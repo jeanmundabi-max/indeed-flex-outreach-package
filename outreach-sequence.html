@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeed Flex — Outreach Sequence | MDB Growth Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #003A9B;
+    --blue-dark: #002470;
+    --blue-light: #1a4fb5;
+    --magenta: #DD00A9;
+    --white: #ffffff;
+    --off-white: #f8f7f4;
+    --text: #0c0c14;
+    --text-muted: #55556b;
+    --border: rgba(0,58,155,0.1);
+    --shadow: 0 4px 20px rgba(0,58,155,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Space Grotesk',sans-serif; font-size:17px; line-height:1.65; color:var(--text); background:var(--off-white); }
+  .page { max-width:880px; margin:0 auto; padding:0 1.5rem 4rem; }
+
+  /* HEADER */
+  .page-header {
+    background:var(--blue);
+    margin:0 -1.5rem;
+    padding:3.5rem 2rem 3rem;
+    margin-bottom:3rem;
+    position:relative; overflow:hidden;
+  }
+  .page-header::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width:280px; height:280px; background:var(--magenta);
+    border-radius:50%; opacity:0.12; filter:blur(50px);
+  }
+  .eyebrow { font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--magenta); margin-bottom:0.75rem; }
+  .page-header h1 { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:700; color:#fff; margin-bottom:0.75rem; position:relative; }
+  .page-header p { color:rgba(255,255,255,0.7); font-size:0.95rem; max-width:520px; position:relative; }
+
+  /* STATS BAR */
+  .stats-bar {
+    display:flex;
+    gap:0.75rem;
+    flex-wrap:wrap;
+    margin-top:2rem;
+  }
+  .stat-chip {
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:8px;
+    padding:0.5rem 1rem;
+    font-size:0.85rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .stat-chip span { color:var(--magenta); }
+
+  /* SECTION */
+  .section-header { margin-bottom:1.5rem; }
+  .section-label { font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--magenta); margin-bottom:0.5rem; }
+  h2 { font-size:1.4rem; font-weight:700; color:var(--blue); margin-bottom:0.5rem; }
+  .section-note { font-size:0.88rem; color:var(--text-muted); margin-bottom:2rem; }
+
+  /* TIMELINE */
+  .timeline { position:relative; padding-left:2.5rem; margin-bottom:3rem; }
+  .timeline::before {
+    content:''; position:absolute;
+    left:12px; top:8px; bottom:0;
+    width:3px;
+    background:linear-gradient(to bottom, var(--blue) 0%, var(--magenta) 100%);
+    border-radius:2px;
+  }
+
+  .tl-item { position:relative; margin-bottom:1.5rem; }
+
+  .tl-dot {
+    position:absolute;
+    left:-2rem;
+    top:6px;
+    width:20px; height:20px;
+    background:var(--white);
+    border:3px solid var(--blue);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    z-index:1;
+  }
+  .tl-dot.magenta { border-color:var(--magenta); }
+  .tl-dot.linkedin { border-color:#0077b5; }
+  .tl-dot.nurture { border-color:#22a67a; }
+
+  .tl-dot-inner {
+    width:6px; height:6px; border-radius:50%;
+    background:var(--blue);
+  }
+  .tl-dot.magenta .tl-dot-inner { background:var(--magenta); }
+  .tl-dot.linkedin .tl-dot-inner { background:#0077b5; }
+  .tl-dot.nurture .tl-dot-inner { background:#22a67a; }
+
+  .tl-card {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.5rem;
+    box-shadow:var(--shadow);
+  }
+
+  .tl-card-header {
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    margin-bottom:0.75rem;
+    flex-wrap:wrap;
+  }
+
+  .day-tag {
+    font-size:0.7rem;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    background:var(--blue);
+    color:#fff;
+    padding:0.25rem 0.65rem;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+
+  .channel-tag {
+    font-size:0.7rem;
+    font-weight:700;
+    padding:0.25rem 0.65rem;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+  .channel-email { background:rgba(0,58,155,0.1); color:var(--blue); }
+  .channel-linkedin { background:rgba(0,119,181,0.1); color:#0077b5; }
+  .channel-nurture { background:rgba(34,166,122,0.1); color:#22a67a; }
+
+  .pss-tag {
+    font-size:0.7rem;
+    font-weight:700;
+    background:var(--magenta);
+    color:#fff;
+    padding:0.25rem 0.65rem;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+
+  .tl-action-title {
+    font-weight:700;
+    font-size:1rem;
+    color:var(--text);
+    flex:1;
+  }
+
+  .email-body-preview {
+    background:rgba(0,58,155,0.03);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:1.25rem;
+    margin-top:0.75rem;
+    font-size:0.88rem;
+    color:var(--text-muted);
+    line-height:1.7;
+  }
+
+  .email-body-preview p { color:var(--text-muted); margin-bottom:0.5rem; }
+  .email-body-preview p:last-child { margin-bottom:0; }
+
+  .linkedin-msg {
+    background:rgba(0,119,181,0.04);
+    border:1px solid rgba(0,119,181,0.15);
+    border-radius:8px;
+    padding:1rem;
+    margin-top:0.75rem;
+    font-size:0.88rem;
+    color:var(--text-muted);
+    font-style:italic;
+  }
+
+  .nurture-msg {
+    background:rgba(34,166,122,0.04);
+    border:1px solid rgba(34,166,122,0.15);
+    border-radius:8px;
+    padding:1rem;
+    margin-top:0.75rem;
+    font-size:0.88rem;
+    color:var(--text-muted);
+  }
+
+  .tl-note {
+    font-size:0.8rem;
+    color:var(--text-muted);
+    margin-top:0.6rem;
+    font-style:italic;
+  }
+
+  /* CTA */
+  .cta-block {
+    background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+    border-radius:14px;
+    padding:2.5rem;
+    text-align:center;
+    margin-top:2rem;
+  }
+  .cta-block h3 { color:#fff; font-size:1.3rem; margin-bottom:0.75rem; }
+  .cta-block p { color:rgba(255,255,255,0.7); margin-bottom:1.5rem; font-size:0.95rem; }
+  .cta-btn {
+    display:inline-block;
+    background:var(--magenta);
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    padding:0.9rem 2.25rem;
+    border-radius:8px;
+    font-size:1rem;
+    transition:all 0.2s;
+  }
+  .cta-btn:hover { background:#f020c0; transform:translateY(-2px); box-shadow:0 8px 28px rgba(221,0,169,0.3); }
+
+  .page-footer { text-align:center; padding:2rem 0 0; border-top:1px solid var(--border); font-size:0.82rem; color:var(--text-muted); margin-top:2rem; }
+  .page-footer a { color:var(--magenta); text-decoration:none; }
+
+  @media(max-width:600px){ .stats-bar .stat-chip { font-size:0.78rem; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">Outreach Sequence · MDB Growth Capital</div>
+    <h1>Indeed Flex — Outreach Sequence for Sarah Peck</h1>
+    <p>Day-by-day multi-channel schedule. Email, LinkedIn, and HubSpot nurture. Built around the post-Coople buying window and the enterprise Flex Plus pipeline gap.</p>
+
+    <div class="stats-bar">
+      <div class="stat-chip"><span>2</span> emails</div>
+      <div class="stat-chip"><span>3</span> LinkedIn touches</div>
+      <div class="stat-chip"><span>21-day</span> active sequence</div>
+      <div class="stat-chip">PSS avg <span>87.5</span></div>
+      <div class="stat-chip">Trigger → Friction</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-label">Full Sequence Timeline</div>
+    <h2>From first email to HubSpot nurture</h2>
+    <div class="section-note">All outreach sends in Sarah Peck's name from Indeed Flex. MDB writes the sequences and manages the sending infrastructure. Sarah reviews before any sequence goes live.</div>
+  </div>
+
+  <div class="timeline">
+
+    <!-- DAY 0: LINKEDIN DM OPENER (TEXT HOOK) -->
+    <div class="tl-item">
+      <div class="tl-dot">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 0</span>
+          <span class="channel-tag" style="background:#0a66c2; color:#fff; padding:2px 8px; border-radius:4px; font-size:11px; margin-left:8px;">LinkedIn DM</span>
+          <strong>LinkedIn DM — Text Hook (after connection accepted)</strong>
+        </div>
+        <div class="tl-body">
+          <p><em>Intrigue gap — no ask, no link, no CTA. Just the hook.</em></p>
+          <p>Hey Sarah, saw your piece on workforce flexibility and the summer peak timing. Had an idea for turning that exact staffing crunch into something that attracts more operations directors before the fill-rate problem hits. Sending a quick video shortly.</p>
+        </div>
+        <div class="tl-note">Recipient: Sarah Peck · Send after connection accepted · No video link yet — hook only · Wait 24–48 hours then send Day 1 video</div>
+      </div>
+    </div>
+
+    <!-- DAY 1: LINKEDIN DM FOLLOW-UP (VIDEO DROP) -->
+    <div class="tl-item">
+      <div class="tl-dot">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 1</span>
+          <span class="channel-tag" style="background:#0a66c2; color:#fff; padding:2px 8px; border-radius:4px; font-size:11px; margin-left:8px;">LinkedIn DM</span>
+          <strong>LinkedIn DM — Video Drop (24–48 hrs after text hook)</strong>
+        </div>
+        <div class="tl-body">
+          <p><em>She is expecting this — send whether or not she replied to Day 0.</em></p>
+          <p>Here it is — LINKEDIN_DM_VSL_URL</p>
+          <p>And the page: https://jeanmundabi-max.github.io/indeed-flex-outreach-package/landing-page-procurement-flex-staffing.html</p>
+          <p>Happy to walk through how we'd drive the right traffic to this specifically.</p>
+        </div>
+        <div class="tl-note">Send even if no reply to Day 0 · Replace LINKEDIN_DM_VSL_URL with Loom/Tella link before sending</div>
+      </div>
+    </div>
+
+    <!-- DAY 0: EMAIL 1 -->
+    <div class="tl-item">
+      <div class="tl-dot">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 0</span>
+          <span class="channel-tag channel-email">Email</span>
+          <span class="pss-tag">PSS 89/100</span>
+          <div class="tl-action-title">Email 1 — Trigger: "Coople's clients."</div>
+        </div>
+        <div class="email-body-preview">
+          <p><strong>Subject:</strong> Coople's clients.</p>
+          <p>Hi Sarah,</p>
+          <p>Indeed Flex has the Indeed brand. That drives awareness. At this stage, brand awareness alone usually stops converting to enterprise Flex Plus accounts.</p>
+          <p>The risk: UK hospitality and contract catering operations teams are replacing their Coople supplier agreement right now. Summer staffing season starts in six weeks. The companies that close their preferred supplier list first won't reopen it until autumn.</p>
+          <p>We help you reach those contract caterers and hotel groups before they shortlist a competitor.</p>
+          <p>A few enterprise accounts at Flex Plus scale can mean £100,000 or more.</p>
+          <p>We handle the account research, outreach, and qualification so your team stays focused on commercial conversations.</p>
+          <p>I've mapped 30 enterprise companies — UK hospitality, contract catering, and facilities — including companies that lost their Coople supplier in January and are still in evaluation.</p>
+          <p>I can send the list over.</p>
+          <p>Jean</p>
+        </div>
+        <div class="tl-note">Angle: Trigger. Delivery CTA — leads.md has 30 named entries. Coople exit is a confirmed public event. £100K+ is conservative (£50K ACV × 2 closes).</div>
+      </div>
+    </div>
+
+    <!-- DAY 1: LINKEDIN CONNECT -->
+    <div class="tl-item">
+      <div class="tl-dot linkedin">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 1</span>
+          <span class="channel-tag channel-linkedin">LinkedIn</span>
+          <div class="tl-action-title">LinkedIn — Connection Request to Sarah Peck</div>
+        </div>
+        <div class="linkedin-msg">
+          "Sarah — I've been researching the post-Coople opportunity in UK hospitality staffing and built a list of enterprise companies still evaluating replacements. Happy to share it."
+        </div>
+        <div class="tl-note">Profile: https://uk.linkedin.com/in/sarah-peck-18375a25 — Short note only. No pitch. The list offer mirrors Email 1 CTA so both channels reinforce the same message.</div>
+      </div>
+    </div>
+
+    <!-- DAY 3: EMAIL 2 -->
+    <div class="tl-item">
+      <div class="tl-dot magenta">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 3</span>
+          <span class="channel-tag channel-email">Email</span>
+          <span class="pss-tag">PSS 86/100</span>
+          <div class="tl-action-title">Email 2 — Friction: "The shortlist forms before the brief."</div>
+        </div>
+        <div class="email-body-preview">
+          <p><strong>Subject:</strong> The shortlist forms before the brief.</p>
+          <p>Hi Sarah,</p>
+          <p>Enterprise HR Directors and procurement teams shortlist contingent workforce platforms through peer networks before a formal brief ever goes out. New operations director joining, a fill rate failure at peak, or a compliance incident — that's when the informal list forms.</p>
+          <p>Without a channel to reach those decision-makers at that moment, Flex Plus only surfaces when someone in their network mentions it. The rest of the market evaluates without Indeed Flex in the room.</p>
+          <p>We get you in front of enterprise procurement teams already reviewing their labour supply — before the preferred supplier list closes.</p>
+          <p>We handle the account research, outreach, and qualification so your team enters those conversations early.</p>
+          <p>Worth showing you how we'd approach this for Indeed Flex?</p>
+          <p>Jean</p>
+        </div>
+        <div class="tl-note">Angle: Friction. Different angle type from Email 1. Question CTA — no list promised in body. 106 words. All gates passed. No JD reference anywhere.</div>
+      </div>
+    </div>
+
+    <!-- DAY 5: LINKEDIN DM -->
+    <div class="tl-item">
+      <div class="tl-dot linkedin">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 5</span>
+          <span class="channel-tag channel-linkedin">LinkedIn</span>
+          <div class="tl-action-title">LinkedIn — Follow-up Message (after connection accepted)</div>
+        </div>
+        <div class="linkedin-msg">
+          "Thanks for connecting. I mapped 30 UK hospitality, contract catering, and facilities companies that lost their Coople supplier in January — including several with summer staffing seasons starting soon. I can send the full list. Useful?"
+        </div>
+        <div class="tl-note">Only send if Day 1 connection request was accepted. Mirrors Email 1 CTA. Short, specific, direct offer. No pitch deck. No explanation of MDB. The list is the value.</div>
+      </div>
+    </div>
+
+    <!-- DAY 8: LINKEDIN BREAKUP -->
+    <div class="tl-item">
+      <div class="tl-dot linkedin">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 8</span>
+          <span class="channel-tag channel-linkedin">LinkedIn</span>
+          <div class="tl-action-title">LinkedIn — Breakup / Leave-Behind Message</div>
+        </div>
+        <div class="linkedin-msg">
+          "Last one — I'll leave the list with you. Built it for Indeed Flex specifically: UK enterprise accounts in a live supplier evaluation window, prioritised by sector fit and Flex Plus eligibility. Let me know if it's useful and I'll send it over. Jean"
+        </div>
+        <div class="tl-note">Final LinkedIn touch. No follow-up after this via LinkedIn. The breakup creates finality and makes the next email feel different if Sarah responds later.</div>
+      </div>
+    </div>
+
+    <!-- DAY 21: HUBSPOT NURTURE -->
+    <div class="tl-item">
+      <div class="tl-dot nurture">
+        <div class="tl-dot-inner"></div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-card-header">
+          <span class="day-tag">Day 21</span>
+          <span class="channel-tag channel-nurture">HubSpot Nurture</span>
+          <div class="tl-action-title">Authority Engine — 20-Week Nurture Sequence Begins</div>
+        </div>
+        <div class="nurture-msg">
+          <strong>What enters the nurture:</strong> Sarah Peck as a contact in HubSpot. No sales emails. Pure value delivery.<br><br>
+          <strong>Week 3 content:</strong> "How enterprise hospitality groups manage the Coople gap before summer — what we're seeing in the market."<br><br>
+          <strong>Week 6 content:</strong> "NHS RM6380 framework for VMS suppliers — what it means for Flex Plus procurement."<br><br>
+          <strong>Week 9 content:</strong> "IR35 compliance checklist for contingent workforce managers — 2026 update."<br><br>
+          <strong>Week 12 content:</strong> "How to build the business case for Flex Plus VMS internally — for Operations Directors presenting to CFOs."<br><br>
+          <strong>Logic:</strong> If Sarah opens any email or clicks any link, move to "Warm" bucket and flag for follow-up. Hot bucket alert when she clicks a pricing or case study link.
+        </div>
+        <div class="tl-note">Authority Engine nurture runs alongside the active sequence. These are not sales emails. They are useful content pieces that keep Jean and MDB present with Sarah over 18 months. When the Senior Demand Gen Manager hire prompts a re-evaluation, Jean is already a known name in her inbox.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SEQUENCE RULES BOX -->
+  <div style="background:var(--white); border:1px solid var(--border); border-radius:14px; padding:2rem; margin-bottom:2rem; box-shadow:var(--shadow);">
+    <div class="section-label">Sequence Rules</div>
+    <h2 style="font-size:1.1rem; margin-bottom:1rem;">What governs this sequence</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+      <div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong style="color:var(--text);">Email angle rule:</strong> Email 1 and Email 2 use different angle types. Email 1 = Trigger (event-based: Coople exit). Email 2 = Friction (structural: procurement shortlisting process). Never the same angle twice.</p>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong style="color:var(--text);">Subject line rule:</strong> Both subjects are under 50 characters. "Coople's clients." (16 chars). "The shortlist forms before the brief." (37 chars).</p>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0;"><strong style="color:var(--text);">Word count rule:</strong> Email 1 = 113 words. Email 2 = 106 words. Both within 90 to 120 word target.</p>
+      </div>
+      <div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong style="color:var(--text);">Twitter/X step:</strong> Excluded. Sarah Peck has no confirmed active Twitter presence in research brief Task 1B. LinkedIn only for social touches.</p>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;"><strong style="color:var(--text);">CTA rule:</strong> Email 1 = Delivery CTA ("I can send the list over") because leads.md has 30 named entries. Email 2 = Question CTA. Never promise a list that does not exist.</p>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0;"><strong style="color:var(--text);">JD bleed-through check:</strong> Zero JD references in either email. Business observation framing only. The gap is described as a business structure observation, not as "your JD says."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Ready to see the full 30-company list?</h3>
+    <p>Book 15 minutes with Jean. He will walk through the list, the specific approach for Indeed Flex, and the timeline for the first enterprise Flex Plus conversations.</p>
+    <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" class="cta-btn">Book 15 Min with Jean →</a>
+  </div>
+
+  <div class="page-footer">
+    <p>Strategy and GTM research by <strong>Jean Mundabi Fala</strong>, MDB Growth Capital</p>
+    <p>Built for Indeed Flex — Sarah Peck, UK Country Manager · <a href="https://cal.com/jean-m-8f4kbr/15min">Book 15 Min →</a></p>
+  </div>
+</div>
+</body>
+</html>

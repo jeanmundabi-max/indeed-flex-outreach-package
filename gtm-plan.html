@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeed Flex — GTM Plan | MDB Growth Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #003A9B;
+    --blue-dark: #002470;
+    --blue-light: #1a4fb5;
+    --magenta: #DD00A9;
+    --white: #ffffff;
+    --off-white: #f8f7f4;
+    --text: #0c0c14;
+    --text-muted: #55556b;
+    --border: rgba(0,58,155,0.1);
+    --shadow: 0 4px 24px rgba(0,58,155,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Space Grotesk',sans-serif; font-size:17px; line-height:1.65; color:var(--text); background:var(--off-white); }
+  .page { max-width:960px; margin:0 auto; padding:0 1.5rem 4rem; }
+
+  /* HEADER */
+  .page-header {
+    background:var(--blue);
+    margin:0 -1.5rem;
+    padding:3.5rem 2rem 3rem;
+    margin-bottom:3rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .page-header::before {
+    content:'';
+    position:absolute;
+    top:-80px; right:-80px;
+    width:300px; height:300px;
+    background:var(--magenta);
+    border-radius:50%;
+    opacity:0.12;
+    filter:blur(60px);
+  }
+  .eyebrow {
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--magenta);
+    margin-bottom:0.75rem;
+  }
+  .page-header h1 {
+    font-size:clamp(1.6rem,3vw,2.4rem);
+    font-weight:700;
+    color:#fff;
+    margin-bottom:0.75rem;
+    line-height:1.2;
+    position:relative;
+  }
+  .page-header p {
+    color:rgba(255,255,255,0.7);
+    font-size:1rem;
+    max-width:560px;
+    position:relative;
+  }
+  .header-meta {
+    display:flex;
+    gap:1.5rem;
+    margin-top:2rem;
+    flex-wrap:wrap;
+  }
+  .meta-item {
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:8px;
+    padding:0.5rem 1rem;
+    font-size:0.8rem;
+    font-weight:600;
+    color:rgba(255,255,255,0.85);
+  }
+
+  /* PILLARS */
+  .pillars-grid {
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:0.75rem;
+    margin-bottom:3rem;
+  }
+  .pillar-card {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.25rem 1rem;
+    box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .pillar-num {
+    width:32px; height:32px;
+    background:var(--blue);
+    color:#fff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.82rem;
+    margin:0 auto 0.75rem;
+  }
+  .pillar-title {
+    font-weight:700;
+    font-size:0.82rem;
+    color:var(--text);
+    margin-bottom:0.4rem;
+    line-height:1.3;
+  }
+  .pillar-desc {
+    font-size:0.75rem;
+    color:var(--text-muted);
+    line-height:1.4;
+  }
+  .pillar-card.priority { border-top:3px solid var(--magenta); }
+
+  /* SECTION HEADERS */
+  .section-header {
+    margin-bottom:1.5rem;
+  }
+  .section-label {
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--magenta);
+    margin-bottom:0.5rem;
+  }
+  h2 {
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--blue);
+    margin-bottom:0.5rem;
+  }
+  .section-note { font-size:0.9rem; color:var(--text-muted); margin-bottom:2rem; }
+
+  /* 10-DAY TABLE */
+  .day-table {
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:3rem;
+    font-size:0.88rem;
+    box-shadow:var(--shadow);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .day-table th {
+    background:var(--blue);
+    color:#fff;
+    font-weight:600;
+    padding:0.75rem 1rem;
+    text-align:left;
+    font-size:0.8rem;
+    letter-spacing:0.04em;
+  }
+  .day-table td {
+    padding:0.75rem 1rem;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+    color:var(--text-muted);
+  }
+  .day-table tr:last-child td { border-bottom:none; }
+  .day-table tr:nth-child(even) td { background:rgba(0,58,155,0.025); }
+  .day-badge {
+    display:inline-block;
+    background:var(--blue);
+    color:#fff;
+    font-size:0.72rem;
+    font-weight:700;
+    padding:0.2rem 0.6rem;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+  .channel-badge {
+    display:inline-block;
+    background:rgba(221,0,169,0.1);
+    color:var(--magenta);
+    font-size:0.72rem;
+    font-weight:600;
+    padding:0.2rem 0.6rem;
+    border-radius:4px;
+    margin-left:0.5rem;
+    white-space:nowrap;
+  }
+  td strong { color:var(--text); }
+
+  /* 12-WEEK ROADMAP */
+  .roadmap-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1rem;
+    margin-bottom:3rem;
+  }
+  .week-block {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:1.25rem;
+    box-shadow:var(--shadow);
+  }
+  .week-range {
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--magenta);
+    margin-bottom:0.5rem;
+  }
+  .week-theme {
+    font-weight:700;
+    font-size:0.95rem;
+    color:var(--text);
+    margin-bottom:0.75rem;
+  }
+  .week-items {
+    list-style:none;
+    padding:0;
+  }
+  .week-items li {
+    font-size:0.82rem;
+    color:var(--text-muted);
+    padding:0.3rem 0;
+    border-bottom:1px solid rgba(0,0,0,0.04);
+    padding-left:1rem;
+    position:relative;
+  }
+  .week-items li:last-child { border-bottom:none; }
+  .week-items li::before {
+    content:'→';
+    position:absolute;
+    left:0;
+    color:var(--blue);
+    font-size:0.75rem;
+  }
+
+  /* KPIs */
+  .kpi-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1rem;
+    margin-bottom:3rem;
+  }
+  .kpi-card {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:1.25rem;
+    box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .kpi-num {
+    font-size:1.8rem;
+    font-weight:700;
+    color:var(--blue);
+    line-height:1;
+    margin-bottom:0.35rem;
+  }
+  .kpi-label {
+    font-size:0.78rem;
+    color:var(--text-muted);
+    font-weight:500;
+  }
+  .kpi-card.highlight .kpi-num { color:var(--magenta); }
+
+  /* TOOLS */
+  .tools-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1rem;
+    margin-bottom:2rem;
+  }
+  .tool-card {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:1.25rem;
+    box-shadow:var(--shadow);
+  }
+  .tool-cat {
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--magenta);
+    margin-bottom:0.5rem;
+  }
+  .tool-name {
+    font-weight:700;
+    font-size:0.95rem;
+    color:var(--text);
+    margin-bottom:0.3rem;
+  }
+  .tool-use {
+    font-size:0.82rem;
+    color:var(--text-muted);
+  }
+
+  /* FOOTER */
+  .page-footer {
+    text-align:center;
+    padding:2rem 0 0;
+    border-top:1px solid var(--border);
+    font-size:0.82rem;
+    color:var(--text-muted);
+    margin-top:2rem;
+  }
+  .page-footer a { color:var(--magenta); text-decoration:none; }
+
+  @media(max-width:768px){
+    .pillars-grid { grid-template-columns:1fr 1fr; }
+    .roadmap-grid, .kpi-grid, .tools-grid { grid-template-columns:1fr 1fr; }
+    .day-table { font-size:0.8rem; }
+    th, td { padding:0.6rem 0.75rem; }
+  }
+  @media(max-width:480px){
+    .pillars-grid, .kpi-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">GTM Plan · MDB Growth Capital</div>
+    <h1>Indeed Flex — 90-Day Go-to-Market Plan</h1>
+    <p>Five GTM pillars. 10-day launch sequence. 12-week roadmap. Built for the post-Coople window and the UK enterprise Flex Plus pipeline.</p>
+    <div class="header-meta">
+      <div class="meta-item">Decision-maker: Sarah Peck, UK Country Manager</div>
+      <div class="meta-item">Target: Enterprise Flex Plus accounts</div>
+      <div class="meta-item">Window: 6 weeks until summer PSL closes</div>
+      <div class="meta-item">May 2026</div>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="section-header">
+    <div class="section-label">5 GTM Pillars</div>
+    <h2>Where enterprise Flex Plus accounts come from</h2>
+    <div class="section-note">Each pillar targets a specific buying window. Pillars 1 and 2 are time-critical — 6-week window.</div>
+  </div>
+
+  <div class="pillars-grid">
+    <div class="pillar-card priority">
+      <div class="pillar-num">1</div>
+      <div class="pillar-title">PSL Renewal Cycle Mapping</div>
+      <div class="pillar-desc">Map enterprise accounts to their procurement review cycle. Enter 6 to 12 months before renewal. Signal: new procurement director, incumbent complaint, PSL role posted.</div>
+    </div>
+    <div class="pillar-card priority">
+      <div class="pillar-num">2</div>
+      <div class="pillar-title">Coople Displacement Channel</div>
+      <div class="pillar-desc">Coople exited UK January 2026. Former UK clients in hospitality, events, retail are in live evaluation. Summer season starts in 6 weeks. 30 accounts mapped. Window closes.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">3</div>
+      <div class="pillar-title">New Site Opening Trigger</div>
+      <div class="pillar-desc">Companies opening a new UK facility need flex staffing from day one. Signal: planning permission filings, LinkedIn "now open", Companies House new subsidiary filing.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">4</div>
+      <div class="pillar-title">NHS Procurement Cycle</div>
+      <div class="pillar-desc">NHS Workforce Alliance RM6380 framework launched February 2026. Covers VMS and outsourced staff banks for NHS Trusts. Active procurement window for Flex Plus right now.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-num">5</div>
+      <div class="pillar-title">Authority Engine</div>
+      <div class="pillar-desc">Sarah's LinkedIn content flywheel. Flex Plus case studies. REC data-backed benchmarks. 20-week nurture sequence. Procurement teams discover Flex Plus during research, not just outbound.</div>
+    </div>
+  </div>
+
+  <!-- 10-DAY TABLE -->
+  <div class="section-header">
+    <div class="section-label">10-Day Launch Sequence</div>
+    <h2>Day-by-day actions to activate the post-Coople window</h2>
+    <div class="section-note">Days 1 to 5 are internal setup. Days 6 to 10 are live outreach. All within the 6-week window before summer season closes the PSL.</div>
+  </div>
+
+  <table class="day-table">
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Action</th>
+        <th>Owner</th>
+        <th>Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="day-badge">Day 1</span></td>
+        <td><strong>Account list segmentation</strong> — sort the 30 Tier 1 accounts by urgency score. Highest urgency = Coople ex-clients with summer season dependency and no confirmed replacement. <span class="channel-badge">Research</span></td>
+        <td>MDB</td>
+        <td>Prioritised outreach order. Top 10 first wave accounts confirmed.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 2</span></td>
+        <td><strong>Decision-maker verification</strong> — confirm current role for each Tier 1 contact. Check LinkedIn for recent activity. Flag any stale contacts for replacement. <span class="channel-badge">Research</span></td>
+        <td>MDB</td>
+        <td>Verified contact list for Days 6 to 10. Zero stale names.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 3</span></td>
+        <td><strong>Email personalisation pass</strong> — customise the Trigger email subject line and Layer 3 scene paragraph for the 10 priority accounts. Each opener references something specific about that company. <span class="channel-badge">Copywriting</span></td>
+        <td>MDB</td>
+        <td>10 personalised email versions. Review by Sarah before sending.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 4</span></td>
+        <td><strong>LinkedIn profile audit</strong> — confirm Sarah's LinkedIn profile positioning for enterprise buyers. Connection request template prepared for each of the 10 priority contacts. <span class="channel-badge">LinkedIn</span></td>
+        <td>MDB + Sarah</td>
+        <td>LinkedIn sequence ready. Profile reviewed and optimised if needed.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 5</span></td>
+        <td><strong>SmartLead setup and review</strong> — email sequences loaded into sending tool. Sarah reviews all 10 personalised emails. Approval gate before first send. <span class="channel-badge">Email</span></td>
+        <td>MDB + Sarah</td>
+        <td>Sarah confirms sends. All sequences approved. Zero unknown errors.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 6</span></td>
+        <td><strong>First wave sends</strong> — Trigger email to 10 priority Tier 1 accounts. Subject: "Coople's clients." LinkedIn connection requests sent in parallel. <span class="channel-badge">Email</span> <span class="channel-badge">LinkedIn</span></td>
+        <td>MDB (sends)</td>
+        <td>10 emails delivered. 10 LinkedIn connection requests sent.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 7</span></td>
+        <td><strong>Monitor and flag</strong> — track opens and replies from Day 6 sends. Flag any out-of-office replies for timing adjustment. First LinkedIn connection acceptances likely. <span class="channel-badge">Monitor</span></td>
+        <td>MDB</td>
+        <td>Initial reply data. First connection requests accepted.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 8</span></td>
+        <td><strong>Second wave sends</strong> — Trigger email to next 10 Tier 1 accounts. LinkedIn connection requests for second batch. LinkedIn follow-up message to Day 6 connection acceptances. <span class="channel-badge">Email</span> <span class="channel-badge">LinkedIn</span></td>
+        <td>MDB</td>
+        <td>20 emails total sent. LinkedIn sequence progressing on Day 6 batch.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 9</span></td>
+        <td><strong>Reply qualification</strong> — assess all replies from Days 6 to 8. Genuine PSL evaluation vs polite brush-off. Route high-urgency replies to Sarah immediately with context. <span class="channel-badge">Qualification</span></td>
+        <td>MDB</td>
+        <td>Qualified reply log. Sarah briefed on any genuinely interested prospects.</td>
+      </tr>
+      <tr>
+        <td><span class="day-badge">Day 10</span></td>
+        <td><strong>Week 1 reporting</strong> — accounts reached, open rates, reply rates, qualified conversations. Sarah reviews data and approves continuation. Friction email sequence prepared for Day 14 follow-up. <span class="channel-badge">Reporting</span></td>
+        <td>MDB + Sarah</td>
+        <td>Week 1 report. Sarah decision: continue, adjust, or pause for Loom video addition.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 12-WEEK ROADMAP -->
+  <div class="section-header">
+    <div class="section-label">12-Week Roadmap</div>
+    <h2>From first outreach to qualified pipeline to Demand Gen handover</h2>
+    <div class="section-note">Designed to produce 2 to 5 enterprise Flex Plus evaluation conversations in 90 days and hand the incoming Senior Demand Gen Manager a proven playbook.</div>
+  </div>
+
+  <div class="roadmap-grid">
+    <div class="week-block">
+      <div class="week-range">Weeks 1–2</div>
+      <div class="week-theme">Account Intelligence</div>
+      <ul class="week-items">
+        <li>200-account UK enterprise target list built</li>
+        <li>30 Tier 1 accounts scored and prioritised</li>
+        <li>Signal monitoring setup for new appointments</li>
+        <li>Decision-maker verification completed</li>
+      </ul>
+    </div>
+    <div class="week-block">
+      <div class="week-range">Weeks 3–4</div>
+      <div class="week-theme">Email Personalisation and Review</div>
+      <ul class="week-items">
+        <li>Email 1 (Trigger) personalised per account</li>
+        <li>LinkedIn connection templates prepared</li>
+        <li>Sarah reviews and approves all sequences</li>
+        <li>SmartLead campaigns configured</li>
+      </ul>
+    </div>
+    <div class="week-block">
+      <div class="week-range">Weeks 5–6</div>
+      <div class="week-theme">First Outreach Wave — Tier 1</div>
+      <ul class="week-items">
+        <li>30 post-Coople accounts reached</li>
+        <li>LinkedIn sequence running in parallel</li>
+        <li>First replies qualified and routed</li>
+        <li>Week 5 report: open rates, reply rates</li>
+      </ul>
+    </div>
+    <div class="week-block">
+      <div class="week-range">Weeks 7–8</div>
+      <div class="week-theme">Follow-up and Qualification</div>
+      <ul class="week-items">
+        <li>Email 2 (Friction) to non-responders</li>
+        <li>LinkedIn breakup message sent</li>
+        <li>Qualified replies: research brief prepared</li>
+        <li>First enterprise Flex Plus conversations starting</li>
+      </ul>
+    </div>
+    <div class="week-block">
+      <div class="week-range">Weeks 9–10</div>
+      <div class="week-theme">Second Wave — Tier 2</div>
+      <ul class="week-items">
+        <li>NHS framework accounts contacted</li>
+        <li>US new market accounts (8 cities) outreach</li>
+        <li>UK enterprise retail and logistics wave</li>
+        <li>1 to 2 accounts in advanced procurement discussion</li>
+      </ul>
+    </div>
+    <div class="week-block">
+      <div class="week-range">Weeks 11–12</div>
+      <div class="week-theme">Pipeline and Handover</div>
+      <ul class="week-items">
+        <li>2 to 5 Flex Plus evaluation conversations confirmed</li>
+        <li>Demand Gen Manager handover pack complete</li>
+        <li>Proven message templates documented</li>
+        <li>Account database handed to Indeed Flex permanently</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="section-header">
+    <div class="section-label">Key Performance Indicators</div>
+    <h2>What we measure. What success looks like at each stage.</h2>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">200</div>
+      <div class="kpi-label">Enterprise accounts in database by Week 2</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">30%+</div>
+      <div class="kpi-label">Email open rate target (Trigger subject line)</div>
+    </div>
+    <div class="kpi-card highlight">
+      <div class="kpi-num">2–5</div>
+      <div class="kpi-label">New Flex Plus evaluation conversations in 90 days</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">£100K+</div>
+      <div class="kpi-label">Conservative 90-day pipeline value at £50K ACV</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">1–2</div>
+      <div class="kpi-label">Accounts in advanced procurement by Week 10</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">10%</div>
+      <div class="kpi-label">Reply rate target on personalised Tier 1 accounts</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">3</div>
+      <div class="kpi-label">Flex Plus case studies produced in 90 days</div>
+    </div>
+    <div class="kpi-card highlight">
+      <div class="kpi-num">Day 1</div>
+      <div class="kpi-label">Demand Gen Manager has a live playbook from day one</div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="section-header">
+    <div class="section-label">Tech Stack</div>
+    <h2>Tools used to execute the 90-day plan</h2>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-cat">Outreach Execution</div>
+      <div class="tool-name">SmartLead</div>
+      <div class="tool-use">Email sequence deployment. Open and reply tracking. SmartLead campaigns built and managed by MDB. Sarah sends from her account.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Demand Gen and CRM</div>
+      <div class="tool-name">HubSpot</div>
+      <div class="tool-use">Indeed Flex's confirmed MarTech platform. Qualified replies routed directly into HubSpot pipeline. Research briefs attached to contact records.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Account Intelligence</div>
+      <div class="tool-name">LinkedIn Sales Navigator</div>
+      <div class="tool-use">Decision-maker verification. New appointment signals. Company employee count changes. LinkedIn sequence execution alongside email.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Signal Monitoring</div>
+      <div class="tool-name">Companies House API</div>
+      <div class="tool-use">Director changes at target accounts. New subsidiary filings indicating UK expansion. Free, real-time signal source for new appointment tracking.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">NHS Framework</div>
+      <div class="tool-name">NHS Shared Business Services</div>
+      <div class="tool-use">RM6380 framework access and requirements. NHS Trust procurement timelines. Flex Plus compliance documentation requirements for NHS PSL submission.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-cat">Content and Authority</div>
+      <div class="tool-name">LinkedIn Content Flywheel</div>
+      <div class="tool-use">2 posts per week from Sarah's profile targeting enterprise procurement pain points. REC data and Flex Plus benchmarks as content anchors. 20-week nurture sequence alongside.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>Strategy and GTM research by <strong>Jean Mundabi Fala</strong>, MDB Growth Capital</p>
+    <p>Built for Indeed Flex — Sarah Peck, UK Country Manager · <a href="https://cal.com/jean-m-8f4kbr/15min">Book 15 Min →</a></p>
+  </div>
+</div>
+</body>
+</html>

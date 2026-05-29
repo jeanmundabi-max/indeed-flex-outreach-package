@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeed Flex — Revenue Infrastructure | James Terry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #003A9B;
+    --blue-dark: #002470;
+    --blue-light: #1a4fb5;
+    --magenta: #DD00A9;
+    --magenta-light: #f020c0;
+    --white: #ffffff;
+    --off-white: #f8f7f4;
+    --text: #0a0a0a;
+    --text-muted: #5a5a6e;
+    --border: rgba(0,58,155,0.12);
+    --shadow: 0 4px 32px rgba(0,58,155,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--off-white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 220px;
+    height: 100vh;
+    background: var(--blue-dark);
+    padding: 2rem 1.25rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    overflow-y: auto;
+  }
+
+  nav .logo {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  nav a {
+    display: block;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.45rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+
+  nav a.cta-nav {
+    margin-top: auto;
+    background: var(--magenta);
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.6rem 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  nav a.cta-nav:hover {
+    background: var(--magenta-light);
+  }
+
+  /* MAIN */
+  main {
+    margin-left: 220px;
+    padding: 0 2.5rem 4rem;
+    max-width: 900px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--blue);
+    margin: 0 -2.5rem;
+    padding: 5rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: var(--magenta);
+    border-radius: 50%;
+    opacity: 0.12;
+    filter: blur(60px);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    max-width: 640px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 560px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--magenta);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    margin-right: 1rem;
+  }
+
+  .hero-cta:hover {
+    background: var(--magenta-light);
+    transform: translateY(-2px);
+  }
+
+  .hero-meta {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 2.5rem;
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--blue-dark);
+    padding: 0.85rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 -2.5rem;
+  }
+
+  .marquee-inner {
+    display: inline-flex;
+    gap: 3rem;
+    animation: marquee 22s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .marquee-inner span.accent { color: var(--magenta); }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION */
+  section {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 1.25rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  p { margin-bottom: 1rem; color: var(--text-muted); }
+
+  /* LEAK MAP */
+  .leak-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .leak-dot {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .leak-content strong {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .leak-content p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 1.5rem 0;
+  }
+
+  th {
+    background: var(--blue);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+
+  td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: rgba(0,58,155,0.03); }
+
+  /* EMAIL */
+  .email-sample {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .email-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .email-subject {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue);
+    flex: 1;
+  }
+
+  .pss-badge {
+    background: var(--magenta);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .angle-badge {
+    background: rgba(0,58,155,0.08);
+    color: var(--blue);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+  }
+
+  .email-body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .email-body p { color: var(--text); margin-bottom: 0.75rem; }
+
+  /* PLAYBOOK */
+  .playbook-phase {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .phase-num {
+    width: 36px; height: 36px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .phase-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .phase-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .phase-items {
+    list-style: none;
+    padding: 0;
+  }
+
+  .phase-items li {
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .phase-items li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--magenta);
+    font-weight: 700;
+  }
+
+  /* RESULTS / TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--blue), var(--magenta));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.75rem;
+    top: 4px;
+    width: 16px; height: 16px;
+    background: var(--magenta);
+    border-radius: 50%;
+    border: 2px solid var(--off-white);
+  }
+
+  .timeline-week {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* GROWTH LOOPS */
+  .loop-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .loop-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .loop-icon {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .loop-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .loop-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .loop-steps {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .loop-step {
+    background: rgba(0,58,155,0.06);
+    color: var(--blue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+  }
+
+  /* VIDEO */
+  .video-placeholder {
+    background: var(--blue-dark);
+    border-radius: 12px;
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,58,155,0.6) 0%, rgba(221,0,169,0.3) 100%);
+  }
+
+  .play-btn {
+    width: 64px; height: 64px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+
+  .play-btn::after {
+    content: '';
+    width: 0; height: 0;
+    border-left: 18px solid #fff;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    margin-left: 4px;
+  }
+
+  .video-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CTA BLOCK */
+  .cta-block {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--magenta);
+    border-radius: 50%;
+    opacity: 0.15;
+    filter: blur(40px);
+  }
+
+  .cta-block h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+
+  .cta-block p {
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: var(--magenta);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .cta-button:hover {
+    background: var(--magenta-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(221,0,169,0.3);
+  }
+
+  /* STAT GRID */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* QUOTE */
+  blockquote {
+    border-left: 3px solid var(--magenta);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    background: rgba(221,0,169,0.04);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  /* GRID 2 COL */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .grid-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+
+  .grid-card h4 {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .grid-card p {
+    font-size: 0.85rem;
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  /* FOOTER */
+  footer {
+    margin: 3rem -2.5rem 0;
+    padding: 2rem 2.5rem;
+    background: var(--blue-dark);
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  footer a { color: var(--magenta); text-decoration: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    main { margin-left: 0; padding: 0 1.25rem 3rem; }
+    .hero { margin: 0 -1.25rem; padding: 3.5rem 1.25rem 2.5rem; }
+    .marquee-strip { margin: 0 -1.25rem; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    table { font-size: 0.8rem; }
+    th, td { padding: 0.5rem 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Indeed Flex</div>
+  <a href="#overview">Overview</a>
+  <a href="#video">Why Now</a>
+  <a href="#audit">Leak Map</a>
+  <a href="#funnel">Funnel Cascade</a>
+  <a href="#opportunity">The Opportunity</a>
+  <a href="#competition">Competitors</a>
+  <a href="#email-sequences">Email Sequences</a>
+  <a href="#playbook">90-Day Plan</a>
+  <a href="#results">Results Timeline</a>
+  <a href="#growth-loops">Growth Loops</a>
+  <a href="#installation">Installation</a>
+  <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" class="cta-nav">Book 15 Min →</a>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <div class="hero-eyebrow">Preferred Supplier Intelligence · MDB Growth Capital</div>
+    <h1>Flex Plus has the product. The enterprise pipeline is the gap.</h1>
+    <p>Jean researched Indeed Flex before reaching out. This package shows what he found — the post-Coople buying window, the enterprise acquisition gap, and 30 companies already mapped for outreach.</p>
+    <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" class="hero-cta">Book 15 Min with Jean</a>
+    <div class="hero-meta">Built for James Terry, Head of Revenue · MDB Growth Capital · May 2026</div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="accent">Post-Coople Window</span>
+      <span>NHS Workforce Alliance RM6380</span>
+      <span class="accent">30 Enterprise Companies Mapped</span>
+      <span>PSL Renewal Cycle</span>
+      <span class="accent">Flex Plus VMS</span>
+      <span>Contingent Workforce</span>
+      <span class="accent">Summer Season 2026</span>
+      <span>IR35 Compliance</span>
+      <span class="accent">Enterprise ABM Gap</span>
+      <span>Stage 1 Procurement</span>
+      <!-- duplicate for seamless loop -->
+      <span class="accent">Post-Coople Window</span>
+      <span>NHS Workforce Alliance RM6380</span>
+      <span class="accent">30 Enterprise Companies Mapped</span>
+      <span>PSL Renewal Cycle</span>
+      <span class="accent">Flex Plus VMS</span>
+      <span>Contingent Workforce</span>
+      <span class="accent">Summer Season 2026</span>
+      <span>IR35 Compliance</span>
+      <span class="accent">Enterprise ABM Gap</span>
+      <span>Stage 1 Procurement</span>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <section id="video" style="border-bottom:none; padding-bottom:0;">
+    <div class="section-label">Why This Package Exists</div>
+    <h2>Three things Jean found before reaching out</h2>
+    <div class="video-placeholder">
+      <div class="play-btn"></div>
+      <div class="video-label">VIDEO_URL_GOES_HERE — Jean's 3-min walk-through for James Terry</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">30</div>
+        <div class="stat-label">Enterprise companies mapped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6 wks</div>
+        <div class="stat-label">Until summer season closes PSL window</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">£100K+</div>
+        <div class="stat-label">Conservative 90-day Flex Plus revenue</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIT / LEAK MAP -->
+  <section id="audit">
+    <div class="section-label">Revenue Leak Map</div>
+    <h2>Where enterprise Flex Plus revenue is leaking</h2>
+
+    <div class="leak-item">
+      <div class="leak-dot">🔴</div>
+      <div class="leak-content">
+        <strong>LEAK 1: Stage 1 visibility — Critical</strong>
+        <p>Enterprise procurement teams form informal shortlists before the formal brief goes out. Indeed Flex is not in those conversations. By the time a formal brief arrives, the preferred vendor is already identified. Stage 1 is invisible to inbound-only suppliers.</p>
+      </div>
+    </div>
+
+    <div class="leak-item">
+      <div class="leak-dot">🔴</div>
+      <div class="leak-content">
+        <strong>LEAK 2: Post-Coople window timing — Critical</strong>
+        <p>Coople exited the UK market on 1 January 2026. Summer season starts in 6 weeks. Companies that have not yet signed a replacement preferred supplier agreement are in live evaluation right now. This window closes and does not reopen until autumn.</p>
+      </div>
+    </div>
+
+    <div class="leak-item">
+      <div class="leak-dot">🟡</div>
+      <div class="leak-content">
+        <strong>LEAK 3: Authority gap in enterprise discovery — Important</strong>
+        <p>Enterprise HR Directors searching "contingent workforce platform UK" find the Indeed brand, not Flex Plus case studies or VMS comparison content. The authority gap means Instawork and StaffHeroes are winning the discovery stage in searches Indeed Flex should own.</p>
+      </div>
+    </div>
+
+    <div class="leak-item">
+      <div class="leak-dot">🟡</div>
+      <div class="leak-content">
+        <strong>LEAK 4: US new market penetration — Important</strong>
+        <p>8 new US markets launched December 2025. Five months in, no confirmed systematic outreach to enterprise accounts in Charlotte, Phoenix, Las Vegas, or Orlando. The first 6 months is the peak window for enterprise account formation. That window is closing.</p>
+      </div>
+    </div>
+
+    <div class="leak-item">
+      <div class="leak-dot">🟢</div>
+      <div class="leak-content">
+        <strong>LEAK 5: Marketplace to Flex Plus upgrade path — Monitor</strong>
+        <p>Existing Marketplace accounts are not being systematically upgraded to Flex Plus VMS. The conversation from "we use your app for shifts" to "we want your VMS across all our sites" requires proactive account development, not just inbound upgrade requests.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNNEL -->
+  <section id="funnel">
+    <div class="section-label">Funnel Cascade</div>
+    <h2>What happens at each stage. What gets installed.</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>TODAY</th>
+          <th>AFTER MDB</th>
+          <th>WHAT'S MISSING</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Top of Funnel</strong><br><small>Awareness</small></td>
+          <td>Indeed parent brand awareness. Some direct sales. Word of mouth from James's network and direct sales.</td>
+          <td>Systematic outreach to enterprise decision-makers at the moment of their trigger event. 200-account target list live.</td>
+          <td>Research-led ABM. Signal monitoring for Coople exits, new appointments, fill rate failures.</td>
+        </tr>
+        <tr>
+          <td><strong>Mid Funnel</strong><br><small>Evaluation</small></td>
+          <td>Enterprise procurement teams who find Indeed Flex run a standard demo and evaluation. The product wins on merits when it gets in front of the right buyer.</td>
+          <td>Pre-qualification of every inbound and outbound lead by buying urgency. Research brief on each account before the first meeting.</td>
+          <td>Prioritisation of inbound leads by buying urgency. Qualification framework separating genuine evaluation from early exploration.</td>
+        </tr>
+        <tr>
+          <td><strong>Bottom of Funnel</strong><br><small>Conversion</small></td>
+          <td>Sales team converts enterprise enquiries at industry standard rates. Volume at top is the problem, not conversion rate at bottom.</td>
+          <td>Predictable volume of new enterprise procurement conversations per month. Follow-up sequence for informal evaluation stage companies.</td>
+          <td>Tracking system connecting outreach to Flex Plus wins. Re-engagement sequence for companies that evaluated and did not convert.</td>
+        </tr>
+        <tr>
+          <td><strong>Post-Sale</strong><br><small>Expansion</small></td>
+          <td>Marketplace accounts exist. Flex Plus upsell path exists in product. Proactive account development: not confirmed.</td>
+          <td>Systematic upgrade sequence for Marketplace accounts meeting Flex Plus criteria. Expansion playbook per account.</td>
+          <td>Account development programme targeting 3x to 5x ACV uplift from existing Marketplace accounts to Flex Plus VMS.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- OPPORTUNITY -->
+  <section id="opportunity">
+    <div class="section-label">The Post-Coople Opportunity</div>
+    <h2>This window is open now. It closes in 6 weeks.</h2>
+
+    <blockquote>"Our incumbent supplier just left the market. We need a replacement before the events season starts."<br>— Operations Director, UK contract caterer (pattern observed from industry research, 2026)</blockquote>
+
+    <p>Coople — a flexible staffing platform operating in UK hospitality, events, retail, and business support — exited the UK market on 1 January 2026. Their UK client base operated in the same sectors as Indeed Flex's Marketplace and Flex Plus products.</p>
+
+    <p>These are companies that already understand the value of a platform-based staffing solution, already have budget allocated for this category, and are actively evaluating replacements right now.</p>
+
+    <div class="grid-2">
+      <div class="grid-card">
+        <h4>Tier 1 — Post-Coople UK</h4>
+        <p>UK hospitality chains, contract caterers, event venues, facilities management companies. 200 to 2,000 employees. Multiple UK sites. Coople supplier relationship ended January 2026. Summer season starts June 2026.</p>
+      </div>
+      <div class="grid-card">
+        <h4>Tier 2 — Enterprise ABM</h4>
+        <p>UK retailers with seasonal staffing dependency, logistics companies, NHS-adjacent healthcare, US enterprise accounts in the 8 new markets launched December 2025. High temp labour dependency confirmed.</p>
+      </div>
+    </div>
+
+    <div class="cta-block" style="margin-top:2rem;">
+      <h3>Jean has already mapped 30 of these companies.</h3>
+      <p>UK hospitality, contract catering, facilities, and US new market accounts. Prioritised by Coople replacement urgency. Ready to outreach today.</p>
+      <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" class="cta-button">Get the Full List — Book 15 Min</a>
+    </div>
+  </section>
+
+  <!-- COMPETITION -->
+  <section id="competition">
+    <div class="section-label">Competitive Intelligence</div>
+    <h2>What competitors are doing that Indeed Flex is not</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Competitor</th>
+          <th>Positioning</th>
+          <th>What They Do Well</th>
+          <th>Gap for Indeed Flex</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Instawork</strong></td>
+          <td>15,000 businesses, 10M workers, 400+ US cities</td>
+          <td>Systematic ABM against enterprise hospitality and retail. Weekly content for HR operations leaders. Google Ads on "on-demand staffing" terms.</td>
+          <td>Flex Plus VMS is more enterprise-grade. But Instawork reaches US enterprise buyers first through targeted account engagement, not organic discovery.</td>
+        </tr>
+        <tr>
+          <td><strong>StaffHeroes</strong></td>
+          <td>UK hospitality, catering, hotel, retail, logistics</td>
+          <td>UK-focused. Has been actively marketing to UK hospitality employers since Coople's exit (February 2026 onwards). Nimbler than Indeed Flex on UK-specific outreach.</td>
+          <td>Most likely winner of post-Coople UK enterprise accounts if Indeed Flex does not reach them first. StaffHeroes lacks the Flex Plus VMS depth — but they are in the room earlier.</td>
+        </tr>
+        <tr>
+          <td><strong>Blue Arrow</strong></td>
+          <td>30+ years in UK staffing market</td>
+          <td>Personal employer relationships built over 30 years. Stage 1 presence through relationship-based business development. CIPD and UKHospitality event presence.</td>
+          <td>No technology-first model. Cannot compete on speed or analytics. But they are in the room because they built the relationship first — not because the buyer searched for them.</td>
+        </tr>
+        <tr>
+          <td><strong>Temping.com</strong></td>
+          <td>UK-focused online staffing platform</td>
+          <td>Lower-cost positioning. Direct employer outreach model. UK market focus without enterprise VMS complexity.</td>
+          <td>No VMS capability. Cannot serve multi-site enterprise operations. Competes at SMB level, not Flex Plus enterprise level.</td>
+        </tr>
+        <tr>
+          <td><strong>Hays Specialist Recruitment</strong></td>
+          <td>UK staffing generalist, enterprise relationships</td>
+          <td>Deep procurement team relationships. Framework agreements with NHS and local government. Trusted brand in UK enterprise procurement.</td>
+          <td>Generalist model — no platform-based fill rate or VMS analytics advantage. Flex Plus is measurably better product, but Hays gets into the PSL conversation through relationship, not outbound.</td>
+        </tr>
+        <tr>
+          <td><strong>Reed Specialist Recruitment</strong></td>
+          <td>UK staffing, employer brand focus</td>
+          <td>Strong UK employer brand. Reed name recognition in HR circles. Active at HR events and industry conferences.</td>
+          <td>Traditional agency model — slower, less tech-forward. Flex Plus should be winning every procurement evaluation against Reed where the buyer cares about compliance, speed, and cost analytics.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:1rem;"><strong>Key competitive risk:</strong> StaffHeroes is the most likely winner of post-Coople enterprise accounts if Indeed Flex does not reach them first. The window is 4 to 6 weeks.</p>
+  </section>
+
+  <!-- EMAIL SEQUENCES -->
+  <section id="email-sequences">
+    <div class="section-label">Outreach Sequences</div>
+    <h2>Two emails. Two angles. Both written for James's world.</h2>
+
+    <!-- EMAIL 1 -->
+    <div class="email-sample">
+      <div class="email-header">
+        <div class="email-subject">Subject: Coople's clients.</div>
+        <span class="pss-badge">PSS 89/100</span>
+        <span class="angle-badge">Trigger</span>
+      </div>
+      <div class="email-body">
+        <p>Hi James,</p>
+        <p>Indeed Flex has the Indeed brand. That drives awareness. At this stage, brand awareness alone usually stops converting to enterprise Flex Plus accounts.</p>
+        <p>The risk: UK hospitality and contract catering operations teams are replacing their Coople supplier agreement right now. Summer staffing season starts in six weeks. The companies that close their preferred supplier list first won't reopen it until autumn.</p>
+        <p>We help you reach those contract caterers and hotel groups before they shortlist a competitor.</p>
+        <p>A few enterprise accounts at Flex Plus scale can mean £100,000 or more.</p>
+        <p>We handle the account research, outreach, and qualification so your team stays focused on commercial conversations.</p>
+        <p>I've mapped 30 enterprise companies — UK hospitality, contract catering, and facilities — including companies that lost their Coople supplier in January and are still in evaluation.</p>
+        <p>I can send the list over.</p>
+        <p>Jean</p>
+      </div>
+    </div>
+
+    <!-- EMAIL 2 -->
+    <div class="email-sample">
+      <div class="email-header">
+        <div class="email-subject">Subject: The shortlist forms before the brief.</div>
+        <span class="pss-badge">PSS 86/100</span>
+        <span class="angle-badge">Friction</span>
+      </div>
+      <div class="email-body">
+        <p>Hi James,</p>
+        <p>Enterprise HR Directors and procurement teams shortlist contingent workforce platforms through peer networks before a formal brief ever goes out. New operations director joining, a fill rate failure at peak, or a compliance incident — that's when the informal list forms.</p>
+        <p>Without a channel to reach those decision-makers at that moment, Flex Plus only surfaces when someone in their network mentions it. The rest of the market evaluates without Indeed Flex in the room.</p>
+        <p>We get you in front of enterprise procurement teams already reviewing their labour supply — before the preferred supplier list closes.</p>
+        <p>We handle the account research, outreach, and qualification so your team enters those conversations early.</p>
+        <p>Worth showing you how we'd approach this for Indeed Flex?</p>
+        <p>Jean</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.5rem;">Email 1: Trigger angle — Coople exit timing window · Email 2: Friction angle — enterprise procurement shortlisting gap · PSS average: 87.5/100</p>
+  </section>
+
+  <!-- PLAYBOOK -->
+  <section id="playbook">
+    <div class="section-label">90-Day Growth Plan</div>
+    <h2>The MDB installation for Indeed Flex</h2>
+
+    <div class="playbook-phase">
+      <div class="phase-header">
+        <div class="phase-num">1</div>
+        <div>
+          <div class="phase-title">Weeks 1 to 4 — Account Intelligence and Signal Mapping</div>
+          <div class="phase-subtitle">Build the foundation. Identify who is in a buying window right now.</div>
+        </div>
+      </div>
+      <ul class="phase-items">
+        <li>Build 200-account UK enterprise target list across hospitality, contract catering, FM, retail, logistics, healthcare</li>
+        <li>Map each account to its trigger event type: Coople replacement, new procurement director, fill rate failure, compliance incident, NHS RM6380 framework</li>
+        <li>Score each account by urgency and timing. 30 highest-urgency accounts flagged for immediate outreach</li>
+        <li>Deliver list to James's sales team with research notes on each account — every conversation starts informed</li>
+        <li>Set up signal monitoring: weekly scan for new procurement director appointments at target accounts</li>
+      </ul>
+    </div>
+
+    <div class="playbook-phase">
+      <div class="phase-header">
+        <div class="phase-num">2</div>
+        <div>
+          <div class="phase-title">Weeks 5 to 8 — First Outreach Wave</div>
+          <div class="phase-subtitle">Reach the 30 highest-urgency accounts before summer PSL window closes.</div>
+        </div>
+      </div>
+      <ul class="phase-items">
+        <li>Run two-email sequence for the 30 post-Coople accounts. LinkedIn connection requests in parallel</li>
+        <li>All outreach in James's name or sales team name — MDB writes, team sends</li>
+        <li>Each message references something specific: the Coople exit timing, the summer season pressure, the company's sector</li>
+        <li>Qualify every reply: genuine evaluation urgency vs early exploration. Route high-urgency to James's team immediately</li>
+        <li>Prepare one-page research brief per qualified reply before the first call: trigger event, decision-maker profile, informal shortlist status</li>
+      </ul>
+    </div>
+
+    <div class="playbook-phase">
+      <div class="phase-header">
+        <div class="phase-num">3</div>
+        <div>
+          <div class="phase-title">Weeks 9 to 12 — Pipeline and Handover</div>
+          <div class="phase-subtitle">Convert qualified conversations. Build the playbook for the incoming Demand Gen hire.</div>
+        </div>
+      </div>
+      <ul class="phase-items">
+        <li>2 to 5 new enterprise Flex Plus evaluation conversations confirmed. 1 to 2 accounts in advanced procurement discussion</li>
+        <li>Run second wave against remaining Tier 2 accounts (NHS framework, US new markets, enterprise retail/logistics)</li>
+        <li>Document: which messages drove highest reply rates, which account types converted, what the Flex Plus objection pattern looks like</li>
+        <li>Build the Senior Demand Gen Manager playbook — they inherit a proven channel, not a blank sheet</li>
+        <li>Weekly reporting: accounts reached, replies received, accounts in evaluation, accounts converted</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="results">
+    <div class="section-label">Expected Outcomes</div>
+    <h2>What good looks like at each stage</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Week 2</div>
+        <div class="timeline-title">200-account target list complete</div>
+        <div class="timeline-desc">Segmented by sector and buying trigger. 30 highest-urgency accounts flagged. Research notes attached to each. Sales team has context before any conversation starts.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Week 5</div>
+        <div class="timeline-title">First outreach wave deployed</div>
+        <div class="timeline-desc">30 post-Coople accounts reached. First replies expected within 5 to 7 business days. LinkedIn sequence running in parallel. Summer PSL window still open.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Week 7</div>
+        <div class="timeline-title">First qualified conversations</div>
+        <div class="timeline-desc">2 to 5 enterprise accounts in active Flex Plus evaluation. Research brief prepared for each. James's team enters every conversation knowing the trigger event, the informal shortlist, and the recommended approach.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Week 10</div>
+        <div class="timeline-title">1 to 2 accounts in advanced procurement</div>
+        <div class="timeline-desc">At least one enterprise account progressing through the formal PSL evaluation. Demo completed. Reference checks in progress. Conservative revenue: £50,000 to £200,000 per account.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-week">Week 12</div>
+        <div class="timeline-title">Handover to Senior Demand Gen Manager</div>
+        <div class="timeline-desc">Incoming hire inherits a proven playbook. Proven messages, qualified pipeline, segmented account list with signal data. They ramp into a running channel — not a blank brief.</div>
+      </div>
+    </div>
+
+    <div class="stat-grid" style="margin-top:2rem;">
+      <div class="stat-card">
+        <div class="stat-num">2–5</div>
+        <div class="stat-label">New Flex Plus conversations in 90 days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">£100K+</div>
+        <div class="stat-label">Conservative 90-day pipeline value</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">200</div>
+        <div class="stat-label">Named enterprise accounts in database</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROWTH LOOPS -->
+  <section id="growth-loops">
+    <div class="section-label">Growth Architecture</div>
+    <h2>Three loops that compound over 12 months</h2>
+
+    <div class="loop-card">
+      <div class="loop-header">
+        <div class="loop-icon">🎯</div>
+        <div class="loop-title">Loop 1 — Sector Acquisition Loop</div>
+      </div>
+      <div class="loop-desc">Target enterprise account identified → MDB researches trigger event and decision-maker → outreach reaches decision-maker at Stage 1 → prospect enters Flex Plus evaluation → Flex Plus wins the PSL → case study created → case study used in future outreach to similar accounts → loop repeats with higher conversion rate each cycle. Each win creates social proof that makes the next win in the same sector easier.</div>
+      <div class="loop-steps">
+        <span class="loop-step">Account Intelligence</span>
+        <span class="loop-step">Trigger Signal</span>
+        <span class="loop-step">Stage 1 Outreach</span>
+        <span class="loop-step">Flex Plus Win</span>
+        <span class="loop-step">Case Study</span>
+        <span class="loop-step">Repeat at Higher Conversion</span>
+      </div>
+    </div>
+
+    <div class="loop-card">
+      <div class="loop-header">
+        <div class="loop-icon">📣</div>
+        <div class="loop-title">Loop 2 — Authority and Inbound Loop</div>
+      </div>
+      <div class="loop-desc">Indeed Flex publishes enterprise-specific content (Flex Plus case study, VMS comparison guide, seasonal staffing cost calculator) → content ranks in enterprise procurement searches → enterprise HR Director discovers Indeed Flex during their research phase → Indeed Flex is already on their informal shortlist when Stage 1 evaluation starts → outbound confirms and accelerates → win → repeat. This loop takes 6 to 12 months to compound. Every piece of content published today is an asset that works for 2 to 3 years.</div>
+      <div class="loop-steps">
+        <span class="loop-step">Enterprise Content Published</span>
+        <span class="loop-step">Ranks in Procurement Search</span>
+        <span class="loop-step">Pre-shortlisted on Discovery</span>
+        <span class="loop-step">Outbound Confirms</span>
+        <span class="loop-step">Faster Win</span>
+      </div>
+    </div>
+
+    <div class="loop-card">
+      <div class="loop-header">
+        <div class="loop-icon">🔄</div>
+        <div class="loop-title">Loop 3 — Procurement Network Referral Loop</div>
+      </div>
+      <div class="loop-desc">Enterprise Flex Plus win in contract catering → Operations Director is satisfied → Operations Director moves to new group or recommends Flex Plus to peer at industry event → new account enters evaluation at Stage 1 already with Flex Plus on informal list → faster evaluation, higher conversion → new win → Operations Director now has two companies using Indeed Flex → referral network compounds. Enterprise operations leaders in UK hospitality and FM are a tightly networked community. UKHospitality, BIFM, and CIPD circles mean every win creates 2 to 3 warm referrals over 24 months.</div>
+      <div class="loop-steps">
+        <span class="loop-step">Flex Plus Win</span>
+        <span class="loop-step">Satisfied Operations Director</span>
+        <span class="loop-step">Peer Referral at Industry Event</span>
+        <span class="loop-step">Pre-shortlisted Evaluation</span>
+        <span class="loop-step">Faster Win</span>
+        <span class="loop-step">Referral Network Compounds</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALLATION -->
+  <section id="installation">
+    <div class="section-label">The MDB Installation</div>
+    <h2>What gets built. What gets handed over.</h2>
+
+    <div class="grid-2">
+      <div class="grid-card">
+        <h4>Revenue Infrastructure</h4>
+        <p>200-account UK enterprise target list. 30-account first outreach wave. Two-email sequence per account, LinkedIn in parallel. Qualification framework. Research brief per qualified reply. Weekly reporting. All in James's name.</p>
+      </div>
+      <div class="grid-card">
+        <h4>Authority Engine Add-on</h4>
+        <p>3 Flex Plus enterprise case studies. LinkedIn content flywheel targeting procurement pain points. 20-week email nurture sequence for enterprise contacts not yet in evaluation. Micro-budget LinkedIn retargeting (£5 to £10/day) to re-engage Flex Plus page visitors.</p>
+      </div>
+      <div class="grid-card">
+        <h4>Demand Gen Handover</h4>
+        <p>When the Senior Demand Gen Manager joins, they inherit: a proven outreach playbook, a qualified account database, signal monitoring workflows, and message testing data. They ramp into a running channel — not a blank brief.</p>
+      </div>
+      <div class="grid-card">
+        <h4>NHS Framework Activation</h4>
+        <p>NHS Workforce Alliance Health Workforce Solutions framework (RM6380) launched February 2026. Covers outsourced staff banks and vendor management systems for NHS Trusts. MDB maps the framework requirements and builds the procurement submission approach for Flex Plus.</p>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <h3>The post-Coople window is open. It closes in 6 weeks.</h3>
+      <p>Book 15 minutes and Jean will walk through the specific approach for Indeed Flex — including the 30-company list, the first outreach messages, and the timeline for the first enterprise Flex Plus conversations.</p>
+      <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" class="cta-button">Book 15 Min with Jean →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Strategy and GTM research by <strong>Jean Mundabi Fala</strong>, MDB Growth Capital</p>
+    <p>Built for Indeed Flex — not a template. Every claim in this document is based on research specific to Indeed Flex, the UK flexible staffing market, and the post-Coople competitive landscape.</p>
+    <p style="margin-top:0.75rem;"><a href="https://cal.com/jean-m-8f4kbr/15min">Book 15 Min</a> · <a href="mailto:jeanmundabi@gmail.com">jeanmundabi@gmail.com</a></p>
+  </footer>
+
+</main>
+
+<script>
+  // Scroll reveal
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Nav active state
+        const id = e.target.getAttribute('id');
+        document.querySelectorAll('nav a').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Video placeholder click
+  document.querySelector('.video-placeholder').addEventListener('click', function() {
+    const url = 'VIDEO_URL_GOES_HERE';
+    if (url !== 'VIDEO_URL_GOES_HERE') {
+      window.open(url, '_blank');
+    }
+  });
+</script>
+</body>
+</html>

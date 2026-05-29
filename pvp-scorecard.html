@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flex Staffing Procurement Readiness Scorecard | Indeed Flex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #003A9B;
+    --blue-dark: #002470;
+    --blue-light: #1a4fb5;
+    --magenta: #DD00A9;
+    --magenta-light: #f020c0;
+    --white: #ffffff;
+    --off-white: #f8f7f4;
+    --text: #0c0c14;
+    --text-muted: #55556b;
+    --border: rgba(0,58,155,0.12);
+    --shadow: 0 6px 32px rgba(0,58,155,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--off-white);
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* HEADER */
+  .quiz-header {
+    background: var(--blue);
+    margin: 0 -1.5rem;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border-radius: 0 0 24px 24px;
+  }
+
+  .quiz-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: var(--magenta);
+    border-radius: 50%;
+    opacity: 0.12;
+    filter: blur(50px);
+  }
+
+  .quiz-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.75rem;
+  }
+
+  .quiz-header h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    position: relative;
+  }
+
+  .quiz-header p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    position: relative;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--magenta));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .q-card.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-num {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.75rem;
+  }
+
+  .q-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1.75rem;
+    line-height: 1.4;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: var(--off-white);
+  }
+
+  .option:hover {
+    border-color: var(--blue);
+    background: rgba(0,58,155,0.04);
+  }
+
+  .option.selected {
+    border-color: var(--blue);
+    background: rgba(0,58,155,0.07);
+  }
+
+  .option-radio {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.18s;
+  }
+
+  .option.selected .option-radio {
+    border-color: var(--blue);
+    background: var(--blue);
+  }
+
+  .option.selected .option-radio::after {
+    content: '';
+    width: 8px; height: 8px;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .option-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .q-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.75rem;
+  }
+
+  .btn-back {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.18s;
+  }
+
+  .btn-back:hover { border-color: var(--blue); color: var(--blue); }
+
+  .btn-next {
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .btn-next.ready {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .btn-next.ready:hover {
+    background: var(--blue-light);
+    transform: translateY(-1px);
+  }
+
+  /* EMAIL CAPTURE */
+  .email-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: var(--shadow);
+    display: none;
+    text-align: center;
+  }
+
+  .email-card.active { display: block; }
+
+  .email-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  .email-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .email-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .email-form input {
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--text);
+    transition: border-color 0.18s;
+    background: var(--off-white);
+  }
+
+  .email-form input:focus {
+    outline: none;
+    border-color: var(--blue);
+    background: #fff;
+  }
+
+  .btn-submit {
+    background: var(--magenta);
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .btn-submit:hover {
+    background: var(--magenta-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(221,0,169,0.3);
+  }
+
+  /* RESULTS */
+  .results-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: var(--shadow);
+    display: none;
+  }
+
+  .results-card.active { display: block; }
+
+  /* DIAL */
+  .dial-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .dial-svg-wrap { position: relative; width: 200px; height: 120px; }
+
+  .dial-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 14;
+  }
+
+  .dial-fill {
+    fill: none;
+    stroke: url(#dialGrad);
+    stroke-width: 14;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.2s ease;
+  }
+
+  .dial-score {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--blue);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .dial-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .result-tier {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .tier-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tier-high { background: rgba(34,166,122,0.12); color: #1a8a60; }
+  .tier-mid { background: rgba(0,58,155,0.1); color: var(--blue); }
+  .tier-low { background: rgba(100,100,120,0.1); color: var(--text-muted); }
+
+  .result-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .result-insights {
+    background: rgba(0,58,155,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .insight-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .insight-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.4rem 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .insight-dot {
+    width: 7px; height: 7px;
+    background: var(--magenta);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+
+  .result-cta {
+    background: var(--blue);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    transition: all 0.2s;
+    margin-top: 1.5rem;
+  }
+
+  .result-cta:hover {
+    background: var(--blue-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,58,155,0.2);
+  }
+
+  .result-note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="quiz-header">
+    <div class="quiz-eyebrow">Flex Staffing Procurement Intelligence</div>
+    <h1>Procurement Readiness Scorecard</h1>
+    <p>8 questions. 90 seconds. Find out whether your organisation is in an active flex staffing evaluation window — and what that means for Q3.</p>
+  </div>
+
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label">
+      <span id="progressLabel">Question 1 of 8</span>
+      <span id="progressPct">12%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:12%"></div>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card active" id="q1">
+    <div class="q-num">Question 1 of 8</div>
+    <div class="q-text">How does your organisation currently source flex staffing platform providers?</div>
+    <div class="options">
+      <div class="option" data-score="1" onclick="selectOption(this, 'q1')">
+        <div class="option-radio"></div>
+        <div class="option-text">Inbound only — they reach us when we need them</div>
+      </div>
+      <div class="option" data-score="3" onclick="selectOption(this, 'q1')">
+        <div class="option-radio"></div>
+        <div class="option-text">We have a fixed Preferred Supplier List and rarely review it</div>
+      </div>
+      <div class="option" data-score="5" onclick="selectOption(this, 'q1')">
+        <div class="option-radio"></div>
+        <div class="option-text">We run an active market review before renewing our PSL</div>
+      </div>
+      <div class="option" data-score="2" onclick="selectOption(this, 'q1')">
+        <div class="option-radio"></div>
+        <div class="option-text">Spot purchasing — we use whoever can fill the shift this week</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <div></div>
+      <button class="btn-next" id="next-q1" onclick="nextQ(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-num">Question 2 of 8</div>
+    <div class="q-text">When did you last formally review your flex staffing Preferred Supplier List?</div>
+    <div class="options">
+      <div class="option" data-score="2" onclick="selectOption(this, 'q2')">
+        <div class="option-radio"></div>
+        <div class="option-text">This year — review is either in progress or just completed</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q2')">
+        <div class="option-radio"></div>
+        <div class="option-text">1 to 2 years ago — we are probably due another review</div>
+      </div>
+      <div class="option" data-score="5" onclick="selectOption(this, 'q2')">
+        <div class="option-radio"></div>
+        <div class="option-text">3 or more years ago — it has not been touched since we set it up</div>
+      </div>
+      <div class="option" data-score="5" onclick="selectOption(this, 'q2')">
+        <div class="option-radio"></div>
+        <div class="option-text">We have never formally reviewed it — we just use who we know</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(1)">← Back</button>
+      <button class="btn-next" id="next-q2" onclick="nextQ(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-num">Question 3 of 8</div>
+    <div class="q-text">Which sectors do you primarily hire flex workers in?</div>
+    <div class="options">
+      <div class="option" data-score="5" onclick="selectOption(this, 'q3')">
+        <div class="option-radio"></div>
+        <div class="option-text">Hospitality — hotels, restaurants, event catering, venues</div>
+      </div>
+      <div class="option" data-score="5" onclick="selectOption(this, 'q3')">
+        <div class="option-radio"></div>
+        <div class="option-text">Healthcare — NHS Trusts, private hospitals, care homes</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q3')">
+        <div class="option-radio"></div>
+        <div class="option-text">Retail — supermarkets, fashion, e-commerce fulfilment</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q3')">
+        <div class="option-radio"></div>
+        <div class="option-text">Logistics — warehousing, distribution, delivery operations</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(2)">← Back</button>
+      <button class="btn-next" id="next-q3" onclick="nextQ(4)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-num">Question 4 of 8</div>
+    <div class="q-text">How do flex staffing platform vendors typically approach your team?</div>
+    <div class="options">
+      <div class="option" data-score="5" onclick="selectOption(this, 'q4')">
+        <div class="option-radio"></div>
+        <div class="option-text">We contact them — they do not reach us proactively</div>
+      </div>
+      <div class="option" data-score="3" onclick="selectOption(this, 'q4')">
+        <div class="option-radio"></div>
+        <div class="option-text">They reach us mostly through email or LinkedIn cold outreach</div>
+      </div>
+      <div class="option" data-score="2" onclick="selectOption(this, 'q4')">
+        <div class="option-radio"></div>
+        <div class="option-text">Both — we receive outreach and we also actively research options</div>
+      </div>
+      <div class="option" data-score="3" onclick="selectOption(this, 'q4')">
+        <div class="option-radio"></div>
+        <div class="option-text">Through industry conferences and events — not direct outreach</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(3)">← Back</button>
+      <button class="btn-next" id="next-q4" onclick="nextQ(5)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-num">Question 5 of 8</div>
+    <div class="q-text">How many flex workers does your organisation place per month on average?</div>
+    <div class="options">
+      <div class="option" data-score="5" onclick="selectOption(this, 'q5')">
+        <div class="option-radio"></div>
+        <div class="option-text">500 or more — flex workers are a significant part of our total headcount</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q5')">
+        <div class="option-radio"></div>
+        <div class="option-text">100 to 500 — we use flex labour regularly for operational gaps</div>
+      </div>
+      <div class="option" data-score="2" onclick="selectOption(this, 'q5')">
+        <div class="option-radio"></div>
+        <div class="option-text">Under 100 — flex labour is occasional, not a core dependency</div>
+      </div>
+      <div class="option" data-score="3" onclick="selectOption(this, 'q5')">
+        <div class="option-radio"></div>
+        <div class="option-text">Variable — peaks at certain seasons (Christmas, summer) but low otherwise</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(4)">← Back</button>
+      <button class="btn-next" id="next-q5" onclick="nextQ(6)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-num">Question 6 of 8</div>
+    <div class="q-text">What is your primary pain with current flex staffing providers?</div>
+    <div class="options">
+      <div class="option" data-score="5" onclick="selectOption(this, 'q6')">
+        <div class="option-radio"></div>
+        <div class="option-text">Worker quality — no-shows, unvetted candidates, skill mismatches</div>
+      </div>
+      <div class="option" data-score="5" onclick="selectOption(this, 'q6')">
+        <div class="option-radio"></div>
+        <div class="option-text">Coverage — we cannot get enough workers at peak periods</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q6')">
+        <div class="option-radio"></div>
+        <div class="option-text">Cost — we are spending too much relative to the fill rate we get</div>
+      </div>
+      <div class="option" data-score="5" onclick="selectOption(this, 'q6')">
+        <div class="option-radio"></div>
+        <div class="option-text">Compliance — IR35, misclassification risk, inadequate worker vetting</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(5)">← Back</button>
+      <button class="btn-next" id="next-q6" onclick="nextQ(7)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-num">Question 7 of 8</div>
+    <div class="q-text">Are you currently on a Coople or Syft contract?</div>
+    <div class="options">
+      <div class="option" data-score="5" onclick="selectOption(this, 'q7')">
+        <div class="option-radio"></div>
+        <div class="option-text">We used Coople — they exited the market in January 2026 and we need a replacement</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q7')">
+        <div class="option-radio"></div>
+        <div class="option-text">We use Syft — our contract is up for renewal within 12 months</div>
+      </div>
+      <div class="option" data-score="3" onclick="selectOption(this, 'q7')">
+        <div class="option-radio"></div>
+        <div class="option-text">Both — we use multiple platforms and are rationalising our list</div>
+      </div>
+      <div class="option" data-score="2" onclick="selectOption(this, 'q7')">
+        <div class="option-radio"></div>
+        <div class="option-text">Neither — we use different providers or traditional agencies</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(6)">← Back</button>
+      <button class="btn-next" id="next-q7" onclick="nextQ(8)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-num">Question 8 of 8</div>
+    <div class="q-text">When is your next PSL review due?</div>
+    <div class="options">
+      <div class="option" data-score="5" onclick="selectOption(this, 'q8')">
+        <div class="option-radio"></div>
+        <div class="option-text">Within 3 months — we are actively evaluating options right now</div>
+      </div>
+      <div class="option" data-score="4" onclick="selectOption(this, 'q8')">
+        <div class="option-radio"></div>
+        <div class="option-text">3 to 6 months — beginning to shortlist suppliers for the review</div>
+      </div>
+      <div class="option" data-score="3" onclick="selectOption(this, 'q8')">
+        <div class="option-radio"></div>
+        <div class="option-text">6 to 12 months — in the awareness phase, not evaluating yet</div>
+      </div>
+      <div class="option" data-score="1" onclick="selectOption(this, 'q8')">
+        <div class="option-radio"></div>
+        <div class="option-text">Over 12 months — no active procurement activity planned</div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="backQ(7)">← Back</button>
+      <button class="btn-next" id="next-q8" onclick="showEmail()">See My Score →</button>
+    </div>
+  </div>
+
+  <!-- EMAIL CAPTURE -->
+  <div class="email-card" id="emailCard">
+    <div class="email-icon">📊</div>
+    <h2>Your readiness score is ready.</h2>
+    <p>Enter your name and work email to see your Procurement Readiness Score and the specific recommendations for your evaluation stage.</p>
+    <form class="email-form" onsubmit="showResults(event)">
+      <input type="text" id="firstName" placeholder="First name" required>
+      <input type="email" id="emailInput" placeholder="Work email address" required>
+      <input type="text" id="companyInput" placeholder="Company name" required>
+      <button type="submit" class="btn-submit">See My Score →</button>
+    </form>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1rem;">Jean from MDB Growth Capital will send your full breakdown to this email. No spam. Unsubscribe any time.</p>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-card" id="resultsCard">
+    <div class="q-num">Your Procurement Readiness Score</div>
+
+    <div class="dial-wrap">
+      <div class="dial-svg-wrap">
+        <svg width="200" height="120" viewBox="0 0 200 120">
+          <defs>
+            <linearGradient id="dialGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#003A9B"/>
+              <stop offset="100%" style="stop-color:#DD00A9"/>
+            </linearGradient>
+          </defs>
+          <!-- Background arc: half circle from 180° to 0°, r=80, cx=100, cy=100 -->
+          <!-- circumference of half circle = π × r = π × 80 ≈ 251.3 -->
+          <path d="M 20 100 A 80 80 0 0 1 180 100"
+            class="dial-bg" stroke-dasharray="251.3" stroke-dashoffset="0"/>
+          <path d="M 20 100 A 80 80 0 0 1 180 100"
+            class="dial-fill" id="dialFill"
+            stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
+        </svg>
+        <div class="dial-score" id="dialScore">0%</div>
+      </div>
+      <div class="dial-label">Procurement Readiness Score</div>
+    </div>
+
+    <div class="result-tier" id="resultTier"></div>
+
+    <div class="result-insights" id="resultInsights"></div>
+
+    <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" class="result-cta" id="resultCta">Book 15 Minutes with Jean →</a>
+    <div class="result-note" id="resultNote"></div>
+  </div>
+
+  <div class="footer-note">
+    Built by Jean Mundabi Fala, MDB Growth Capital · <a href="https://cal.com/jean-m-8f4kbr/15min" target="_blank" style="color:var(--magenta);">Book 15 Min</a>
+  </div>
+</div>
+
+<script>
+  const scores = {};
+
+  function selectOption(el, qId) {
+    const card = document.getElementById(qId);
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    scores[qId] = parseInt(el.dataset.score);
+    document.getElementById('next-' + qId).classList.add('ready');
+  }
+
+  function nextQ(num) {
+    const current = num - 1;
+    document.getElementById('q' + current).classList.remove('active');
+    if (num <= 8) {
+      document.getElementById('q' + num).classList.add('active');
+    }
+    updateProgress(num);
+  }
+
+  function backQ(num) {
+    const current = num + 1;
+    document.getElementById('q' + current).classList.remove('active');
+    document.getElementById('q' + num).classList.add('active');
+    updateProgress(num);
+  }
+
+  function updateProgress(current) {
+    const pct = Math.round((current / 8) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = 'Question ' + current + ' of 8';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+
+  function showEmail() {
+    document.getElementById('q8').classList.remove('active');
+    document.getElementById('emailCard').classList.add('active');
+    document.getElementById('progressWrap').style.display = 'none';
+  }
+
+  function showResults(e) {
+    e.preventDefault();
+    document.getElementById('emailCard').classList.remove('active');
+    document.getElementById('resultsCard').classList.add('active');
+
+    const total = Object.values(scores).reduce((a, b) => a + b, 0);
+    const maxScore = 8 * 5;
+    const pct = Math.round((total / maxScore) * 100);
+
+    // Animate dial
+    setTimeout(() => {
+      const circumference = 251.3;
+      const offset = circumference - (circumference * pct / 100);
+      document.getElementById('dialFill').style.strokeDashoffset = offset;
+      // Count up score
+      let count = 0;
+      const interval = setInterval(() => {
+        count += 2;
+        if (count >= pct) { count = pct; clearInterval(interval); }
+        document.getElementById('dialScore').textContent = count + '%';
+      }, 20);
+    }, 100);
+
+    const tier = document.getElementById('resultTier');
+    const insights = document.getElementById('resultInsights');
+    const note = document.getElementById('resultNote');
+
+    if (pct >= 70) {
+      tier.innerHTML = '<span class="tier-badge tier-high">Active Evaluation Window</span><div class="result-title">Your organisation is in a live procurement evaluation window.</div><div class="result-desc">Your score indicates you are either actively replacing a supplier, running a PSL review, or in a peak period that creates urgency for flex staffing platform decisions. The post-Coople window is relevant to your situation.</div>';
+      insights.innerHTML = '<div class="insight-label">What this means for you</div><div class="insight-item"><div class="insight-dot"></div>Your organisation matches the Tier 1 profile Jean has mapped 30 companies against</div><div class="insight-item"><div class="insight-dot"></div>Flex Plus\'s 95% fill rate and VMS depth is directly relevant to your sector and scale</div><div class="insight-item"><div class="insight-dot"></div>The 15-minute call with Jean is worth taking now — before your PSL window closes</div>';
+      note.textContent = 'Jean will send your full score breakdown and sector-specific recommendations to your work email within 24 hours.';
+    } else if (pct >= 45) {
+      tier.innerHTML = '<span class="tier-badge tier-mid">Pre-Evaluation Stage</span><div class="result-title">Your organisation is in the research and awareness phase.</div><div class="result-desc">Your score indicates you are likely 6 to 12 months from a formal PSL evaluation but beginning to understand your options. This is the right stage to learn what Flex Plus can do — before the informal shortlist forms.</div>';
+      insights.innerHTML = '<div class="insight-label">What this means for you</div><div class="insight-item"><div class="insight-dot"></div>Your evaluation window will open in the next 6 to 12 months — the informal shortlist forms now, not when the brief goes out</div><div class="insight-item"><div class="insight-dot"></div>Jean can walk you through the Flex Plus product and how it compares to your current setup</div><div class="insight-item"><div class="insight-dot"></div>A 15-minute call costs nothing and gives you independent market context for your upcoming review</div>';
+      note.textContent = 'Jean will send your full score breakdown to your work email within 24 hours.';
+    } else {
+      tier.innerHTML = '<span class="tier-badge tier-low">Stable — Monitor</span><div class="result-title">Your organisation is not in an active evaluation window.</div><div class="result-desc">Your current supplier relationships appear stable and your PSL review is more than 12 months away. The right move is to stay informed about what Flex Plus offers so that when your review opens, you have the context to evaluate quickly.</div>';
+      insights.innerHTML = '<div class="insight-label">What to watch</div><div class="insight-item"><div class="insight-dot"></div>The April 2026 National Living Wage increase is putting cost pressure on flex labour budgets — this may accelerate your timeline</div><div class="insight-item"><div class="insight-dot"></div>The NHS RM6380 framework launched February 2026 creates a procurement path that may be relevant when your review opens</div><div class="insight-item"><div class="insight-dot"></div>Jean can send you the Flex Plus enterprise overview — no commitment, just context</div>';
+      note.textContent = 'Jean will send your score breakdown and the Flex Plus enterprise overview to your work email.';
+    }
+  }
+</script>
+</body>
+</html>

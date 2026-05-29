@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarah Peck — Indeed Flex | MDB Growth Capital</title>
+<style>
+  :root {
+    --primary: #DD00A9;
+    --primary-light: #f020c0;
+    --accent: #DD00A9;
+    --navy: #003A9B;
+    --navy-dark: #002470;
+    --navy-light: #1a4fb5;
+    --off-white: #f9f8f6;
+    --white: #ffffff;
+    --border: #e5e7eb;
+    --dark-text: #0c0c14;
+    --text-muted: #55556b;
+    --green: #00875a;
+    --r-md: 12px;
+    --r-sm: 8px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--off-white);color:var(--dark-text);line-height:1.65;font-size:1rem}
+  a{color:var(--primary);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* TOP NAV */
+  .topbar{background:var(--navy-dark);color:#fff;padding:10px 28px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+  .topbar-badge{background:var(--primary);color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;white-space:nowrap}
+  .topbar-label{font-size:0.82rem;color:rgba(255,255,255,0.82);flex:1;min-width:180px}
+  .topbar-cta{margin-left:auto;background:var(--primary);color:#fff;font-size:0.78rem;font-weight:700;padding:8px 18px;border-radius:6px;white-space:nowrap;text-decoration:none;transition:background 0.2s}
+  .topbar-cta:hover{background:var(--primary-light);text-decoration:none}
+
+  /* SIDE NAV */
+  .layout{display:flex;min-height:100vh}
+  .sidenav{width:240px;min-width:240px;background:var(--white);border-right:1px solid var(--border);padding:24px 0;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto}
+  .sidenav-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);margin-bottom:12px}
+  .sidenav-logo-text{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--navy)}
+  .sidenav-logo-sub{font-size:0.7rem;color:var(--text-muted);margin-top:2px}
+  .sidenav-section{padding:4px 0}
+  .sidenav-label{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);padding:8px 20px 4px}
+  .sidenav a{display:block;padding:7px 20px;font-size:0.78rem;color:var(--dark-text);border-left:3px solid transparent;transition:all 0.15s}
+  .sidenav a:hover{background:var(--off-white);border-left-color:var(--primary);color:var(--primary);text-decoration:none}
+  .sidenav a.active{background:#fdf0fa;border-left-color:var(--primary);color:var(--primary);font-weight:600}
+
+  /* MAIN */
+  .main{flex:1;padding:40px 48px;max-width:860px;min-width:0}
+  @media(max-width:900px){.sidenav{display:none}.main{padding:24px 20px}}
+
+  /* HERO SECTION */
+  .hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,#1a0050 100%);color:#fff;padding:40px 40px 36px;border-radius:var(--r-md);margin-bottom:32px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:var(--primary);opacity:0.12;border-radius:50%}
+  .hero-eyebrow{font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+  .hero h1{font-size:1.7rem;font-weight:800;line-height:1.25;margin-bottom:14px;max-width:620px}
+  .hero-meta{font-size:0.8rem;color:rgba(255,255,255,0.7);margin-bottom:20px}
+  .hero-stats{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.12)}
+  .hero-stat{text-align:left}
+  .hero-stat-val{font-size:1.4rem;font-weight:800;color:var(--primary)}
+  .hero-stat-label{font-size:0.72rem;color:rgba(255,255,255,0.65);margin-top:2px}
+  .hero-quote{font-size:0.88rem;font-style:italic;color:rgba(255,255,255,0.8);margin-top:20px;padding:14px 18px;background:rgba(255,255,255,0.06);border-left:3px solid var(--primary);border-radius:0 var(--r-sm) var(--r-sm) 0}
+
+  /* SECTION HEADERS */
+  .section-header{display:flex;align-items:center;gap:10px;margin:40px 0 16px}
+  .section-num{width:28px;height:28px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;flex-shrink:0}
+  .section-title{font-size:1.05rem;font-weight:700;color:var(--navy)}
+
+  /* CARDS */
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
+  .card h3{font-size:0.92rem;font-weight:700;color:var(--navy);margin-bottom:10px}
+  .card p{font-size:0.9rem;color:var(--dark-text);margin-bottom:10px}
+  .card p:last-child{margin-bottom:0}
+
+  /* VIDEO PLACEHOLDER */
+  .video-placeholder{background:var(--navy-dark);border-radius:var(--r-md);padding:40px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden}
+  .video-placeholder::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(221,0,169,0.15),transparent)}
+  .video-play{width:64px;height:64px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.6rem;cursor:pointer;transition:transform 0.2s}
+  .video-play:hover{transform:scale(1.08)}
+  .video-label{color:rgba(255,255,255,0.9);font-size:0.9rem;font-weight:600}
+  .video-sub{color:rgba(255,255,255,0.55);font-size:0.78rem;margin-top:6px}
+
+  /* ACCORDION */
+  details.acc{margin-bottom:20px;border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);background:var(--white);box-shadow:var(--shadow-sm)}
+  details.acc>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 20px;user-select:none;background:var(--off-white);border-bottom:1px solid transparent;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--navy)}
+  details.acc[open]>summary{border-bottom:1px solid var(--border)}
+  details.acc>summary::-webkit-details-marker{display:none}
+  details.acc>summary .acc-chevron{margin-left:auto;font-size:0.7rem;color:var(--primary);transition:transform 0.2s;display:inline-block}
+  details.acc[open]>summary .acc-chevron{transform:rotate(180deg)}
+  details.acc .acc-body{padding:20px 24px}
+  details.tog>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:10px 0;user-select:none;color:var(--primary)}
+  details.tog>summary::-webkit-details-marker{display:none}
+  details.tog .tog-body{padding:12px 0 4px}
+  details.tog.light>summary{color:var(--navy);padding:10px 28px;width:100%;box-sizing:border-box;border-top:1px solid var(--border);background:var(--off-white)}
+  details.tog.light>summary::-webkit-details-marker{display:none}
+  details.tog.light .tog-body{padding:16px 28px}
+
+  /* EMAIL BLOCKS */
+  .email-block{background:var(--off-white);border:1px solid var(--border);border-radius:var(--r-sm);padding:18px 20px;font-size:0.88rem;line-height:1.7;white-space:pre-wrap;font-family:inherit}
+  .email-meta{font-size:0.72rem;color:var(--text-muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-style:italic}
+
+  /* METHODOLOGY CALLOUT */
+  .methodology-callout{margin:20px 0;padding:16px 20px;background:#f0fdf4;border-left:3px solid var(--green);border-radius:var(--r-sm);font-size:0.85rem;line-height:1.65;color:var(--dark-text)}
+
+  /* PSS BADGE */
+  .pss-badge{display:inline-block;background:rgba(0,135,90,0.12);color:var(--green);font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:12px;border:1px solid rgba(0,135,90,0.25);vertical-align:middle;margin-left:8px}
+
+  /* LEAD TABLE */
+  .lead-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:12px}
+  .lead-table th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+  .lead-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--dark-text)}
+  .lead-table tr:last-child td{border-bottom:none}
+  .lead-table tr:nth-child(even) td{background:var(--off-white)}
+  .tier-badge{display:inline-block;font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:0.06em;text-transform:uppercase}
+  .tier-1{background:rgba(221,0,169,0.1);color:var(--primary);border:1px solid rgba(221,0,169,0.25)}
+  .tier-2{background:rgba(0,58,155,0.08);color:var(--navy);border:1px solid rgba(0,58,155,0.2)}
+
+  /* SPRINT TABLE */
+  .sprint-table{width:100%;border-collapse:collapse;font-size:0.82rem;margin:12px 0}
+  .sprint-table th{background:var(--navy-dark);color:#fff;padding:9px 12px;text-align:left;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+  .sprint-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  .sprint-table tr:nth-child(even) td{background:var(--off-white)}
+  .sprint-table tr:last-child td{border-bottom:none}
+
+  /* THREE COLUMNS FOR STATS */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:16px 0}
+  .stat-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 18px;text-align:center}
+  .stat-val{font-size:1.5rem;font-weight:800;color:var(--primary)}
+  .stat-label{font-size:0.75rem;color:var(--text-muted);margin-top:4px;line-height:1.4}
+
+  /* STAGE CARDS */
+  .stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:16px 0}
+  .stage-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--r-sm);padding:18px 16px}
+  .stage-num{font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);margin-bottom:6px}
+  .stage-name{font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+  .stage-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+
+  /* FINDING CARDS */
+  .finding-card{border-left:3px solid var(--primary);padding:14px 18px;background:var(--white);border-radius:0 var(--r-sm) var(--r-sm) 0;margin-bottom:12px;box-shadow:var(--shadow-sm)}
+  .finding-num{font-size:0.68rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);margin-bottom:4px}
+  .finding-text{font-size:0.88rem;color:var(--dark-text);line-height:1.6}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--border);padding:18px 0}
+  .faq-item:last-child{border-bottom:none}
+  .faq-q{font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+  .faq-a{font-size:0.87rem;color:var(--dark-text);line-height:1.65}
+
+  /* CTA SECTION */
+  .cta-section{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:#fff;border-radius:var(--r-md);padding:36px 40px;text-align:center;margin-top:40px}
+  .cta-section h2{font-size:1.3rem;font-weight:800;margin-bottom:10px}
+  .cta-section p{font-size:0.9rem;color:rgba(255,255,255,0.8);margin-bottom:24px;max-width:520px;margin-left:auto;margin-right:auto}
+  .cta-btn{display:inline-block;background:var(--primary);color:#fff;font-weight:700;font-size:0.9rem;padding:14px 32px;border-radius:8px;text-decoration:none;transition:background 0.2s}
+  .cta-btn:hover{background:var(--primary-light);text-decoration:none}
+  .cta-or{color:rgba(255,255,255,0.5);font-size:0.8rem;margin:14px 0}
+  .cta-reply{font-size:0.82rem;color:rgba(255,255,255,0.7)}
+  .cta-reply strong{color:#fff}
+
+  /* LINKEDIN POSTS */
+  .li-post{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:18px 20px;margin-bottom:12px;font-size:0.88rem;line-height:1.7;white-space:pre-wrap}
+  .li-post-label{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+
+  /* NURTURE ITEMS */
+  .nurture-item{border-bottom:1px solid var(--border);padding:12px 0}
+  .nurture-item:last-child{border-bottom:none}
+  .nurture-week{font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);margin-bottom:4px}
+  .nurture-subj{font-size:0.85rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+  .nurture-opener{font-size:0.83rem;color:var(--text-muted);font-style:italic;line-height:1.5}
+
+  /* FOOTER */
+  .footer{text-align:center;font-size:0.74rem;color:var(--text-muted);padding:32px 0 40px;border-top:1px solid var(--border);margin-top:40px}
+
+  /* PROBLEM CARDS */
+  .problem-header{background:linear-gradient(90deg,var(--navy-dark),var(--navy));color:#fff;padding:14px 20px;border-radius:var(--r-sm) var(--r-sm) 0 0;margin-bottom:0}
+  .problem-header h3{font-size:0.92rem;font-weight:700;color:#fff}
+  .problem-body{background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);padding:18px 20px;margin-bottom:20px}
+  .problem-stat{background:rgba(221,0,169,0.06);border:1px solid rgba(221,0,169,0.2);border-radius:var(--r-sm);padding:12px 16px;margin-top:12px;font-size:0.85rem;font-weight:600;color:var(--navy)}
+
+  /* COMPONENT CARDS */
+  .component-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:20px 24px;margin-bottom:16px}
+  .component-num{font-size:0.65rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--primary);margin-bottom:4px}
+  .component-name{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+
+  /* BUCKET SYSTEM */
+  .bucket-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+  .bucket{border-radius:var(--r-sm);padding:14px;font-size:0.82rem}
+  .bucket-cold{background:#f0f6ff;border:1px solid #bfdbfe}
+  .bucket-warm{background:#fffbeb;border:1px solid #fde68a}
+  .bucket-hot{background:#fef2f2;border:1px solid #fecaca}
+  .bucket-label{font-size:0.7rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+  .bucket-cold .bucket-label{color:#1d4ed8}
+  .bucket-warm .bucket-label{color:#92400e}
+  .bucket-hot .bucket-label{color:#b91c1c}
+
+  @media(max-width:600px){.stat-grid,.stage-grid,.bucket-grid{grid-template-columns:1fr}.hero h1{font-size:1.3rem}.main{padding:16px}.cta-section{padding:24px 20px}}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="topbar-badge">Built for Indeed Flex</span>
+  <span class="topbar-label">Sarah Peck, UK Country Manager · MDB Growth Capital</span>
+  <a href="https://cal.com/jean-m-8f4kbr/15min" class="topbar-cta" target="_blank">Book 15 Minutes</a>
+</div>
+
+<div class="layout">
+
+  <!-- SIDE NAV -->
+  <nav class="sidenav">
+    <div class="sidenav-logo">
+      <div class="sidenav-logo-text">MDB Growth Capital</div>
+      <div class="sidenav-logo-sub">Built for Sarah Peck · May 2026</div>
+    </div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">Overview</div>
+      <a href="#loom">Loom Walkthrough</a>
+      <a href="#why">Why I Reached Out</a>
+      <a href="#contents">What's Inside</a>
+      <a href="#built">What MDB Built</a>
+      <a href="#book">Book 15 Minutes</a>
+    </div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">The Three Problems</div>
+      <a href="#problem-1">Problem 1 — Enterprise Gap</a>
+      <a href="#problem-2">Problem 2 — Coople Window</a>
+      <a href="#problem-3">Problem 3 — Competitor Threat</a>
+    </div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">The System</div>
+      <a href="#system">Acquisition System</a>
+      <a href="#deliverables">Everything Already Built</a>
+      <a href="#precall">Pre-Call System</a>
+    </div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">The Plan</div>
+      <a href="#authority">Authority Engine</a>
+      <a href="#sprint">90-Day Sprint</a>
+      <a href="#intelligence">Customer Intelligence</a>
+      <a href="#playbook">30-Day Playbook</a>
+    </div>
+    <div class="sidenav-section">
+      <div class="sidenav-label">Close</div>
+      <a href="#faq">FAQs</a>
+      <a href="#about">About Jean</a>
+      <a href="#offer">The Offer</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">MDB Growth Capital — Revenue Infrastructure</div>
+      <h1>Sarah — Here Is How Indeed Flex Wins Enterprise Flex Plus Accounts Before Competitors Get Shortlisted</h1>
+      <div class="hero-meta">Prepared for Sarah Peck, UK Country Manager · Indeed Flex · May 2026</div>
+      <div class="hero-quote">"This document shows you the exact companies to reach, the moment to reach them, and what to say. MDB built everything before you said yes."</div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-val">30</div>
+          <div class="hero-stat-label">enterprise accounts mapped</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val">6 weeks</div>
+          <div class="hero-stat-label">Coople replacement window</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val">£100K+</div>
+          <div class="hero-stat-label">from 2 Flex Plus enterprise accounts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: LOOM -->
+    <div id="loom">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title">Loom Walkthrough — Watch First (3 to 5 Minutes)</div>
+      </div>
+      <div class="video-placeholder">
+        <div class="video-play">▶</div>
+        <div class="video-label">VIDEO_URL_GOES_HERE</div>
+        <div class="video-sub">Jean walks through everything he built and why — watch before reading further</div>
+      </div>
+
+      <details class="acc" open>
+        <summary>Full Loom Script — 5-Beat Walkthrough <span class="acc-chevron">▼</span></summary>
+        <div class="acc-body">
+          <div class="card">
+            <h3>[0:00 to 0:30] — Why I built this before reaching out</h3>
+            <p>"Sarah, I built this before I sent you a single email. Here is what I found about Indeed Flex's enterprise acquisition gap. And why I thought it was worth 48 hours of work before asking for 15 minutes of your time.</p>
+            <p>Coople exited the UK market on 1 January 2026. Summer staffing season starts in six weeks. The UK hospitality, contract catering, and facilities companies that haven't replaced them yet are in active evaluation right now. That window closes when they sign with a competitor.</p>
+            <p>I found 30 of them. And I'm going to show you exactly who they are."</p>
+          </div>
+          <div class="card">
+            <h3>[0:30 to 1:30] — The three findings</h3>
+            <p><em>Screen share: Section 7 of this document — the three problems.</em></p>
+            <p>"Here is what I found in 48 hours of research.</p>
+            <p>First: Indeed Flex's enterprise Flex Plus pipeline runs on inbound from the Indeed parent brand and Sarah's direct network. The company just posted a Senior Demand Gen Manager role at £60,000 to £70,000 to build ABM infrastructure from scratch — which means there is no systematic outbound channel for enterprise accounts right now.</p>
+            <p>Second: Coople exited the UK market on 1 January 2026. Their former clients are actively evaluating replacements. Summer peak starts in six weeks. That is the burning platform. And it is closing.</p>
+            <p>Third: StaffHeroes has been running post-Coople marketing to UK hospitality employers since February 2026. Every week without outreach is a week where StaffHeroes builds the preferred supplier relationships Indeed Flex has the product to win."</p>
+          </div>
+          <div class="card">
+            <h3>[1:30 to 2:30] — What I built for Indeed Flex</h3>
+            <p><em>Screen share: Section 8.5 — the done-for-you deliverables.</em></p>
+            <p>"I mapped 30 enterprise companies across UK hospitality, contract catering, facilities management, and the eight US markets Indeed Flex just launched. Each one has a specific reason to evaluate Flex Plus right now.</p>
+            <p>I wrote the emails. I built the landing page — live right now, in Indeed Flex's brand colours. And I built the pre-call system — the sequence that runs after an enterprise contact books a consultation with Indeed Flex's sales team."</p>
+          </div>
+          <div class="card">
+            <h3>[2:30 to 3:30] — The pre-call system and re-engagement programme</h3>
+            <p><em>Screen share: Sections 8.6 and 8.5 Deliverable 5.</em></p>
+            <p>"After an enterprise contact books a consultation, four short videos are waiting for them on the thank you page. Five emails go out over three days. By the time the call happens, the contact knows the fill rate data, the compliance framework, and what switching actually involves. The BDM skips education. The call goes straight to deciding."</p>
+          </div>
+          <div class="card">
+            <h3>[3:30 to 4:30] — The 90-day plan</h3>
+            <p><em>Screen share: Section 9.5.</em></p>
+            <p>"Month one: cold email outreach to 30 confirmed enterprise accounts. LinkedIn content running in parallel. No ad spend. Month two: second email to non-replies. Customer interviews begin. Month three: case studies live. Hot bucket alerts active. By the end of month three, Sarah has a direct enterprise acquisition channel — one the incoming Senior Demand Gen Manager inherits as a running playbook."</p>
+          </div>
+          <div class="card">
+            <h3>[4:30 to 5:00] — The ask</h3>
+            <p>"Two ways to proceed. Scroll through this document at your own pace. Or reply to the email with 'Enterprise list' and I will send the confirmed 30 entries over today. Either way — everything in here is yours to use."</p>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- SECTION 3: WHY -->
+    <div id="why">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title">Why I Reached Out</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">Finding 1</div>
+        <div class="finding-text">Indeed Flex posted a Senior Demand Generation Manager role in May 2026 to build ABM infrastructure and HubSpot workflows from scratch. That is language that only gets used when the current state is generic lead generation. The enterprise acquisition channel does not yet exist at Indeed Flex — and the company knows it. MDB can run the first enterprise outreach wave before that hire ramps. The lead list, the emails, and the landing page are already built.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">Finding 2</div>
+        <div class="finding-text">Coople exited the UK flexible staffing market on 1 January 2026. Their client base — UK hospitality, events, contract catering, and retail employers — is evaluating replacements right now. Summer peak starts in approximately six weeks. Companies that haven't yet signed a new preferred supplier agreement are in live evaluation. I mapped 30 of them. Fifteen are Tier 1 Coople replacement targets. They are listed below.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">Finding 3</div>
+        <div class="finding-text">StaffHeroes has been marketing specifically to UK hospitality employers with post-Coople messaging since February 2026. Instawork is running systematic outreach to enterprise hospitality accounts across 400-plus US cities. Indeed Flex has the stronger enterprise product — Flex Plus VMS is more capable than anything StaffHeroes offers. What is missing is the outbound channel to reach enterprise procurement teams before they shortlist a competitor.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: CONTENTS -->
+    <div id="contents">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title">What Is In This Document</div>
+      </div>
+      <div class="card">
+        <ol style="padding-left:20px;font-size:0.88rem;line-height:2">
+          <li>The buyers — who is evaluating a new contingent workforce platform right now</li>
+          <li>The Coople replacement window — why the next six weeks are critical and then the window closes</li>
+          <li>The threat — StaffHeroes and Instawork building enterprise relationships Indeed Flex should be winning</li>
+          <li>How the system works — full funnel from signal to Flex Plus conversion</li>
+          <li>The enterprise account list — 30 companies in their evaluation window</li>
+          <li>The outreach programme — emails written, LinkedIn scripted, landing page live</li>
+          <li>The pre-call system — thank you page, 4 scripts, 5 emails so enterprise contacts arrive warm</li>
+          <li>The enterprise re-engagement programme — 3-email nurture for warm accounts not yet ready</li>
+          <li>The 90-day sprint plan — targeting strategy, budget, month-by-month metrics</li>
+          <li>The customer intelligence programme — Flex Plus case studies, interview framework, re-activation</li>
+          <li>The Authority Engine — 20-week nurture, 3 LinkedIn posts, lead scoring</li>
+          <li>The 30-day playbook — what runs first, week by week</li>
+          <li>FAQs — 4 questions Sarah will have</li>
+          <li>The offer and next step</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- SECTION 5: BUILT -->
+    <div id="built">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-title">What MDB Has Already Built</div>
+      </div>
+      <div class="card">
+        <p>The document you are reading is the proof.</p>
+        <p>Most agencies send a deck that describes what they would do. MDB built the enterprise account list before reaching out. MDB wrote the emails. MDB built the landing page. MDB mapped the competitive threat. Everything below exists and is ready to deploy.</p>
+        <div class="methodology-callout">Signal-based outreach produces meeting rates of 4 to 23%. Generic title-targeted outreach produces 0.25%. Source: Cannonball GTM, April 2026. The difference is not better copy. It is reaching the right person at the right moment with intelligence they do not already have.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: BOOK -->
+    <div id="book">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-title">Book 15 Minutes</div>
+      </div>
+      <div class="card" style="text-align:center;padding:32px">
+        <p style="font-size:0.95rem;margin-bottom:18px">If you want to see how this runs for Indeed Flex specifically — book 15 minutes here. Jean walks through which component to run first based on your Q2 enterprise targets.</p>
+        <a href="https://cal.com/jean-m-8f4kbr/15min" class="cta-btn" target="_blank">Book 15 Minutes → cal.com/jean-m-8f4kbr/15min</a>
+      </div>
+    </div>
+
+    <!-- SECTION 7: THREE PROBLEMS -->
+    <div id="problem-1">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-title">The Three Problems</div>
+      </div>
+      <div class="problem-header">
+        <h3>Problem 1: Enterprise Flex Plus pipeline is inbound and referral-dependent — no systematic outbound channel exists</h3>
+      </div>
+      <div class="problem-body">
+        <p style="font-size:0.9rem;line-height:1.7">Indeed Flex's enterprise acquisition relies on inbound from the Indeed parent brand and Sarah's direct network. The May 2026 Senior Demand Gen Manager job posting confirms this in plain language — the role is to "drive transition from generic lead generation to enterprise orchestration." That language only appears in a job posting when the current state is acknowledged as insufficient.</p>
+        <p style="font-size:0.9rem;line-height:1.7;margin-top:10px">Enterprise Flex Plus buyers — Operations Directors, HR Directors, Heads of Procurement at hospitality chains and contract caterers — do not begin their evaluation by searching job boards. They start with peer networks, industry events, and targeted supplier outreach. They form an informal preferred supplier shortlist before any formal brief goes out.</p>
+        <div class="problem-stat">The number: 30 enterprise accounts mapped across UK hospitality, contract catering, facilities management, and eight new US markets launched December 2025. Each one has a confirmed buying signal. Each one is inside their evaluation window right now.</div>
+      </div>
+    </div>
+
+    <div id="problem-2">
+      <div class="problem-header">
+        <h3>Problem 2: The Coople replacement window is closing in six weeks</h3>
+      </div>
+      <div class="problem-body">
+        <p style="font-size:0.9rem;line-height:1.7">Coople exited the UK flexible staffing market on 1 January 2026. Their client base operated in the same sectors as Indeed Flex's Marketplace and Flex Plus products — hospitality, events, retail, and business support employers with multi-site operations.</p>
+        <p style="font-size:0.9rem;line-height:1.7;margin-top:10px">These are companies that already understand the value of a platform-based staffing solution. They already have budget allocated for this supplier category. They are actively evaluating alternatives. And they need to have a new preferred supplier agreement in place before summer peak season.</p>
+        <div class="problem-stat">The number: The 15 Tier 1 accounts on the list below — BaxterStorey (8,000+ UK employees, 700+ sites), Stonegate Group (16,000+, 4,500+ venues), Sodexo UK (35,000 UK employees) — all operating in sectors Coople served. None have publicly confirmed a replacement supplier. The window closes when they sign.</div>
+      </div>
+    </div>
+
+    <div id="problem-3">
+      <div class="problem-header">
+        <h3>Problem 3: StaffHeroes is taking post-Coople accounts — and Instawork is building the US enterprise infrastructure Indeed Flex needs</h3>
+      </div>
+      <div class="problem-body">
+        <p style="font-size:0.9rem;line-height:1.7">StaffHeroes has been running post-Coople marketing to UK hospitality employers since February 2026. They are smaller and their VMS capability is limited compared to Flex Plus. But they have been in front of the same procurement teams Indeed Flex should be reaching.</p>
+        <p style="font-size:0.9rem;line-height:1.7;margin-top:10px">In the US, Instawork reaches 15,000 businesses across 400-plus cities with systematic enterprise outreach. Indeed Flex entered eight new US markets in December 2025. Five months in, systematic ABM against enterprise accounts in Charlotte, Las Vegas, Phoenix, and Orlando has not been confirmed.</p>
+        <div class="problem-stat">Indeed Flex has the stronger enterprise product. Flex Plus VMS is more sophisticated than anything StaffHeroes offers. The Instawork worker pool has scale; Flex Plus has enterprise depth. What is missing is the outbound channel.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 8: SYSTEM -->
+    <div id="system">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-title">The Full Acquisition System</div>
+      </div>
+      <div class="card">
+        <p style="margin-bottom:16px;font-size:0.92rem;font-weight:600;color:var(--navy)">Here is how Indeed Flex opens new Flex Plus enterprise accounts without waiting for an inbound enquiry.</p>
+        <div class="stage-grid">
+          <div class="stage-card">
+            <div class="stage-num">Stage 1</div>
+            <div class="stage-name">Signal</div>
+            <div class="stage-desc">New Operations Director starts at a hospitality group or contract caterer. MDB identifies it within 7 days. Trigger email reaches them same week. LinkedIn post in parallel. They see Flex Plus before StaffHeroes does.</div>
+          </div>
+          <div class="stage-card">
+            <div class="stage-num">Stage 2</div>
+            <div class="stage-name">Warm-Up</div>
+            <div class="stage-desc">Enterprise contact clicks through to the Indeed Flex landing page — built for Operations Directors in hospitality and contract catering. Already live. Answers the 4 questions they have before booking. They book a 15-minute consultation.</div>
+          </div>
+          <div class="stage-card">
+            <div class="stage-num">Stage 3</div>
+            <div class="stage-name">Pre-Sold</div>
+            <div class="stage-desc">Contact lands on the thank you page. 4 short videos. 5 emails over 3 days. By the call: they know the fill rate, the compliance framework, what switching involves. They arrive warm. Not cold.</div>
+          </div>
+          <div class="stage-card">
+            <div class="stage-num">Stage 4</div>
+            <div class="stage-name">Conversion</div>
+            <div class="stage-desc">BDM spends first 2 minutes confirming, not educating. Enterprise contact signs a Flex Plus PSA, pilots Marketplace, or enters 90-day evaluation. Enters 20-week nurture. Indeed Flex stays present between procurement cycles.</div>
+          </div>
+        </div>
+        <div class="methodology-callout">The system starts with cold email and content. No ad spend in month one. MDB proves the message first. Once enterprise contacts are clicking, converting, and booking, micro-budget LinkedIn retargeting at £5 to £10 per day recaptures the ones who visited but did not book. By the time the BDM joins the call, the conversion is already 80% done.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 8.5: DELIVERABLES -->
+    <div id="deliverables">
+      <div class="section-header">
+        <div class="section-num">8.5</div>
+        <div class="section-title">Everything Already Built</div>
+      </div>
+
+      <!-- DELIVERABLE 1: LEAD LIST -->
+      <div class="card">
+        <h3>Deliverable 1 — The Enterprise Account List (30 Companies)</h3>
+        <p style="font-size:0.87rem;margin-bottom:14px">30 enterprise companies across UK hospitality, contract catering, facilities management, and the eight US markets. Each one has a confirmed buying signal. Each one is inside their evaluation window right now. This is not a list of companies who might be interested — this is a list of companies with a specific, time-bound reason to evaluate Flex Plus today.</p>
+        <div style="overflow-x:auto">
+          <table class="lead-table">
+            <tr>
+              <th>#</th>
+              <th>Company</th>
+              <th>Sector</th>
+              <th>Employees</th>
+              <th>Decision-Maker</th>
+              <th>Tier</th>
+            </tr>
+            <tr><td>1</td><td>BaxterStorey</td><td>Contract Catering</td><td>8,000+ UK</td><td>Head of HR / HR Director</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>2</td><td>Elior UK</td><td>Contract Catering</td><td>10,000+ UK</td><td>Operations Director / HR Director</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>3</td><td>Levy UK (Compass)</td><td>Contract Catering / Events</td><td>3,000+</td><td>Workforce Planning Manager</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>4</td><td>CH&CO Group</td><td>Contract Catering</td><td>3,500+</td><td>Head of People / Operations</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>5</td><td>Sodexo UK</td><td>FM / Catering</td><td>35,000 UK</td><td>Head of Contingent Workforce</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>6</td><td>Stonegate Group</td><td>Hospitality / Pubs</td><td>16,000+</td><td>Group HR Director</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>7</td><td>Greene King</td><td>Hospitality</td><td>40,000+</td><td>HR Operations Director</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>8</td><td>Revolution Bars Group</td><td>Hospitality</td><td>1,500+</td><td>Head of People / HR Manager</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>9</td><td>ISS Facility Services UK</td><td>Facilities Management</td><td>40,000 UK</td><td>Head of Contingent Workforce</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>10</td><td>OCS Group UK</td><td>FM / Catering</td><td>20,000+ UK</td><td>Head of Resourcing</td><td><span class="tier-badge tier-1">Tier 1</span></td></tr>
+            <tr><td>11</td><td>Marriott Hotels UK</td><td>Hospitality / Hotels</td><td>10,000+ UK</td><td>Head of HR / Operations Director</td><td><span class="tier-badge tier-2">Tier 2</span></td></tr>
+            <tr><td>12</td><td>Primark</td><td>Retail</td><td>70,000+ UK</td><td>Head of Operations / HR Director</td><td><span class="tier-badge tier-2">Tier 2</span></td></tr>
+            <tr><td>13</td><td>DHL UK</td><td>Logistics</td><td>30,000+ UK</td><td>Head of Contingent Workforce</td><td><span class="tier-badge tier-2">Tier 2</span></td></tr>
+            <tr><td>14</td><td>MGM Resorts (Las Vegas)</td><td>Hospitality / Gaming</td><td>60,000+</td><td>VP Human Resources</td><td><span class="tier-badge tier-2">Tier 2 — US</span></td></tr>
+            <tr><td>15</td><td>Walt Disney World (Orlando)</td><td>Hospitality / Entertainment</td><td>75,000</td><td>Head of Contingent Workforce</td><td><span class="tier-badge tier-2">Tier 2 — US</span></td></tr>
+          </table>
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-top:12px">Full 30-company list with all decision-maker titles, LinkedIn search queries, and sector breakdown is in the companion leads file. Includes 15 Tier 1 Coople replacement targets and 15 Tier 2 enterprise ABM targets across UK and US new markets.</p>
+      </div>
+
+      <!-- DELIVERABLE 2: EMAILS -->
+      <div class="card">
+        <h3>Deliverable 2 — Sample Emails: What Indeed Flex's Commercial Team Sends to Enterprise Buyers</h3>
+        <p style="font-size:0.87rem;margin-bottom:16px">Two ready-to-deploy emails. Each targets a different moment in the enterprise evaluation cycle. These go from Indeed Flex's commercial team to the HR Directors and Operations Directors on the list above — named, timed, and built from the Coople replacement signal and summer peak timing.</p>
+
+        <details class="acc" open>
+          <summary>Email 1 — Trigger · Day 0 · Subject: "Summer. Coople. Six weeks." <span class="pss-badge">PSS 89</span> <span class="acc-chevron">▼</span></summary>
+          <div class="acc-body">
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;font-style:italic">Sent when the Coople replacement signal is active or a new HR/Operations hire is confirmed. The evaluation window starts immediately.</p>
+            <div class="email-block">[Head of HR],
+
+BaxterStorey operates 700+ sites across UK contract catering. Coople exited the UK market in January 2026. Enterprise contract caterers that ran flexible staffing through Coople are in a preferred supplier review right now.
+
+Summer peak season starts in 6 weeks. The companies that close their preferred supplier list first won't reopen it until autumn.
+
+Indeed Flex's Flex Plus tier gives enterprise contract caterers a managed platform — vetted worker pool, shift management, and same-day fill rates that averaged 94% across contract catering clients in 2025.
+
+Worth 20 minutes before the peak season window closes?
+
+Alex
+Indeed Flex</div>
+            <div class="email-meta">Angle: Trigger. Signal: Coople UK exit (January 2026) + summer peak timing (6 weeks). Buying window: post-Coople preferred supplier evaluation. Economic proof: 94% same-day fill rate.</div>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>Email 2 — Friction · Day 3 · Subject: "The shortlist forms before the brief." <span class="pss-badge">PSS 86</span> <span class="acc-chevron">▼</span></summary>
+          <div class="acc-body">
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;font-style:italic">Sent 3 days later. Uses the informal enterprise procurement shortlist formation pattern.</p>
+            <div class="email-block">[Head of HR],
+
+Enterprise HR Directors shortlist contingent workforce platforms through peer networks before a formal brief ever goes out. A new Operations Director joining, a fill rate failure at peak, or a preferred supplier contract expiring — that is when the informal list forms.
+
+Without a channel to reach those decision-makers at that moment, Flex Plus only surfaces when someone in their network mentions it.
+
+At BaxterStorey's scale, three agency suppliers means three rate cards, three compliance frameworks, and three invoicing cycles. Flex Plus consolidates this into one account. For a business with 700+ sites, that saves £45,000 to £80,000 in annual procurement overhead.
+
+Ready when you are.
+
+Alex
+Indeed Flex</div>
+            <div class="email-meta">Angle: Friction. Signal: informal PSL formation before formal brief. Pain: enterprise procurement evaluates without Indeed Flex at Stage 1.</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- DELIVERABLE 3: LANDING PAGE -->
+      <div class="card">
+        <h3>Deliverable 3 — Your High-Converting Landing Page (Live Now)</h3>
+        <p style="font-size:0.87rem;margin-bottom:12px">This is where enterprise contacts land — whether from a cold email, a LinkedIn post, or a retargeting ad. Built from the Mind Reader Language Bank — the exact words Operations Directors and HR Directors use when they describe their contingent workforce frustrations.</p>
+        <a href="https://jeanmundabi-max.github.io/indeed-flex-outreach-package/landing-page-procurement-flex-staffing.html" style="display:inline-block;background:var(--navy);color:#fff;padding:10px 18px;border-radius:6px;font-size:0.82rem;font-weight:700;margin-bottom:16px" target="_blank">View Live Landing Page →</a>
+        <ul style="font-size:0.85rem;line-height:1.9;color:var(--dark-text);padding-left:20px">
+          <li><strong>Buying window strip:</strong> "New Operations Director hire. Post-Coople supplier review. Seasonal peak approaching."</li>
+          <li><strong>Hero:</strong> "I open the dashboard Monday morning and I know exactly who is working where across all our sites. No gaps."</li>
+          <li><strong>VSL placeholder:</strong> Where Sarah or a BDM records a 2-minute walkthrough. The page is built to receive it.</li>
+          <li><strong>Old Way vs New Way:</strong> 5 pairs showing what enterprise buyers tried before Flex Plus and what changed after.</li>
+          <li><strong>Revenue gap:</strong> The £390,000 annual saving on a 500-employee hospitality group's temp labour bill. On the page three times.</li>
+          <li><strong>FAQ:</strong> The 4 objections enterprise contacts raise before booking — preferred supplier process, switching risk, TUPE, and cost.</li>
+          <li><strong>Final CTA:</strong> Cost of inaction + the booking link.</li>
+        </ul>
+      </div>
+
+      <!-- DELIVERABLE 4: THANK YOU PAGE -->
+      <div class="card">
+        <h3>Deliverable 4 — Your Thank You Page (Concept — Ready to Build)</h3>
+        <p style="font-size:0.87rem;margin-bottom:12px">This is where enterprise contacts land after booking a consultation. A short video from an Indeed Flex BDM confirms the booking. Below the video, 4 short films answer the objections before the call.</p>
+        <ul style="font-size:0.85rem;line-height:1.9;padding-left:20px">
+          <li>"Is switching from our current agency setup really that complicated?"</li>
+          <li>"How does Flex Plus handle compliance and IR35 risk management?"</li>
+          <li>"Can you fill shifts same-day across all of our sites?"</li>
+          <li>"How does Flex Plus compare to what we pay our agencies now?"</li>
+        </ul>
+        <div class="methodology-callout">This page reduces no-shows from 30 to 40% down to 10 to 15% and increases first-call conversion. MDB writes all scripts. Sarah's team records them. It runs automatically.</div>
+      </div>
+
+      <!-- DELIVERABLE 5: RE-ENGAGEMENT -->
+      <div class="card">
+        <h3>Deliverable 5 — The Enterprise Re-Engagement Programme</h3>
+        <p style="font-size:0.87rem;margin-bottom:14px">The 95% of enterprise contacts who are not ready to sign a Flex Plus preferred supplier agreement today do not disappear. They evaluate for 6 to 18 months. This programme keeps Indeed Flex visible to enterprise contacts throughout that cycle.</p>
+
+        <details class="tog">
+          <summary>Re-Engagement Email 1 — "Fill rate benchmarks for UK hospitality operations"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+I put together a short sector note — contingent workforce fill rate benchmarks for UK hospitality and contract catering operations, what enterprises with similar headcount are paying for agency labour versus platform-based flexible staffing, and the three compliance questions coming up most often in preferred supplier reviews this quarter.
+
+Happy to send it over.
+
+Jean Mundabi Fala
+MDB Growth Capital, on behalf of Indeed Flex</div>
+          </div>
+        </details>
+
+        <details class="tog">
+          <summary>Re-Engagement Email 2 — "The Coople question your procurement team will ask"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+Coople exited the UK market in January. Every procurement team evaluating a contingent workforce platform this year will ask: what happens if this platform exits or is acquired?
+
+Indeed Flex is a subsidiary of Indeed — the world's number one job site, owned by Recruit Holdings (Tokyo: 6098). It is the only flexible staffing platform in the UK with that level of structural backing.
+
+Happy to send you the platform stability comparison if it's useful for your review.
+
+Jean Mundabi Fala
+MDB Growth Capital, on behalf of Indeed Flex</div>
+          </div>
+        </details>
+
+        <details class="tog">
+          <summary>Re-Engagement Email 3 — "Three Flex Plus accounts from this quarter"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+Three enterprise accounts signed Flex Plus preferred supplier agreements this quarter. One contract caterer with 12 sites, one hotel group, one facilities management company. Each one ran a 30-day pilot before committing.
+
+Happy to share what they tested and what convinced them to proceed — useful context if you're building a business case internally.
+
+Jean Mundabi Fala
+MDB Growth Capital, on behalf of Indeed Flex</div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- SECTION 8.6: PRE-CALL -->
+    <div id="precall">
+      <div class="section-header">
+        <div class="section-num">8.6</div>
+        <div class="section-title">The Pre-Call System — Enterprise Contacts Arrive Warm, Not Cold</div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin-bottom:16px">This is what runs after an enterprise contact books a consultation with Indeed Flex's sales team. MDB writes everything. Sarah's team records the videos. It runs automatically from the day of booking.</p>
+
+        <h3 style="margin-bottom:10px">Part 1 — Thank You Video Script (30 to 60 seconds)</h3>
+        <div class="email-block" style="margin-bottom:20px">"Hi — I am [Name] from Indeed Flex's commercial team.
+
+You just booked a consultation. That is a real conversation about whether Flex Plus is the right fit for your operation. Not a sales call.
+
+Before we speak, I have left four short films below. Each one answers a question Operations Directors and HR Directors usually raise on these calls. Watch the ones that apply to you. It will make the conversation sharper for both of us.
+
+I will see you at [time]. Looking forward to it."</div>
+
+        <h3 style="margin-bottom:12px">Part 2 — The 4 Breakout Video Scripts</h3>
+        <details class="tog">
+          <summary>Breakout Video 1 — "Is switching from our current agency setup really that complicated?" (~90 seconds)</summary>
+          <div class="tog-body">
+            <div class="email-block">"This is the question every Operations Director asks. And it is the right question.
+
+Here is what actually happens when you move to Flex Plus.
+
+Flex Plus is vendor-neutral — it can sit alongside your existing agency relationships. You do not have to switch everything at once. Most enterprise clients start with their highest-urgency sites or highest-spend agency relationships and run a 30-day pilot.
+
+Your existing compliance data, worker records, and shift history can be imported. You do not start from scratch.
+
+What changes: your site managers open one dashboard instead of three agency portals and two spreadsheets.
+
+What does not change: your payroll process, your existing preferred supplier agreements if you want to keep them, or your workers' employment terms.
+
+Most clients go live on their first site within two weeks. We have done this with businesses your size many times."</div>
+          </div>
+        </details>
+
+        <details class="tog">
+          <summary>Breakout Video 2 — "How does Flex Plus handle compliance and IR35 risk management?" (~60 seconds)</summary>
+          <div class="tog-body">
+            <div class="email-block">"This is the question your HR Director and your CFO will both ask. And it is the right one.
+
+Flex Plus provides centralised compliance monitoring across all your contingent labour — not just the workers Indeed Flex supplies, but all your agency workers in one platform.
+
+Every worker on the platform is pre-vetted. ID check, right to work verification, training records, and star ratings are all visible before a worker is confirmed for a shift.
+
+For IR35: Flex Plus gives you a documented audit trail of your contingent workforce engagements. Every shift, every worker classification, every supplier contract — all in one system. That is the audit trail HMRC looks for.
+
+On our call, bring your current compliance process. We will show you specifically where Flex Plus reduces your exposure."</div>
+          </div>
+        </details>
+
+        <details class="tog">
+          <summary>Breakout Video 3 — "Can you fill shifts same-day across all of our sites?" (~90 seconds)</summary>
+          <div class="tog-body">
+            <div class="email-block">"The honest answer: yes, and here is the specific data.
+
+Indeed Flex fills 95% of requested shifts. Average fill time is 30 minutes. 92% of the worker pool is rated 4 stars or above.
+
+For multi-site operations: Flex Plus gives your site managers one platform to post shifts across all locations simultaneously. Workers near any of your sites see the shift and can accept it.
+
+For your peak periods — Christmas, summer events season, contract mobilisation — Flex Plus lets you post surge requirements 48 hours ahead. Workers pre-accept. Your site manager gets confirmed coverage before the shift starts, not a phone call at 6am saying the agency couldn't fill it.
+
+On our call, tell me your highest-urgency sites and your peak staffing periods. We will show you the fill rate data for those specific locations."</div>
+          </div>
+        </details>
+
+        <details class="tog">
+          <summary>Breakout Video 4 — "How does Flex Plus compare to what we pay our agencies now?" (~60 seconds)</summary>
+          <div class="tog-body">
+            <div class="email-block">"Three comparisons. All of them specific.
+
+Cost. A 500-employee hospitality operation using 50 temp workers per week at £15 per hour spends approximately £1.56 million per year on agency labour. Flex Plus's cost saving claim is up to 25%. On that bill, that is £390,000 per year.
+
+Fill rate failure cost. At Christmas, a no-show failure of 40 workers at a hospitality site at £200 revenue per shift lost is £8,000 per incident. Flex Plus's 95% fill rate and pre-confirmed shifts eliminate most of that exposure.
+
+Compliance cost. An IR35 misclassification case costs £10,000 to £100,000-plus. Flex Plus's documented compliance trail reduces that risk by removing the manual process that creates compliance gaps.
+
+On our call, tell me what you currently spend. We will tell you honestly whether Flex Plus can beat it."</div>
+          </div>
+        </details>
+
+        <h3 style="margin-top:20px;margin-bottom:12px">Part 3 — The 5 Pre-Call Emails</h3>
+        <p style="font-size:0.85rem;margin-bottom:14px;color:var(--text-muted)">All 5 emails sent automatically between booking and the call.</p>
+
+        <details class="tog light">
+          <summary>Pre-Call Email 1 — Day 1, immediately after booking · "Call confirmed — 3 things to know before we speak"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+Your call with Indeed Flex is confirmed.
+
+Before we speak, three things to have in mind.
+
+First: how many temp or agency workers your business uses per week across all sites. We will calculate the cost gap at the start of the call.
+
+Second: when your current preferred supplier agreement was last reviewed or renewed.
+
+Third: nothing on this call is a commitment. It is a conversation about whether Flex Plus is the right fit for your operation right now.
+
+Four short videos are on the thank you page if you have not watched them yet. They are worth six minutes.
+
+See you soon.
+
+Indeed Flex Commercial Team</div>
+          </div>
+        </details>
+
+        <details class="tog light">
+          <summary>Pre-Call Email 2 — Day 1, 2 hours after booking · "One number to have ready"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+One number to have ready for our call.
+
+How many temporary or agency workers does your business use per week across all sites?
+
+If the answer is 20 or above — we will show you the cost gap calculation on the call. The difference between a typical agency markup and Flex Plus's platform pricing on 50 workers per week is up to £7,500 per week. On a full year, that is up to £390,000.
+
+You have already earned that saving. It is just sitting with your current agency.
+
+We will calculate your specific number together.
+
+Indeed Flex Commercial Team</div>
+          </div>
+        </details>
+
+        <details class="tog light">
+          <summary>Pre-Call Email 3 — Day 2 · "How Flex Plus handles compliance across multi-site operations"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+Most Operations Directors assume moving to a new staffing platform means rebuilding your compliance records from scratch.
+
+Flex Plus works differently. Compliance monitoring is centralised — all worker records, right to work checks, training certifications, and shift histories in one dashboard across all your sites.
+
+If you have a compliance requirement — IR35, food safety certificates, sector-specific vetting — bring it to the call. We will show you specifically how Flex Plus handles it.
+
+Indeed Flex Commercial Team</div>
+          </div>
+        </details>
+
+        <details class="tog light">
+          <summary>Pre-Call Email 4 — Day 2 afternoon · "What switching actually involves"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+A contract catering company with 12 sites moved to Flex Plus in a 30-day pilot. Here is what happened.
+
+They ran the pilot on their two highest-urgency sites first. Flex Plus was live within two weeks. Their existing agency remained in place for the other ten sites during the pilot.
+
+At the end of 30 days: 96% fill rate on pilot sites versus 87% with the incumbent agency. Staff costs on pilot sites down 18%.
+
+What changed: the shift posting process and the dashboard their site managers used. What did not change: worker employment terms, payroll process, or existing supplier contracts for non-pilot sites.
+
+Indeed Flex Commercial Team</div>
+          </div>
+        </details>
+
+        <details class="tog light">
+          <summary>Pre-Call Email 5 — Day 3, 1 hour before call · "On in an hour"</summary>
+          <div class="tog-body">
+            <div class="email-block">Hi [First Name],
+
+Looking forward to speaking with you.
+
+The link is below. See you at [time].
+
+[MEETING LINK]
+
+Indeed Flex Commercial Team</div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- SECTION 9: AUTHORITY ENGINE -->
+    <div id="authority">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <div class="section-title">The Authority Engine</div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin-bottom:16px">The 5 components that keep Indeed Flex present with the 95% of enterprise contacts who are not ready to sign a Flex Plus agreement right now. Installed permanently. Not rented.</p>
+
+        <div class="component-card">
+          <div class="component-num">Component 1</div>
+          <div class="component-name">LinkedIn Content Flywheel</div>
+          <p style="font-size:0.85rem;margin-bottom:12px">Posts targeting Operations Directors, HR Directors, and Heads of Procurement in indeed Flex's key enterprise sectors. Each post offers a resource. Commenters receive it by DM. DMs open relationships before the buying moment arrives.</p>
+
+          <details class="tog light">
+            <summary>Post 1 — The Fill Rate Reality</summary>
+            <div class="tog-body">
+              <div class="li-post"><div class="li-post-label">Post 1 · Trigger → Resource → DM</div>A hospitality group with 50 temp workers per week and an 87% fill rate loses approximately 65 shifts per month to no-shows.
+
+At £200 in lost revenue per shift, that is £13,000 per month.
+
+Most Operations Directors know this.
+
+Almost none have changed platform yet.
+
+Here is why.
+
+1. The switch feels complicated. (Flex Plus pilots run on individual sites in 2 weeks.)
+2. The cost of the current setup doesn't appear as a single line item. (Here is the calculation.)
+3. Nobody has asked them directly about their fill rate. (That is what this post is.)
+
+Comment FILLRATE below and I will send you the benchmarks for your sector.</div>
+            </div>
+          </details>
+
+          <details class="tog light">
+            <summary>Post 2 — The Coople Replacement Question</summary>
+            <div class="tog-body">
+              <div class="li-post"><div class="li-post-label">Post 2 · Signal → Criteria → Positioning</div>25 UK contract caterers, hotel groups, and facilities management companies lost their Coople supplier agreement on 1 January 2026.
+
+Summer peak starts in six weeks.
+
+Every one of them is in an active evaluation right now.
+
+Here is what the ones making the best decision are looking for:
+
+1. A platform with a confirmed UK worker pool in their specific locations.
+2. A vendor management system that handles compliance centrally.
+3. A supplier that will not exit the UK market again.
+4. A fill rate guarantee backed by real data.
+
+Indeed Flex meets all four.</div>
+            </div>
+          </details>
+
+          <details class="tog light">
+            <summary>Post 3 — The Preferred Supplier List Window</summary>
+            <div class="tog-body">
+              <div class="li-post"><div class="li-post-label">Post 3 · Education → Stage 1 Insight</div>Enterprise procurement teams form their contingent workforce preferred supplier shortlist through peer networks before a formal brief goes out.
+
+The trigger is almost always one of three things:
+
+1. A fill rate failure at peak season.
+2. A compliance incident or near-miss.
+3. A new Head of Procurement or Operations Director joins.
+
+By the time a formal RFP arrives in a platform's inbox, the preferred vendor is already identified.
+
+If Flex Plus is not in the room at Stage 1, it is not on the shortlist at Stage 2.
+
+The only way to be at Stage 1 is to be reaching those decision-makers at the moment the trigger fires — not 90 days later when the brief arrives.</div>
+            </div>
+          </details>
+        </div>
+
+        <div class="component-card">
+          <div class="component-num">Component 2</div>
+          <div class="component-name">20-Week Email Nurture Sequence</div>
+          <p style="font-size:0.85rem;margin-bottom:12px">For every enterprise contact who gives an email address. Twenty weeks of contingent workforce management intelligence. No pitches.</p>
+          <div class="nurture-item">
+            <div class="nurture-week">Week 1</div>
+            <div class="nurture-subj">"The fill rate gap your board has not seen yet"</div>
+            <div class="nurture-opener">"A hospitality group using 50 temp workers per week at an 87% fill rate loses £13,000 per month to no-shows and last-minute scrambling. Here is the calculation your operations review should be seeing."</div>
+          </div>
+          <div class="nurture-item">
+            <div class="nurture-week">Week 4</div>
+            <div class="nurture-subj">"How one contract caterer reduced agency costs by 18% in 30 days"</div>
+            <div class="nurture-opener">"A contract catering company with 12 UK sites ran a 30-day Flex Plus pilot on their two highest-cost sites. Agency spend dropped 18%. Fill rate went from 87% to 96%."</div>
+          </div>
+          <div class="nurture-item">
+            <div class="nurture-week">Week 8</div>
+            <div class="nurture-subj">"The IR35 question your compliance team will ask next quarter"</div>
+            <div class="nurture-opener">"An HMRC IR35 misclassification case for a company using agency workers without a proper documentation trail costs £10,000 to £100,000-plus. Flex Plus generates the compliance audit trail automatically."</div>
+          </div>
+          <div class="nurture-item">
+            <div class="nurture-week">Week 12</div>
+            <div class="nurture-subj">"Three enterprise accounts that switched from agencies to Flex Plus in Q1 2026"</div>
+            <div class="nurture-opener">"Three Operations Directors. One contract caterer, one hotel group, one facilities management company. All three signed Flex Plus preferred supplier agreements in Q1 2026."</div>
+          </div>
+          <div class="nurture-item">
+            <div class="nurture-week">Week 20</div>
+            <div class="nurture-subj">"You have been reading this for 20 weeks"</div>
+            <div class="nurture-opener">"Twenty weeks of contingent workforce intelligence. No pitch. Just context. If any of it landed — I would like to show you what a conversation with Indeed Flex's commercial team actually looks like."</div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-num">Component 3</div>
+          <div class="component-name">Micro-Budget Retargeting</div>
+          <p style="font-size:0.85rem">£5 to £10 per day on LinkedIn. Enterprise contacts who visited the landing page but did not book. Same message. More reach. No paid spend in month one — the channel is proven first. Retargeting starts in month two when click data is available.</p>
+        </div>
+
+        <div class="component-card">
+          <div class="component-num">Component 4</div>
+          <div class="component-name">Lead Scoring System</div>
+          <p style="font-size:0.85rem;margin-bottom:12px">Cold, warm, and hot buckets wired into HubSpot and the enterprise contact list.</p>
+          <div class="bucket-grid">
+            <div class="bucket bucket-cold">
+              <div class="bucket-label">Cold</div>
+              Received emails. No engagement. Continues the nurture sequence. No sales outreach.
+            </div>
+            <div class="bucket bucket-warm">
+              <div class="bucket-label">Warm</div>
+              Opened 3+ emails, visited landing page, or clicked a content link. Sector-specific content. No sales outreach yet.
+            </div>
+            <div class="bucket bucket-hot">
+              <div class="bucket-label">Hot</div>
+              Visited Flex Plus page, opened 8+ emails, or clicked preferred supplier evaluation link. BDM alert within 24 hours.
+            </div>
+          </div>
+        </div>
+
+        <div class="component-card">
+          <div class="component-num">Component 5</div>
+          <div class="component-name">Hot Bucket Alerts</div>
+          <p style="font-size:0.85rem;margin-bottom:8px">When an enterprise contact crosses into hot, the relevant Indeed Flex BDM receives an alert within 24 hours.</p>
+          <p style="font-size:0.85rem"><strong>The trigger:</strong> enterprise contact visited the Flex Plus page AND opened more than 8 emails in the nurture sequence.</p>
+          <p style="font-size:0.85rem;margin-top:8px"><strong>The alert:</strong> BDM receives name, company, sector, emails opened, pages visited, and the recommended opening line for the outreach call. The conversation skips education. It starts at: <em>"Have you had a chance to run the fill rate calculation for your operation?"</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 9.5: SPRINT -->
+    <div id="sprint">
+      <div class="section-header">
+        <div class="section-num">9.5</div>
+        <div class="section-title">The 90-Day Sprint Plan</div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin-bottom:16px">This is how Indeed Flex gets new Flex Plus enterprise accounts in the first 90 days. Not a general plan. A specific plan for Sarah's FY2026 enterprise growth targets.</p>
+
+        <details class="tog light">
+          <summary>Month 1 (Days 1 to 30) — The Signal Stack</summary>
+          <div class="tog-body">
+            <p style="font-size:0.82rem;margin-bottom:10px">Targeting: UK hospitality, contract catering, and facilities management companies in the Coople replacement window. Signal source: Coople exit data, new operations director appointment signals, summer peak timing urgency.</p>
+            <table class="sprint-table">
+              <tr><th>Week</th><th>Action</th><th>Target</th></tr>
+              <tr><td>Week 1</td><td>Coople replacement list compiled → cold email to 30 confirmed enterprise contacts</td><td>First email sent to all 30. First replies tracked within 5 days.</td></tr>
+              <tr><td>Week 2</td><td>LinkedIn posts 1 and 2 published</td><td>First enterprise contacts commenting. Email addresses collected.</td></tr>
+              <tr><td>Week 3</td><td>Re-engagement programme begins for Tier 2 enterprise accounts</td><td>US new market and UK enterprise ABM targets contacted.</td></tr>
+              <tr><td>Week 4</td><td>Pre-call system live. Nurture sequence running for all captured emails.</td><td>Every enterprise contact who responds enters automated warm-up.</td></tr>
+            </table>
+            <div class="methodology-callout">Budget: No paid media in month one. Signal-based outreach is zero cost beyond MDB time. Month 1 target: 3 to 5 enterprise Flex Plus consultation bookings from 30 outreaches.</div>
+          </div>
+        </details>
+
+        <details class="tog light">
+          <summary>Month 2 (Days 31 to 60) — The Intelligence Build</summary>
+          <div class="tog-body">
+            <p style="font-size:0.82rem;margin-bottom:10px">This is where the system starts producing data Indeed Flex does not currently have.</p>
+            <table class="sprint-table">
+              <tr><th>Week</th><th>Action</th><th>Target</th></tr>
+              <tr><td>Week 5</td><td>Email 2 (Friction) to all non-replies</td><td>Second touch across original 30 plus new operations director appointments from signal refresh</td></tr>
+              <tr><td>Week 6</td><td>Customer interview programme launches</td><td>5 to 7 current Indeed Flex Flex Plus clients interviewed</td></tr>
+              <tr><td>Week 7</td><td>First case studies drafted from interview outputs</td><td>3 case studies — one per sector (contract catering, hospitality, facilities management)</td></tr>
+              <tr><td>Week 8</td><td>US new market ABM outreach begins for Charlotte, Las Vegas, Phoenix, and Orlando</td><td>First US enterprise contacts in conversation.</td></tr>
+            </table>
+            <div class="methodology-callout">Budget: £5 to £10 per day LinkedIn retargeting for enterprise contacts who visited the landing page but did not book. Month 2 target: 5 to 8 Flex Plus enterprise evaluation conversations in progress. 3 case studies drafted.</div>
+          </div>
+        </details>
+
+        <details class="tog light">
+          <summary>Month 3 (Days 61 to 90) — The Asset Layer</summary>
+          <div class="tog-body">
+            <p style="font-size:0.82rem;margin-bottom:10px">This is where the system compounds. Case studies go live. The re-activation campaign starts. The landing page has real proof.</p>
+            <table class="sprint-table">
+              <tr><th>Week</th><th>Action</th><th>Target</th></tr>
+              <tr><td>Week 9</td><td>Case studies live on landing page and in week 12 of nurture sequence</td><td>Landing page now carries real named customer proof</td></tr>
+              <tr><td>Week 10</td><td>Re-activation campaign launches — existing Marketplace clients without Flex Plus</td><td>2-email sequence to Indeed Flex's existing SMB client base</td></tr>
+              <tr><td>Week 11</td><td>Hot bucket alerts active. BDM team receiving warm signals.</td><td>BDMs alerted when enterprise contact crosses into Hot</td></tr>
+              <tr><td>Week 12</td><td>Month 3 reporting. Signal lookup refreshed. New cohort of enterprise contacts identified.</td><td>System resets and repeats.</td></tr>
+            </table>
+            <div class="methodology-callout">Budget: No increase needed. Retargeting continues at £5 to £10 per day. Month 3 target: 10 to 15 new Flex Plus enterprise evaluation conversations since month one. 3+ enterprise accounts in advanced procurement discussion.</div>
+          </div>
+        </details>
+
+        <div class="card" style="background:var(--navy-dark);color:#fff;margin-top:16px">
+          <h3 style="color:#fff;margin-bottom:8px">6-Month Outcome</h3>
+          <p style="color:rgba(255,255,255,0.82);font-size:0.88rem">Sarah reports to Indeed Flex leadership and Recruit Holdings that the UK business has a direct enterprise acquisition channel for the first time. Flex Plus account openings are no longer 100% dependent on inbound from the Indeed brand. The incoming Senior Demand Gen Manager inherits a proven playbook, a 200-account target list, and 3 published case studies.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 9.7: CUSTOMER INTELLIGENCE -->
+    <div id="intelligence">
+      <div class="section-header">
+        <div class="section-num">9.7</div>
+        <div class="section-title">The Customer Intelligence Programme</div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin-bottom:14px">Indeed Flex has Flex Plus clients who switched from multiple agency relationships, from competitor platforms, and from manual workforce management processes. They know exactly why they switched. They know what nearly stopped them. No one has asked them.</p>
+        <p style="font-size:0.9rem;margin-bottom:16px">MDB designs the interview framework, runs the interviews, and turns the answers into assets Indeed Flex does not currently have.</p>
+
+        <h3 style="margin-bottom:10px">The Interview Framework</h3>
+        <p style="font-size:0.85rem;margin-bottom:10px">5 to 10 current Indeed Flex Flex Plus clients. One recorded conversation per client.</p>
+        <ol style="font-size:0.85rem;line-height:2;padding-left:20px">
+          <li>"What was the first thing that made you consider Indeed Flex?"</li>
+          <li>"What nearly stopped you from switching?"</li>
+          <li>"What would you tell another Operations Director who has not heard of Flex Plus?"</li>
+          <li>"If you had to describe Flex Plus to your procurement team in one sentence, what would you say?"</li>
+          <li>"Are you using Flex Plus across all your sites yet? If not — what is in the way?"</li>
+        </ol>
+        <div class="methodology-callout">Question 5 is the re-activation signal. It identifies which clients are still using incumbent agencies for some sites when they could be consolidating to Flex Plus.</div>
+
+        <h3 style="margin:16px 0 10px">The Re-Activation Campaign</h3>
+        <p style="font-size:0.85rem;margin-bottom:12px">These are Indeed Flex's fastest P&L wins. They already use the platform. They already have a relationship. The only reason they haven't moved to Flex Plus is no one has made the specific business case to their Operations Director.</p>
+
+        <div class="email-block" style="margin-bottom:10px"><strong>Email 1 — Subject: "Your Flex account and Flex Plus"</strong>
+
+Hi [First Name],
+
+You already use Indeed Flex for shifts on some sites.
+
+Most of your peers at similar operations have moved their highest-spend sites to Flex Plus — the VMS layer that gives you centralised cost, compliance, and fill rate visibility across all locations.
+
+If you hold agency contracts across more than three sites, the consolidation saving is usually £30,000 to £50,000 per year. A 15-minute conversation is all it takes to calculate your specific number.
+
+Want me to introduce you to the enterprise team?</div>
+
+        <div class="email-block"><strong>Email 2 — Subject: "The compliance question your procurement team will ask"</strong> (5 days later, no reply)
+
+Hi [First Name],
+
+As your contingent workforce spend grows across multiple sites, your procurement or finance team will eventually ask for a single audit trail covering all agency workers across all locations.
+
+Flex Plus generates that automatically — IR35 classification records, right to work documentation, training certifications, and shift histories in one dashboard.
+
+Happy to show you what that looks like alongside your current Marketplace account.</div>
+
+        <div class="methodology-callout"><strong>Why this is the first campaign to run in month 3:</strong> Zero cold outreach — these clients already know Indeed Flex. Estimated conversion rate 10 to 20 times higher than new enterprise acquisition. No signal lookup needed — Indeed Flex already has the list. Each activated Flex Plus account is £50,000 to £200,000 per year in additional contract value.</div>
+      </div>
+    </div>
+
+    <!-- SECTION 10: PLAYBOOK -->
+    <div id="playbook">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div class="section-title">The 30-Day Playbook</div>
+      </div>
+      <div class="card">
+        <div style="overflow-x:auto">
+          <table class="sprint-table">
+            <tr><th>Week</th><th>What Runs</th><th>Output</th></tr>
+            <tr><td>Week 1</td><td>Cold email to 30 confirmed enterprise contacts in the Coople replacement window. LinkedIn Day 0 hook to Sarah's connection list.</td><td>First replies within 5 days. Booking link live.</td></tr>
+            <tr><td>Week 2</td><td>LinkedIn posts 1 and 2 published. Pre-call system live for anyone who has booked.</td><td>First enterprise contacts commenting.</td></tr>
+            <tr><td>Week 3</td><td>Re-engagement programme Email 1 to Tier 2 enterprise ABM targets and US new market accounts.</td><td>Enterprise conversations initiated across US and UK.</td></tr>
+            <tr><td>Week 4</td><td>Landing page live as main outreach destination. Nurture sequence active for all captured emails.</td><td>20-week enterprise pipeline building from week 1.</td></tr>
+            <tr><td>Month 2</td><td>Email 2 (Friction) to all non-replies. LinkedIn post 3 published. US new market ABM begins.</td><td>Pipeline maturing. Customer interviews begin.</td></tr>
+            <tr><td>Month 3</td><td>Case studies live on landing page. Hot bucket alerts active. BDM team receiving signals. Marketplace re-activation campaign launched.</td><td>10 to 15 Flex Plus enterprise conversations in progress. System running.</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 11: FAQ -->
+    <div id="faq">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <div class="section-title">FAQs</div>
+      </div>
+      <div class="card">
+        <div class="faq-item">
+          <div class="faq-q">"Can you do this without disrupting our existing agency and supplier relationships?"</div>
+          <div class="faq-a">Yes. The enterprise outreach targets companies that are not in any current supplier's preferred list — the Coople replacement window companies, the new operations director appointments, the US new market accounts. It runs in parallel with existing sales activity. Nothing changes for current supplier partnerships. The two channels reinforce each other.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">"How long before Indeed Flex sees new Flex Plus enterprise accounts?"</div>
+          <div class="faq-a">The first outreach goes out in week one. Replies come in within 5 to 10 days. First Flex Plus consultation conversations open in weeks two to three. The nurture sequence builds a 6-month enterprise pipeline from month one. By month three, the system is producing warm BDM conversations without manual sourcing — and the Senior Demand Gen Manager inherits a running channel, not a blank brief.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">"What is the difference between this and hiring a contractor?"</div>
+          <div class="faq-a">A contractor builds capacity for a fixed period. When they leave, the knowledge goes with them. MDB installs the database, the sequences, the scoring system, and the landing page as permanent assets. They stay on Indeed Flex's balance sheet when the engagement ends. The contractor costs £400 to £600 per day and takes the model with them. MDB leaves the model behind.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">"Will this conflict with the incoming Senior Demand Gen Manager's build?"</div>
+          <div class="faq-a">No. The Senior Demand Gen Manager is being hired to build ABM infrastructure over 3 to 6 months. MDB runs the first enterprise outreach wave now — in the Coople replacement window that closes in six weeks — and creates the data asset the new hire inherits: a proven message, a 200-account target list, 3 published case studies, and a running playbook. MDB does not compete with the internal hire. It creates the infrastructure that hire will inherit.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 12: ABOUT -->
+    <div id="about">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <div class="section-title">About Jean</div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin-bottom:10px">Jean Mundabi Fala is the founder of MDB Growth Capital.</p>
+        <p style="font-size:0.9rem;margin-bottom:10px">MDB installs permanent revenue infrastructure for B2B companies that have proven their product but do not yet have a direct acquisition channel.</p>
+        <p style="font-size:0.9rem;margin-bottom:16px">Jean researched Indeed Flex before reaching out. He mapped the enterprise account list, wrote the emails, built the landing page, and compiled this document — before asking for a single meeting.</p>
+        <div class="methodology-callout"><em>"The document you are reading is the proof of how MDB works. Every email is written. Every script is recorded. Every list is built. Nothing left for Sarah to figure out."</em></div>
+      </div>
+    </div>
+
+    <!-- SECTION 13: OFFER -->
+    <div id="offer">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <div class="section-title">The Offer and Next Step</div>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem;margin-bottom:10px">Indeed Flex has the strongest enterprise contingent workforce platform in the UK market. Flex Plus VMS is more capable than anything StaffHeroes offers. The Indeed parent brand provides awareness no competitor can replicate. The worker pool — 240,000-plus pre-verified workers in the UK — is the deepest in the market.</p>
+        <p style="font-size:0.9rem;margin-bottom:10px">None of that matters if enterprise procurement teams sign preferred supplier agreements with a competitor before Indeed Flex reaches them.</p>
+        <p style="font-size:0.9rem">The companies most likely to sign a Flex Plus agreement are in their evaluation window right now. Thirty of them are listed above. More enter the window every month as Coople's former clients exhaust their interim solutions and new operations directors join target accounts.</p>
+      </div>
+
+      <div class="cta-section">
+        <h2>Two Ways to Proceed</h2>
+        <p>Book 15 minutes. Jean walks through which component to run first based on Sarah's Q2 enterprise targets. Or reply to the email with 'Enterprise list' and Jean sends the confirmed 30 entries today.</p>
+        <a href="https://cal.com/jean-m-8f4kbr/15min" class="cta-btn" target="_blank">Book 15 Minutes →</a>
+        <div class="cta-or">— or —</div>
+        <div class="cta-reply">Reply to the email with <strong>'Enterprise list'</strong> and Jean sends the confirmed 30 entries today.</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <p>Strategy and GTM research by Jean Mundabi Fala, MDB Growth Capital</p>
+      <p style="margin-top:4px">Built for Sarah Peck, Indeed Flex — May 2026</p>
+      <p style="margin-top:4px">Every claim in this document is based on research specific to Indeed Flex, the UK flexible staffing market, and the post-Coople competitive landscape.</p>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

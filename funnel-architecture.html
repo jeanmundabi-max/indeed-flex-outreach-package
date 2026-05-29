@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeed Flex — Funnel Architecture | MDB Growth Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #003A9B;
+    --blue-dark: #002470;
+    --blue-light: #1a4fb5;
+    --magenta: #DD00A9;
+    --white: #ffffff;
+    --off-white: #f8f7f4;
+    --text: #0c0c14;
+    --text-muted: #55556b;
+    --border: rgba(0,58,155,0.1);
+    --shadow: 0 4px 20px rgba(0,58,155,0.1);
+    --red-soft: rgba(200,40,40,0.08);
+    --red-border: rgba(200,40,40,0.2);
+    --green-soft: rgba(34,166,122,0.08);
+    --green-border: rgba(34,166,122,0.2);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Space Grotesk',sans-serif; font-size:17px; line-height:1.65; color:var(--text); background:var(--off-white); }
+  .page { max-width:1100px; margin:0 auto; padding:0 1.5rem 4rem; }
+
+  .page-header {
+    background:var(--blue);
+    margin:0 -1.5rem;
+    padding:3.5rem 2rem 3rem;
+    margin-bottom:3rem;
+    position:relative; overflow:hidden;
+  }
+  .page-header::before {
+    content:''; position:absolute; top:-80px; right:-80px;
+    width:300px; height:300px; background:var(--magenta);
+    border-radius:50%; opacity:0.1; filter:blur(60px);
+  }
+  .eyebrow { font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--magenta); margin-bottom:0.75rem; }
+  .page-header h1 { font-size:clamp(1.6rem,3vw,2.4rem); font-weight:700; color:#fff; margin-bottom:0.75rem; line-height:1.2; position:relative; }
+  .page-header p { color:rgba(255,255,255,0.7); font-size:1rem; max-width:560px; position:relative; }
+  .header-meta { display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap; }
+  .meta-chip { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:6px; padding:0.4rem 0.9rem; font-size:0.78rem; font-weight:600; color:rgba(255,255,255,0.85); }
+
+  /* SECTION */
+  .section-header { margin-bottom:1.5rem; }
+  .section-label { font-size:0.68rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--magenta); margin-bottom:0.5rem; }
+  h2 { font-size:1.5rem; font-weight:700; color:var(--blue); margin-bottom:0.5rem; }
+  .section-note { font-size:0.9rem; color:var(--text-muted); margin-bottom:2rem; }
+
+  /* FUNNEL CASCADE TABLE */
+  .cascade-section { margin-bottom:3rem; }
+  .cascade-table { width:100%; border-collapse:separate; border-spacing:0; border-radius:14px; overflow:hidden; box-shadow:var(--shadow); }
+  .cascade-table thead tr { background:var(--blue); }
+  .cascade-table th { color:#fff; font-weight:700; padding:1rem 1.25rem; text-align:left; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase; border-right:1px solid rgba(255,255,255,0.1); }
+  .cascade-table th:last-child { border-right:none; }
+  .stage-cell { font-weight:700; font-size:0.95rem; }
+  .stage-name { color:var(--text); }
+  .stage-sub { font-size:0.75rem; font-weight:500; color:var(--text-muted); margin-top:0.2rem; }
+  td { padding:1.25rem; vertical-align:top; border-bottom:1px solid var(--border); border-right:1px solid var(--border); font-size:0.9rem; color:var(--text-muted); }
+  td:last-child { border-right:none; }
+  tr:last-child td { border-bottom:none; }
+  tr:nth-child(even) td { background:rgba(0,58,155,0.022); }
+
+  .today-cell { background:var(--red-soft) !important; border-left:3px solid #c82828 !important; }
+  .after-cell { background:var(--green-soft) !important; border-left:3px solid #22a67a !important; }
+  .miss-cell { background:rgba(221,0,169,0.04) !important; border-left:3px solid var(--magenta) !important; }
+
+  .miss-item { display:flex; gap:0.5rem; align-items:flex-start; margin-bottom:0.4rem; font-size:0.85rem; }
+  .miss-dot { width:6px; height:6px; background:var(--magenta); border-radius:50%; flex-shrink:0; margin-top:6px; }
+
+  /* STAGE LABELS */
+  .stage-funnel-label {
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.3rem 0.8rem;
+    border-radius:6px;
+    font-size:0.75rem;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin-bottom:0.5rem;
+  }
+  .tofu { background:rgba(0,58,155,0.1); color:var(--blue); }
+  .mofu { background:rgba(0,100,200,0.1); color:#005bb5; }
+  .bofu { background:rgba(34,166,122,0.1); color:#1a8a60; }
+  .sale { background:rgba(221,0,169,0.1); color:var(--magenta); }
+
+  /* GROWTH LOOPS */
+  .loops-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:3rem; }
+  .loop-card { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:1.75rem; box-shadow:var(--shadow); }
+  .loop-header { display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; }
+  .loop-icon { width:40px; height:40px; background:linear-gradient(135deg,var(--blue),var(--blue-light)); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .loop-title { font-weight:700; font-size:0.95rem; color:var(--text); }
+  .loop-desc { font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem; }
+  .loop-steps { display:flex; flex-direction:column; gap:0.4rem; }
+  .loop-step { display:flex; gap:0.5rem; align-items:center; font-size:0.82rem; color:var(--text-muted); }
+  .step-arrow { color:var(--blue); font-weight:700; flex-shrink:0; }
+
+  /* METRICS ROW */
+  .metrics-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:3rem; }
+  .metric-card { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:1.25rem; box-shadow:var(--shadow); text-align:center; }
+  .metric-num { font-size:1.8rem; font-weight:700; color:var(--blue); line-height:1; margin-bottom:0.35rem; }
+  .metric-label { font-size:0.78rem; color:var(--text-muted); font-weight:500; }
+  .metric-card.highlight .metric-num { color:var(--magenta); }
+
+  /* FOOTER */
+  .page-footer { text-align:center; padding:2rem 0 0; border-top:1px solid var(--border); font-size:0.82rem; color:var(--text-muted); margin-top:2rem; }
+  .page-footer a { color:var(--magenta); text-decoration:none; }
+
+  @media(max-width:768px){
+    .loops-grid, .metrics-row { grid-template-columns:1fr 1fr; }
+    .cascade-table { font-size:0.82rem; }
+    th, td { padding:0.75rem; }
+  }
+  @media(max-width:480px){
+    .loops-grid, .metrics-row { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="eyebrow">Funnel Architecture · MDB Growth Capital</div>
+    <h1>Indeed Flex — Revenue Funnel Architecture</h1>
+    <p>Top of Funnel to Bottom of Funnel and beyond. Today's state, what MDB installs, what is missing at each stage. Three growth loops that compound over 12 months.</p>
+    <div class="header-meta">
+      <div class="meta-chip">Decision-maker: Sarah Peck</div>
+      <div class="meta-chip">Target: Enterprise Flex Plus accounts</div>
+      <div class="meta-chip">Primary segment: Procurement and HR Directors at large UK employers</div>
+      <div class="meta-chip">May 2026</div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics-row">
+    <div class="metric-card">
+      <div class="metric-num">TODAY</div>
+      <div class="metric-label">Inbound only from Indeed brand + direct sales</div>
+    </div>
+    <div class="metric-card highlight">
+      <div class="metric-num">30</div>
+      <div class="metric-label">Tier 1 accounts ready for outreach post-MDB install</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">95%</div>
+      <div class="metric-label">Flex Plus fill rate — product is enterprise-ready</div>
+    </div>
+    <div class="metric-card highlight">
+      <div class="metric-num">£0</div>
+      <div class="metric-label">Content assets for enterprise procurement discovery today</div>
+    </div>
+  </div>
+
+  <!-- CASCADE TABLE -->
+  <div class="cascade-section">
+    <div class="section-header">
+      <div class="section-label">Funnel Cascade</div>
+      <h2>Today vs After MDB vs What is Missing</h2>
+      <div class="section-note">Four stages. Three columns. The gap between what happens now and what the enterprise Flex Plus pipeline looks like after MDB installs the channel.</div>
+    </div>
+
+    <table class="cascade-table">
+      <thead>
+        <tr>
+          <th style="width:160px;">Stage</th>
+          <th style="background:#8B1919; width:30%;">TODAY ❌</th>
+          <th style="background:#1a7a55; width:30%;">AFTER MDB ✓</th>
+          <th style="background:#7a004a; width:30%;">WHAT'S MISSING</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- TOFU -->
+        <tr>
+          <td class="stage-cell">
+            <div class="stage-funnel-label tofu">ToFu</div>
+            <div class="stage-name">Awareness</div>
+            <div class="stage-sub">How enterprise buyers discover Flex Plus</div>
+          </td>
+          <td class="today-cell">
+            Enterprise employers discover Indeed Flex through the Indeed parent brand. High-volume job seeker traffic passes awareness to employers. Some employers discover Flex Plus through word of mouth or Sarah's direct network. No systematic outbound ABM program confirmed. Senior Demand Gen Manager JD confirms this gap exists.
+          </td>
+          <td class="after-cell">
+            Systematic outreach to enterprise decision-makers at the moment of their trigger event. 200-account target list live and segmented by buying signal. Signal monitoring firing on new procurement director appointments at target accounts. Authority content appearing in enterprise procurement searches.
+          </td>
+          <td class="miss-cell">
+            <div class="miss-item"><div class="miss-dot"></div>Research-led ABM program targeting specific enterprise accounts by trigger event type</div>
+            <div class="miss-item"><div class="miss-dot"></div>Awareness of which companies are in an active Coople replacement search right now</div>
+            <div class="miss-item"><div class="miss-dot"></div>Content that ranks when enterprise HR Directors search "best contingent workforce platform UK"</div>
+            <div class="miss-item"><div class="miss-dot"></div>Signal monitoring for new procurement director appointments at 200 target accounts</div>
+          </td>
+        </tr>
+        <!-- MOFU -->
+        <tr>
+          <td class="stage-cell">
+            <div class="stage-funnel-label mofu">MoFu</div>
+            <div class="stage-name">Evaluation</div>
+            <div class="stage-sub">How enterprise buyers assess and shortlist Flex Plus</div>
+          </td>
+          <td class="today-cell">
+            Enterprise procurement teams who have found Indeed Flex run a standard evaluation. Demo, reference check, pricing discussion. The Flex Plus product wins on merits when it gets in front of the right buyer. Challenge: how few enterprise buyers get to this stage through a proactive channel. Most evaluations are inbound-initiated.
+          </td>
+          <td class="after-cell">
+            Pre-qualification of every inbound and outbound lead by buying urgency. Research brief on each enterprise account before the first call — trigger event, decision-maker background, informal shortlist status, recommended approach. Sales team enters every evaluation informed, not cold.
+          </td>
+          <td class="miss-cell">
+            <div class="miss-item"><div class="miss-dot"></div>Systematic way to prioritise enterprise enquiries by buying urgency (genuine PSL evaluation vs early exploration)</div>
+            <div class="miss-item"><div class="miss-dot"></div>Research brief format for every account before the first sales meeting</div>
+            <div class="miss-item"><div class="miss-dot"></div>Qualification framework routing high-urgency accounts to senior sales and early-stage explorers to nurture</div>
+          </td>
+        </tr>
+        <!-- BOFU -->
+        <tr>
+          <td class="stage-cell">
+            <div class="stage-funnel-label bofu">BoFu</div>
+            <div class="stage-name">Conversion</div>
+            <div class="stage-sub">How enterprise buyers sign the Flex Plus PSL agreement</div>
+          </td>
+          <td class="today-cell">
+            Sarah's sales team converts enterprise enquiries at industry standard rates. The product is strong. The challenge is volume at the top of the funnel — not enough enterprise procurement conversations are starting each month. Bottom-of-funnel conversion is not the primary issue.
+          </td>
+          <td class="after-cell">
+            Predictable volume of new enterprise procurement conversations starting each month. Follow-up sequence for companies in informal evaluation stage that have not yet issued a formal brief. Tracking connecting outreach activity to Flex Plus account wins. Re-engagement for companies that evaluated and did not convert.
+          </td>
+          <td class="miss-cell">
+            <div class="miss-item"><div class="miss-dot"></div>Predictable monthly volume of new enterprise procurement conversations</div>
+            <div class="miss-item"><div class="miss-dot"></div>Tracking system connecting outreach activity to Flex Plus PSL wins</div>
+            <div class="miss-item"><div class="miss-dot"></div>Re-engagement sequence for companies that evaluated in a prior cycle but did not convert</div>
+          </td>
+        </tr>
+        <!-- SALE -->
+        <tr>
+          <td class="stage-cell">
+            <div class="stage-funnel-label sale">Post-Sale</div>
+            <div class="stage-name">Expansion</div>
+            <div class="stage-sub">How Marketplace accounts become Flex Plus VMS accounts</div>
+          </td>
+          <td class="today-cell">
+            Existing Marketplace SMB accounts use Indeed Flex for shift filling. The Flex Plus upgrade path exists in product. Proactive account development targeting Marketplace accounts with multi-site operations for Flex Plus conversion: not confirmed. Upgrade typically happens inbound — customer asks, not sales team proposes.
+          </td>
+          <td class="after-cell">
+            Systematic identification of Marketplace accounts that meet Flex Plus eligibility criteria — multi-site, 100-plus flex workers per month, operations in 2-plus sectors. Proactive account development sequence targeting upgrade. Each upgrade = 3x to 5x ACV increase from existing relationship.
+          </td>
+          <td class="miss-cell">
+            <div class="miss-item"><div class="miss-dot"></div>Marketplace account scoring model identifying Flex Plus upgrade candidates</div>
+            <div class="miss-item"><div class="miss-dot"></div>Proactive upgrade outreach to existing accounts meeting Flex Plus criteria</div>
+            <div class="miss-item"><div class="miss-dot"></div>Case study showing Marketplace-to-Flex Plus upgrade ROI for a named client</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GROWTH LOOPS -->
+  <div class="section-header">
+    <div class="section-label">Growth Feedback Loops</div>
+    <h2>Three loops that compound enterprise acquisition over 12 months</h2>
+    <div class="section-note">Each loop self-reinforces. The first win in each loop makes the second win easier. After 12 months, all three loops are running simultaneously and the cost per new enterprise account falls every quarter.</div>
+  </div>
+
+  <div class="loops-grid">
+    <div class="loop-card">
+      <div class="loop-header">
+        <div class="loop-icon">🎯</div>
+        <div class="loop-title">Loop 1 — Sector Acquisition Loop</div>
+      </div>
+      <div class="loop-desc">Each Flex Plus win in a sector creates case study proof that accelerates the next win in the same sector. The first contract catering win makes the second contract catering evaluation faster — the prospect already knows a peer who uses Flex Plus.</div>
+      <div class="loop-steps">
+        <div class="loop-step"><div class="step-arrow">→</div>Target enterprise account identified by sector and trigger</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Outreach reaches decision-maker at Stage 1</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Flex Plus wins the PSL evaluation</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Case study created from win (named client, metrics, ROI)</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Case study used in next outreach to same sector</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Conversion rate increases. Cost per win falls. Repeat.</div>
+      </div>
+    </div>
+
+    <div class="loop-card">
+      <div class="loop-header">
+        <div class="loop-icon">📣</div>
+        <div class="loop-title">Loop 2 — Authority and Inbound Loop</div>
+      </div>
+      <div class="loop-desc">Content published today compounds over 24 months. When an enterprise HR Director searches their problem at 9pm, a piece of Flex Plus content appears. They arrive at the first sales conversation already leaning forward — pre-educated, pre-qualified, pre-sold on the category.</div>
+      <div class="loop-steps">
+        <div class="loop-step"><div class="step-arrow">→</div>Flex Plus case study / VMS guide published</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Content ranks in enterprise procurement search</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Enterprise HR Director discovers Flex Plus during research</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Flex Plus already on informal shortlist at Stage 1</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Faster evaluation, higher conversion rate</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Win creates new case study → more content → loop compounds</div>
+      </div>
+    </div>
+
+    <div class="loop-card">
+      <div class="loop-header">
+        <div class="loop-icon">🤝</div>
+        <div class="loop-title">Loop 3 — Procurement Network Referral Loop</div>
+      </div>
+      <div class="loop-desc">UK enterprise operations and procurement leaders are a tightly networked community. UKHospitality, BIFM, CIPD, and REC circles mean every satisfied Flex Plus client creates 2 to 3 warm referrals over 24 months. The referral pipeline compounds without additional outbound spend.</div>
+      <div class="loop-steps">
+        <div class="loop-step"><div class="step-arrow">→</div>Flex Plus win — satisfied Operations Director</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Operations Director recommends Flex Plus at UKHospitality event</div>
+        <div class="loop-step"><div class="step-arrow">→</div>New account enters evaluation pre-shortlisted</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Faster evaluation, 40-50% higher conversion rate than cold</div>
+        <div class="loop-step"><div class="step-arrow">→</div>New win → new referral node in network</div>
+        <div class="loop-step"><div class="step-arrow">→</div>Referral network compounds with each enterprise win</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p>Strategy and GTM research by <strong>Jean Mundabi Fala</strong>, MDB Growth Capital</p>
+    <p>Built for Indeed Flex — Sarah Peck, UK Country Manager · <a href="https://cal.com/jean-m-8f4kbr/15min">Book 15 Min →</a></p>
+  </div>
+</div>
+</body>
+</html>

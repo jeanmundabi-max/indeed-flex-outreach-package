@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indeed Flex — Trusted by 5,000+ UK Employers | Flex Plus Enterprise Workforce Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #003A9B;
+    --blue-dark: #002470;
+    --blue-light: #1a4fb5;
+    --blue-xlight: rgba(0,58,155,0.06);
+    --magenta: #DD00A9;
+    --magenta-light: #f020c0;
+    --white: #ffffff;
+    --off-white: #f9f8f6;
+    --text: #0c0c14;
+    --text-muted: #55556b;
+    --border: rgba(0,58,155,0.1);
+    --shadow-sm: 0 2px 12px rgba(0,58,155,0.08);
+    --shadow: 0 6px 32px rgba(0,58,155,0.12);
+    --shadow-lg: 0 16px 64px rgba(0,58,155,0.16);
+    --green: #00875a;
+    --red: #c0392b;
+    --amber: #e67e22;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .container-narrow {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* BUYING WINDOW BANNER */
+  .buying-window-banner {
+    background: #001a5c;
+    border-bottom: 2px solid var(--magenta);
+    padding: 0.55rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    overflow: hidden;
+  }
+
+  .bw-inner {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    white-space: nowrap;
+    animation: bw-scroll 30s linear infinite;
+  }
+
+  .bw-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: 0.02em;
+    padding: 0 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .bw-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--magenta);
+    flex-shrink: 0;
+  }
+
+  @keyframes bw-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* STICKY HEADER */
+  header {
+    background: var(--blue-dark);
+    padding: 0.9rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 36px;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+
+  .brand {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.01em;
+  }
+
+  .brand span {
+    color: var(--magenta);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: #fff; }
+
+  .header-cta {
+    background: var(--magenta);
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.55rem 1.35rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+
+  .header-cta:hover { background: var(--magenta-light) !important; }
+
+  /* HERO */
+  .hero {
+    background: var(--blue);
+    padding: 6rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: var(--magenta);
+    border-radius: 50%;
+    opacity: 0.08;
+    filter: blur(80px);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+    filter: blur(60px);
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    background: rgba(221,0,169,0.12);
+    padding: 0.35rem 0.85rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(221,0,169,0.25);
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 3.5vw, 2.9rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--magenta);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 2rem;
+    max-width: 520px;
+  }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    text-align: left;
+  }
+
+  .hero-stat .num {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .hero-stat .label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 500;
+    margin-top: 0.2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--magenta);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.95rem 2.25rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: var(--magenta-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(221,0,169,0.35);
+  }
+
+  .btn-ghost {
+    display: inline-block;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.95rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: #fff;
+  }
+
+  .hero-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-card h3 {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    opacity: 0.7;
+  }
+
+  .metric-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .metric-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .metric-list .m-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.72);
+    font-weight: 500;
+  }
+
+  .metric-list .m-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .metric-list .m-val.good { color: #4ade80; }
+
+  /* PROOF MARQUEE */
+  .proof-bar {
+    background: var(--blue-dark);
+    padding: 1.15rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 28s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 0 2.5rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .marquee-item svg {
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 5rem 2rem;
+  }
+
+  section.alt-bg {
+    background: var(--off-white);
+  }
+
+  section.dark-bg {
+    background: var(--blue-dark);
+    color: #fff;
+  }
+
+  section.blue-bg {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.85rem;
+    display: block;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .dark-bg p, .blue-bg p { color: rgba(255,255,255,0.72); }
+  .dark-bg h2, .blue-bg h2 { color: #fff; }
+  .dark-bg h3, .blue-bg h3 { color: #fff; }
+
+  /* PAIN SECTIONS */
+  .pain-section {
+    background: var(--white);
+    border-left: 4px solid var(--magenta);
+    padding: 3rem 3rem 3rem 2.5rem;
+  }
+
+  .pain-quote {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .pain-quote::before {
+    content: '\201C';
+    position: absolute;
+    left: 0;
+    top: -0.2rem;
+    font-size: 2.5rem;
+    color: var(--magenta);
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+
+  .pain-cost {
+    display: inline-block;
+    background: rgba(192,57,43,0.08);
+    color: var(--red);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid rgba(192,57,43,0.2);
+  }
+
+  /* OLD WAY / NEW WAY */
+  .ow-nw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .ow-col, .nw-col {
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .ow-col {
+    background: rgba(192,57,43,0.05);
+    border: 1px solid rgba(192,57,43,0.15);
+  }
+
+  .nw-col {
+    background: rgba(0,135,90,0.05);
+    border: 1px solid rgba(0,135,90,0.2);
+  }
+
+  .col-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ow-col .col-heading { color: var(--red); }
+  .nw-col .col-heading { color: var(--green); }
+
+  .ow-list, .nw-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .ow-list li, .nw-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .ow-list li .icon { color: var(--red); font-size: 1rem; flex-shrink: 0; margin-top: 0.15rem; }
+  .nw-list li .icon { color: var(--green); font-size: 1rem; flex-shrink: 0; margin-top: 0.15rem; }
+
+  /* MECHANISM */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .step-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--magenta);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .step-card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-card p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+  }
+
+  /* VSL */
+  .vsl-wrapper {
+    background: var(--blue-dark);
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 2rem;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .vsl-placeholder {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .vsl-play {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--magenta);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .vsl-play:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 40px rgba(221,0,169,0.5);
+  }
+
+  .vsl-play svg {
+    width: 28px;
+    height: 28px;
+    fill: #fff;
+    margin-left: 4px;
+  }
+
+  .vsl-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* VIDEO TESTIMONIALS — KareHero pattern */
+  .video-testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:40px; }
+  @media(max-width:768px){ .video-testi-grid{grid-template-columns:1fr;} }
+  .video-testi-card { display:flex; flex-direction:column; gap:14px; }
+  .vt-thumb {
+    position:relative; aspect-ratio:16/9;
+    background:linear-gradient(135deg, #001a5e 0%, #003A9B 55%, #001040 100%);
+    border-radius:14px; overflow:hidden; cursor:pointer;
+    transition:filter 0.22s; border:1px solid rgba(255,255,255,0.06);
+  }
+  .vt-thumb:hover { filter:brightness(1.13); }
+  .vt-thumb:hover .vt-play { transform:translate(-50%,-50%) scale(1.09); }
+  .vt-initials {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-62%);
+    width:60px; height:60px; border-radius:50%;
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; font-weight:700; color:rgba(255,255,255,0.45); letter-spacing:1px;
+  }
+  .vt-play {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:60px; height:60px; background:rgba(255,255,255,0.16);
+    border:2px solid rgba(255,255,255,0.65); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:#fff; transition:transform 0.22s;
+    backdrop-filter:blur(4px);
+  }
+  .vt-duration {
+    position:absolute; bottom:9px; right:11px;
+    font-size:11px; color:#fff; background:rgba(0,0,0,0.52);
+    padding:2px 7px; border-radius:4px; letter-spacing:0.4px;
+  }
+  .vt-name-bar {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:7px 13px; font-size:12px; color:rgba(255,255,255,0.78);
+    background:linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
+    font-family: 'Space Grotesk', monospace;
+  }
+  .vt-quote { font-style:italic; font-size:15px; line-height:1.67; margin:0; color:var(--text); }
+  .vt-attr { display:flex; flex-direction:column; gap:3px; }
+  .vt-attr strong { font-size:14px; font-weight:600; color:var(--text); }
+  .vt-attr span { font-size:13px; opacity:0.6; color:var(--text-muted); }
+
+  /* QUALIFICATION */
+  .qual-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .qual-card {
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+
+  .qual-card.fit {
+    background: rgba(0,135,90,0.06);
+    border: 1px solid rgba(0,135,90,0.2);
+  }
+
+  .qual-card.no-fit {
+    background: rgba(192,57,43,0.05);
+    border: 1px solid rgba(192,57,43,0.15);
+  }
+
+  .qual-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .qual-card.fit .qual-badge {
+    background: rgba(0,135,90,0.12);
+    color: var(--green);
+  }
+
+  .qual-card.no-fit .qual-badge {
+    background: rgba(192,57,43,0.1);
+    color: var(--red);
+  }
+
+  .qual-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .qual-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* REVENUE GAP */
+  .rev-gap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  .gap-calc {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .gap-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .gap-line:last-child { border-bottom: none; }
+
+  .gap-line .glabel {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    font-weight: 500;
+  }
+
+  .gap-line .gval {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .gap-line .gval.loss { color: #f87171; }
+  .gap-line .gval.save { color: #4ade80; }
+
+  .gap-total {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    background: var(--magenta);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .gap-total .glabel {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .gap-total .gval {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* OFFER SECTION */
+  .offer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .offer-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: border-color 0.2s;
+  }
+
+  .offer-card:hover {
+    border-color: rgba(221,0,169,0.4);
+  }
+
+  .offer-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: rgba(221,0,169,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+  }
+
+  .offer-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .offer-card p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.75rem;
+  }
+
+  .micro-pas {
+    font-size: 0.78rem;
+    color: rgba(221,0,169,0.8);
+    font-style: italic;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    line-height: 1.5;
+  }
+
+  /* IMPLEMENTATION */
+  .impl-timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    position: relative;
+  }
+
+  .impl-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    position: relative;
+  }
+
+  .impl-day {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 0.75rem;
+  }
+
+  .impl-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .impl-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .impl-list li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .impl-list li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .faq-item:hover { border-color: rgba(0,58,155,0.25); }
+
+  .faq-q {
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background: var(--white);
+    user-select: none;
+  }
+
+  .faq-q .toggle {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--blue-xlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--blue);
+    font-weight: 700;
+    transition: transform 0.2s;
+  }
+
+  .faq-a {
+    padding: 0 1.5rem 1.25rem;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    background: var(--white);
+    display: none;
+  }
+
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .toggle { transform: rotate(45deg); }
+
+  /* GUARANTEE */
+  .guarantee-box {
+    background: rgba(0,135,90,0.07);
+    border: 2px solid rgba(0,135,90,0.25);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-top: 2rem;
+  }
+
+  .guarantee-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .guarantee-box h3 {
+    color: var(--green);
+    margin-bottom: 0.75rem;
+  }
+
+  .guarantee-box p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* FINAL CTA */
+  .final-cta-section {
+    background: var(--blue);
+    padding: 7rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: var(--magenta);
+    border-radius: 50%;
+    opacity: 0.06;
+    filter: blur(100px);
+    pointer-events: none;
+  }
+
+  .final-cta-section h2 {
+    color: #fff;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .cost-of-inaction {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 580px;
+    margin: 0 auto 1.75rem;
+    position: relative;
+  }
+
+  .final-cta-section .btn-primary {
+    font-size: 1.1rem;
+    padding: 1.1rem 3rem;
+    position: relative;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* FOOTER */
+  footer {
+    background: #000d24;
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.8;
+  }
+
+  footer a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+  }
+
+  /* UTILITIES */
+  .text-center { text-align: center; }
+  .text-magenta { color: var(--magenta); }
+  .mt-1 { margin-top: 1rem; }
+  .mt-2 { margin-top: 2rem; }
+  .mt-3 { margin-top: 3rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .ow-nw-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .offer-grid { grid-template-columns: 1fr; }
+    .qual-grid { grid-template-columns: 1fr; }
+    .rev-gap-grid { grid-template-columns: 1fr; }
+    .impl-timeline { grid-template-columns: 1fr; }
+    nav a:not(.header-cta) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BUYING WINDOW BANNER -->
+<div class="buying-window-banner" aria-label="Current buying signals">
+  <div class="bw-inner">
+    <div class="bw-item"><span class="bw-dot"></span> Coople exited the UK market January 2026 — Preferred Supplier List gap to fill now</div>
+    <div class="bw-item"><span class="bw-dot"></span> Summer peak season 6 weeks away — your bank of workers not confirmed</div>
+    <div class="bw-item"><span class="bw-dot"></span> Preferred Supplier List review underway — new platform evaluation open</div>
+    <div class="bw-item"><span class="bw-dot"></span> Fill rate failure at last major event — board asked questions</div>
+    <div class="bw-item"><span class="bw-dot"></span> New Operations Director joining — reviewing all supplier contracts</div>
+    <!-- duplicate set for continuous loop -->
+    <div class="bw-item"><span class="bw-dot"></span> Coople exited the UK market January 2026 — Preferred Supplier List gap to fill now</div>
+    <div class="bw-item"><span class="bw-dot"></span> Summer peak season 6 weeks away — your bank of workers not confirmed</div>
+    <div class="bw-item"><span class="bw-dot"></span> Preferred Supplier List review underway — new platform evaluation open</div>
+    <div class="bw-item"><span class="bw-dot"></span> Fill rate failure at last major event — board asked questions</div>
+    <div class="bw-item"><span class="bw-dot"></span> New Operations Director joining — reviewing all supplier contracts</div>
+  </div>
+</div>
+
+<!-- STICKY HEADER -->
+<header>
+  <div class="brand">Indeed <span>Flex</span></div>
+  <nav>
+    <a href="#how-it-works">How it works</a>
+    <a href="#results">Results</a>
+    <a href="#flex-plus">Flex Plus</a>
+    <a href="#faq">FAQ</a>
+    <a href="#get-started" class="header-cta">Get Started</a>
+  </nav>
+</header>
+
+<!-- SECTION 1: HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">For Operations Directors managing flex staffing across UK hospitality</div>
+      <h1>Stop calling agencies at 6am.<br>Your contingent workforce,<br><em>covered before the shift starts.</em></h1>
+      <p class="hero-sub">95% fill rate. 30-minute average fill time. 240,000+ pre-vetted UK workers across hospitality, catering, facilities, and retail. One platform your Operations Director and Procurement team actually trust.</p>
+
+      <div class="hero-stat-row">
+        <div class="hero-stat">
+          <div class="num">95%</div>
+          <div class="label">Fill rate</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">30 min</div>
+          <div class="label">Avg. time to fill</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">25%</div>
+          <div class="label">Average labour cost saving</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">240K+</div>
+          <div class="label">Pre-vetted UK workers</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#get-started" class="btn-primary">Get Started</a>
+        <a href="#how-it-works" class="btn-ghost">See How It Works</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <h3>Live Platform Metrics</h3>
+      <ul class="metric-list">
+        <li>
+          <span class="m-label">Fill rate (hospitality)</span>
+          <span class="m-val good">95%</span>
+        </li>
+        <li>
+          <span class="m-label">Avg. time to fill</span>
+          <span class="m-val good">30 min</span>
+        </li>
+        <li>
+          <span class="m-label">Worker quality (4+ stars)</span>
+          <span class="m-val good">92%</span>
+        </li>
+        <li>
+          <span class="m-label">Annual cost saving (typical)</span>
+          <span class="m-val good">25%</span>
+        </li>
+        <li>
+          <span class="m-label">UK employers on platform</span>
+          <span class="m-val">5,000+</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: VSL PLACEHOLDER -->
+<section class="alt-bg reveal" id="vsl">
+  <div class="container-narrow text-center">
+    <span class="section-label">See It In Action</span>
+    <h2>Watch how a 200-person catering company reduced their temp labour bill by £97,000 in year one</h2>
+    <p>Three-minute walkthrough: platform demo, Flex Plus dashboard, and what the first 30 days look like for a multi-site hospitality group.</p>
+
+    <div class="vsl-wrapper">
+      <div class="vsl-placeholder">
+        <div class="vsl-play" title="Play video">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vsl-title">VIDEO_URL_GOES_HERE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- SECTION 2: PROOF MARQUEE -->
+<section style="padding:0; background: var(--blue-dark);" class="proof-bar" aria-label="Platform trust signals">
+  <div class="marquee-track">
+    <!-- set 1 -->
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      5,000+ UK Employers
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      240,000+ Pre-Vetted Workers
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      95% Fill Rate
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      30-Min Average Fill
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      25% Average Labour Cost Reduction
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      IR35-Compliant by Design
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      92% Workers Rated 4+ Stars
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Flex Plus: Vendor-Neutral VMS
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Multi-Site Visibility — One Dashboard
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Hospitality · Catering · Facilities · Retail · Healthcare
+    </div>
+    <!-- set 2 (duplicate for continuous loop) -->
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      5,000+ UK Employers
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      240,000+ Pre-Vetted Workers
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      95% Fill Rate
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      30-Min Average Fill
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      25% Average Labour Cost Reduction
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      IR35-Compliant by Design
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      92% Workers Rated 4+ Stars
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Flex Plus: Vendor-Neutral VMS
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Multi-Site Visibility — One Dashboard
+    </div>
+    <div class="marquee-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DD00A9" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Hospitality · Catering · Facilities · Retail · Healthcare
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: PAIN 01 -->
+<section class="alt-bg reveal" id="pain-01">
+  <div class="container">
+    <span class="section-label">The Problem — Fill Rate Failure</span>
+    <div style="max-width:820px;">
+      <div class="pain-quote">
+        "Our incumbent supplier can't fill shifts during peak. We had 40 no-shows at Christmas and it cost us the whole festive period."
+      </div>
+      <p style="font-size:1rem; margin-bottom:1.25rem;">That is not a staffing problem. That is a supplier dependency problem. When your contingent workforce sits on a preferred supplier who cannot scale past a single platform, every major event is a gamble. You find out on the morning of the shift — not three weeks before when you could have done something about it.</p>
+      <p style="font-size:1rem; margin-bottom:1.5rem;">For a 500-person hospitality operation running 50 temp shifts per week, a single event fill-rate failure means lost revenue, emergency agency calls at premium rates, and a conversation with the board you did not want to have.</p>
+      <span class="pain-cost">40 no-shows × £200 revenue per shift = £8,000 lost in a single peak event</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: PAIN 02 -->
+<section class="reveal" id="pain-02">
+  <div class="container">
+    <span class="section-label">The Problem — Compliance Exposure</span>
+    <div style="max-width:820px;">
+      <div class="pain-quote">
+        "We have compliance exposure with the agency workers we use. Someone from HMRC came asking questions about IR35 misclassification. That is the one that keeps me up at night."
+      </div>
+      <p style="font-size:1rem; margin-bottom:1.25rem;">The IR35 misclassification risk is real. Agency workers placed without compliant contracts, without verifiable employment status checks, and without audit trails create liability that sits on your balance sheet — not your agency's. One enforcement case costs between £10,000 and £100,000 before you account for reputational damage.</p>
+      <p style="font-size:1rem; margin-bottom:1.5rem;">The problem is compounded when your current setup involves multiple agencies, multiple portals, and no single view of who is working where and under what contract. Switching to a new platform only solves this if the compliance tracking is built in — not bolted on. Right to work, DBS, IR35 status, and contract documentation all need to exist before the worker walks in the door.</p>
+      <span class="pain-cost">IR35 misclassification case: £10,000 to £100,000+ per enforcement action</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4B: PAIN 03 -->
+<section class="alt-bg reveal" id="pain-03">
+  <div class="container">
+    <span class="section-label">The Problem — No Single View</span>
+    <div style="max-width:820px;">
+      <div class="pain-quote">
+        "I need one system to see all our temp labour across 12 sites. Right now I have three spreadsheets and two agency portals and nobody can tell me what we are actually spending."
+      </div>
+      <p style="font-size:1rem; margin-bottom:1.25rem;">When temp labour runs across multiple sites and multiple suppliers, the spend picture is always incomplete. Finance asks for the number. You pull three spreadsheets and two agency portals and stitch them together the night before the board meeting. The figure you present is approximate. You know it. They suspect it.</p>
+      <p style="font-size:1rem; margin-bottom:1.5rem;">For a 500-person operation, the annual temp labour bill is typically £1.56 million. A 25% cost saving from consolidating to one platform is £390,000 — but only if you can see the whole picture first. Fragmented visibility means you cannot benchmark your agencies, identify waste, or build a case for change. You are managing cost you cannot see.</p>
+      <span class="pain-cost">Typical annual temp labour bill: £1.56M — and most procurement teams cannot account for 100% of it</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: OLD WAY VS NEW WAY -->
+<section class="alt-bg reveal" id="old-vs-new">
+  <div class="container">
+    <span class="section-label">The Comparison</span>
+    <h2>What operations teams tried before Indeed Flex. What changed after.</h2>
+    <p>Every platform says they have pre-vetted workers and a 90% fill rate. They all look the same until you have a no-show on Christmas Eve. Here is what changes when you move off the old model.</p>
+
+    <style>
+      .comparison-table { width:100%; border-collapse:collapse; margin-top:2.5rem; }
+      .comparison-table th {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--blue-dark);
+        color: rgba(255,255,255,0.5);
+      }
+      .comparison-table th:first-child { color: rgba(192,57,43,0.9); width: 50%; border-radius: 10px 0 0 0; }
+      .comparison-table th:last-child { color: rgba(0,135,90,0.9); width: 50%; border-radius: 0 10px 0 0; }
+      .comparison-table td {
+        padding: 1.5rem;
+        vertical-align: top;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        border-top: 1px solid rgba(0,58,155,0.1);
+      }
+      .comparison-table td:first-child {
+        color: var(--text-muted);
+        background: rgba(192,57,43,0.03);
+        border-right: 1px solid rgba(0,58,155,0.08);
+      }
+      .comparison-table td:last-child {
+        color: var(--text);
+        background: rgba(0,135,90,0.03);
+      }
+      .comparison-table tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+      .comparison-table tr:last-child td:last-child { border-radius: 0 0 10px 0; }
+      .tag-bad { color: var(--red); font-weight: 700; margin-right: 6px; }
+      .tag-good { color: var(--green); font-weight: 700; margin-right: 6px; }
+    </style>
+
+    <table class="comparison-table reveal">
+      <thead>
+        <tr>
+          <th>❌ The Old Way</th>
+          <th>✅ The New Way</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag-bad">❌</span>We were trying to keep coverage consistent across the Christmas peak, but our three preferred agencies forced us into a call-around every Thursday evening to confirm numbers. When Christmas Eve arrived and 40 workers did not show for the evening service, we only had a WhatsApp group and an agency voicemail. That meant the hotel dining room ran at half capacity on the busiest night of the year. The truth is I spent more time apologising to the general manager than I did planning the next peak.</td>
+          <td><span class="tag-good">✅</span>Now full shift cover is confirmed 48 hours before the Christmas peak begins, not the morning of. In December, 95% of posted shifts filled within 30 minutes — no Thursday call-around, no morning scramble. The conversation changed from explaining to the general manager why we were short-staffed to presenting the fill rate dashboard at the post-peak review.</td>
+        </tr>
+        <tr>
+          <td><span class="tag-bad">❌</span>We were trying to maintain compliance across all our agency workers, but our WhatsApp pool had no vetting process and the agencies sent workers with paperwork that was weeks out of date. When HMRC came asking about IR35 status and right to work documentation, we only had agency verbal confirmations and spreadsheet notes. That meant a three-week audit that cost us £40,000 in legal fees and management time. The part nobody says out loud is I was more worried about being personally named in the enforcement case than about the financial cost.</td>
+          <td><span class="tag-good">✅</span>Now every worker's IR35 status, right to work, DBS, and training records are in the platform before they accept a shift. When HMRC came back for a follow-up check, I pulled the compliance report in four minutes. The conversation changed from defending our process to demonstrating it.</td>
+        </tr>
+        <tr>
+          <td><span class="tag-bad">❌</span>We were trying to build a single view of temp labour spend across our 12 sites, but three spreadsheets and two agency portals meant the number Finance received every quarter was a best estimate. When the board asked for the annual temp labour bill at the cost reduction review, we only had an approximate figure with a margin of error we could not explain. That meant losing credibility in the room when the Finance Director pressed on the detail. By the time we saw the issue, the decision had already been made to cut our resourcing budget by 15%.</td>
+          <td><span class="tag-good">✅</span>Now the Flex Plus dashboard shows spend by site, by role, and by period in real time. Last quarter we identified £87,000 in duplicated agency spend across two sites that nobody had spotted in three years. The conversation changed from presenting approximate figures to walking the board through a line-by-line breakdown they had never seen before.</td>
+        </tr>
+        <tr>
+          <td><span class="tag-bad">❌</span>We were trying to fulfil a 500-shift event contract we had just signed, but our PSL supplier confirmed numbers three weeks out and then went silent. When the event day arrived and 40 workers did not turn up, we only had a mobile number that went to voicemail. That meant a £200-per-shift revenue loss across 40 gaps and a general manager who spent the afternoon on the phone to the client. I spent more time managing the client relationship damage than I did running the operation. The truth is I had no way to prevent it — I had no real-time visibility until it was too late.</td>
+          <td><span class="tag-good">✅</span>Now confirmed worker acceptances are visible in the platform 24 hours before the shift, not the morning of. For our last major event, 498 of 500 shifts had accepted workers by 8am the day before. The conversation changed from damage control to the client calling to say it was the best-run event they had seen.</td>
+        </tr>
+        <tr>
+          <td><span class="tag-bad">❌</span>We were trying to replace Coople after they exited the UK in January, but the agencies we fell back on charged 30% above standard rate and had no visibility into which workers knew our sites. When summer bookings came in at full capacity, we only had a fragmented agency roster with no quality history and no fill rate guarantee. That meant offering reduced covers and turning away corporate bookings we could have taken. I spent more time explaining to the commercial director why we could not scale than I did building the operation. The part nobody says out loud is the summer revenue loss was mine to own — not the agency's.</td>
+          <td><span class="tag-good">✅</span>Now workers who have been rated 4 stars or above on our sites are the first to see our new shifts. For our first summer peak on Indeed Flex, fill rate was 96% and the average cost per shift came in 22% below what the replacement agencies were charging. The conversation changed from managing capacity shortfalls to opening the commercial calendar we had been holding back.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 6: MECHANISM — HOW IT WORKS -->
+<section class="dark-bg reveal" id="how-it-works">
+  <div class="container">
+    <span class="section-label" style="color: rgba(221,0,169,0.9);">The Mechanism</span>
+    <h2>How Indeed Flex fills your shifts in 30 minutes</h2>
+    <p>Two products. One platform. Marketplace for same-day fills. Flex Plus for enterprise-wide workforce management.</p>
+
+    <div class="steps-grid">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">1</div>
+        <h4>Post Your Shift</h4>
+        <p>Log in, enter shift details, role requirements, site location. Takes 90 seconds.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">2</div>
+        <h4>Alma Matches</h4>
+        <p>AI Co-Pilot screens 240,000+ workers by rating, qualifications, location, and site history.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">3</div>
+        <h4>Worker Accepts</h4>
+        <p>Pre-vetted worker confirms. You see their profile, star rating, and compliance status before they arrive.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-4">
+        <div class="step-num">4</div>
+        <h4>Shift Happens</h4>
+        <p>Worker checks in via app. Time tracked. Compliance logged automatically. No paperwork.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-5">
+        <div class="step-num">5</div>
+        <h4>One Invoice</h4>
+        <p>Consolidated billing across all sites. Cost analytics in Flex Plus dashboard. Audit trail complete.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; padding: 2rem; background: rgba(255,255,255,0.05); border-radius:14px; border: 1px solid rgba(255,255,255,0.1);">
+      <h3 style="color:#fff; margin-bottom: 0.75rem;">Flex Plus — For Multi-Site Operations</h3>
+      <p>Flex Plus brings all your staffing suppliers into one platform — not just Indeed Flex workers. Your Operations Director sees every site in a single dashboard. Procurement gets one consolidated bill. HR has every compliance record in one place without chasing agencies. The first time your board asks what you are spending on temp labour, you have a real answer.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- SECTION 8: TESTIMONIALS — VIDEO FORMAT -->
+<section class="reveal" id="results">
+  <div class="container">
+    <span class="section-label">Results</span>
+    <h2>What operations teams say after the first 90 days</h2>
+    <p>From contract caterers to hotel groups. Same result: full coverage, lower cost, no more 6am agency calls.</p>
+
+    <div class="video-testi-grid reveal">
+      <div class="video-testi-card">
+        <div class="vt-thumb" data-src="VIDEO_TESTIMONIAL_1">
+          <div class="vt-initials">RH</div>
+          <div class="vt-play">▶</div>
+          <div class="vt-duration">1:47</div>
+          <div class="vt-name-bar">Rachel H. — Operations Director, Greenside Contract Catering</div>
+        </div>
+        <p class="vt-quote">"We moved off our agencies after Christmas. Forty no-shows that year cost us the festive period. Since switching, our fill rate has been above 95% and I haven't had a single morning scramble. The compliance records are there when we need them."</p>
+        <div class="vt-attr">
+          <strong>Rachel H., Operations Director</strong>
+          <span>Greenside Contract Catering — 300 employees, 8 sites</span>
+        </div>
+      </div>
+      <div class="video-testi-card">
+        <div class="vt-thumb" data-src="VIDEO_TESTIMONIAL_2">
+          <div class="vt-initials">TM</div>
+          <div class="vt-play">▶</div>
+          <div class="vt-duration">2:11</div>
+          <div class="vt-name-bar">Tom M. — Head of Procurement, Ashford Hotels Group</div>
+        </div>
+        <p class="vt-quote">"Three spreadsheets. Two agency portals. Nobody could tell me what we were actually spending. With Flex Plus I have one dashboard across all 12 properties. We cut the temp labour bill by 22% in year one. That conversation with the board is now comfortable."</p>
+        <div class="vt-attr">
+          <strong>Tom M., Head of Procurement</strong>
+          <span>Ashford Hotels Group — 12 properties, UK</span>
+        </div>
+      </div>
+      <div class="video-testi-card">
+        <div class="vt-thumb" data-src="VIDEO_TESTIMONIAL_3">
+          <div class="vt-initials">DW</div>
+          <div class="vt-play">▶</div>
+          <div class="vt-duration">1:53</div>
+          <div class="vt-name-bar">Diane W. — Head of People, Meridian Hospitality Group</div>
+        </div>
+        <p class="vt-quote">"We had a food safety incident two years ago with an agency worker. The vetting had happened verbally on the day. That cannot happen again. Now every worker's qualifications, right to work, and DBS are in the platform before they come through the door."</p>
+        <div class="vt-attr">
+          <strong>Diane W., Head of People</strong>
+          <span>Meridian Hospitality Group — 500+ employees</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: QUALIFICATION ENGINE -->
+<section class="alt-bg reveal" id="qualification">
+  <div class="container">
+    <span class="section-label">Is This Right For You?</span>
+    <h2>Three employer profiles that fit. One that does not.</h2>
+    <p>Indeed Flex works best for operations-heavy employers with regular or seasonal contingent workforce needs. If you run a single-site business with fewer than 20 temp shifts per month, the platform is available but the economics work best at scale.</p>
+
+    <div class="qual-grid">
+      <div class="qual-card fit reveal reveal-delay-1">
+        <span class="qual-badge">Strong fit</span>
+        <h4>The Fill Rate Problem</h4>
+        <p>Your current agency fills 70 to 80% of shifts on peak days. You have had at least one event where coverage failed. You are running 50+ temp shifts per week across one or more sites. You need a 95% fill rate, not a promise of one.</p>
+      </div>
+
+      <div class="qual-card fit reveal reveal-delay-2">
+        <span class="qual-badge">Strong fit</span>
+        <h4>The Compliance Ceiling</h4>
+        <p>You have IR35 exposure in your current agency arrangement. You cannot tell your finance director exactly what your temp labour compliance status is. You need vetting, right-to-work, and contract compliance tracked — not managed by a rota manager with a spreadsheet.</p>
+      </div>
+
+      <div class="qual-card fit reveal reveal-delay-3">
+        <span class="qual-badge">Strong fit</span>
+        <h4>The Multi-Site Cost Problem</h4>
+        <p>You operate across 3 or more sites and temp labour is a significant cost line. Procurement has asked you to consolidate suppliers and reduce the total contingent workforce bill. You need a Vendor Management System, not another agency portal.</p>
+      </div>
+
+      <div class="qual-card no-fit reveal reveal-delay-4">
+        <span class="qual-badge">Not the right fit</span>
+        <h4>Single Event, One-Off Need</h4>
+        <p>You need staff for one event per year with no ongoing contingent workforce requirement. Indeed Flex can handle it but the platform value compounds over time. If you are not regularly using temp labour, a traditional agency may be sufficient for your use case.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 10: REVENUE GAP -->
+<section class="dark-bg reveal" id="revenue-gap">
+  <div class="container">
+    <span class="section-label" style="color:rgba(221,0,169,0.9);">The Cost of the Current Setup</span>
+    <h2>What your temp labour bill actually costs when fill rate fails</h2>
+    <p>For a 500-employee hospitality group running 50 temp workers per week at £15 per hour average — the revenue gap between a 95% fill rate and a 70% fill rate is not marginal. It is structural.</p>
+
+    <div class="rev-gap-grid">
+      <div>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom:1.5rem;">The £1.56 million annual temp labour bill is the number your board sees. The real cost is what happens when your current supplier fails at peak — and what it costs to fix it last minute.</p>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom:1.5rem;">A 25% cost saving on a £1.56 million annual temp labour bill is £390,000. That is not a rounding error. That is a headcount decision. That is a site investment. That is the conversation with the board you want to have instead of the fill rate one.</p>
+        <p style="color: rgba(255,255,255,0.8);">Three times this revenue gap figure matters: at budget review, at peak planning, and at supplier PSL evaluation. At each point, the question is the same — what is the cost of the current setup versus the cost of changing it?</p>
+      </div>
+
+      <div class="gap-calc">
+        <div class="gap-line">
+          <span class="glabel">Annual temp labour bill (typical)</span>
+          <span class="gval">£1.56M</span>
+        </div>
+        <div class="gap-line">
+          <span class="glabel">Cost of fill failure — Christmas peak (40 no-shows)</span>
+          <span class="gval loss">£8,000+</span>
+        </div>
+        <div class="gap-line">
+          <span class="glabel">IR35 misclassification enforcement</span>
+          <span class="gval loss">£10K–£100K</span>
+        </div>
+        <div class="gap-line">
+          <span class="glabel">Agency premium for last-minute fills</span>
+          <span class="gval loss">+20 to 40%</span>
+        </div>
+        <div class="gap-line">
+          <span class="glabel">Indeed Flex cost saving (Flex Plus)</span>
+          <span class="gval save">25% / £390K</span>
+        </div>
+        <div class="gap-total">
+          <span class="glabel">Annual opportunity at £1.56M bill</span>
+          <span class="gval">£390,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 11: OFFER -->
+<section class="blue-bg reveal" id="flex-plus">
+  <div class="container">
+    <span class="section-label" style="color:rgba(221,0,169,0.9);">Everything Included</span>
+    <h2>Everything included with Indeed Flex.</h2>
+    <p>Marketplace for on-demand fills. Flex Plus for enterprise workforce management. Alma AI Co-Pilot for intelligent matching. One platform. One invoice. Full compliance.</p>
+
+    <div class="offer-grid">
+      <div class="offer-card reveal reveal-delay-1">
+        <div class="offer-icon">⚡</div>
+        <h4>Marketplace — On-Demand Shift Filling</h4>
+        <p>Post a shift, Alma matches a pre-vetted worker in 30 minutes. Available 24 hours, 7 days a week. 95% fill rate across hospitality, catering, facilities, retail, and industrial.</p>
+        <div class="micro-pas">Without this: you are calling agencies at 6am hoping someone answers. The shift either fills at premium cost or does not fill at all.</div>
+      </div>
+
+      <div class="offer-card reveal reveal-delay-2">
+        <div class="offer-icon">🏢</div>
+        <h4>Flex Plus — Enterprise VMS</h4>
+        <p>Vendor-neutral management system for your entire contingent workforce. Multi-site visibility, consolidated billing, compliance tracking, agency management. One dashboard for Operations and Procurement.</p>
+        <div class="micro-pas">Without this: three spreadsheets, two agency portals, and no single answer when the board asks what your temp labour bill actually is.</div>
+      </div>
+
+      <div class="offer-card reveal reveal-delay-3">
+        <div class="offer-icon">🤖</div>
+        <h4>Alma — AI Staffing Co-Pilot</h4>
+        <p>Smart matching across 240,000+ workers by role, rating, location, qualifications, and site familiarity. Workers who know your operation get priority. New workers go through automated vetting before approval.</p>
+        <div class="micro-pas">Without this: matching is manual, vetting is verbal, and quality is inconsistent from shift to shift.</div>
+      </div>
+
+      <div class="offer-card reveal reveal-delay-1">
+        <div class="offer-icon">✅</div>
+        <h4>Compliance Management</h4>
+        <p>IR35 status, right to work, DBS checks, and training records tracked and auditable in-platform. Every worker placement creates a compliance record. HMRC questions get answered with data, not conversations.</p>
+        <div class="micro-pas">Without this: your IR35 exposure sits untracked until enforcement comes. One misclassification case costs £10,000 to £100,000 before legal fees.</div>
+      </div>
+
+      <div class="offer-card reveal reveal-delay-2">
+        <div class="offer-icon">💰</div>
+        <h4>Worker Instant Pay</h4>
+        <p>Workers get paid same-day, up to 50% within one hour of completing a shift. That is why Indeed Flex attracts and retains the best workers on the platform — and why your fill rate holds at 95% even on bank holidays.</p>
+        <div class="micro-pas">Without this: agency workers go where the fastest payment is. Your fill rate suffers on the days you need it most.</div>
+      </div>
+
+      <div class="offer-card reveal reveal-delay-3">
+        <div class="offer-icon">📊</div>
+        <h4>Cost Analytics and Reporting</h4>
+        <p>Labour spend by site, by role, by period. Fill rate dashboards. Agency performance benchmarking across your PSL. The data your Procurement Director needs to justify the platform to the board — already in the dashboard.</p>
+        <div class="micro-pas">Without this: the conversation with the board about temp labour spend is uncomfortable because the numbers are in three different spreadsheets and two agency systems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 12: IMPLEMENTATION — FIRST 30 DAYS -->
+<section class="alt-bg reveal" id="implementation">
+  <div class="container">
+    <span class="section-label">Getting Started</span>
+    <h2>What changes in the first 30 days</h2>
+    <p>Onboarding is designed for enterprise procurement timelines. No 90-day PSL process required to run your first shift. You can be posting and filling within the first week.</p>
+
+    <div class="impl-timeline">
+      <div class="impl-card reveal reveal-delay-1">
+        <div class="impl-day">Days 1 to 7</div>
+        <h4>Platform Setup and Worker Bank</h4>
+        <ul class="impl-list">
+          <li>Account configured for your sites and roles</li>
+          <li>Existing preferred workers invited to your bank</li>
+          <li>Alma trained on your role requirements and site preferences</li>
+          <li>First shift posted and filled</li>
+        </ul>
+      </div>
+
+      <div class="impl-card reveal reveal-delay-2">
+        <div class="impl-day">Days 8 to 21</div>
+        <h4>Volume and Compliance Go Live</h4>
+        <ul class="impl-list">
+          <li>Full shift volume moved to platform</li>
+          <li>Compliance records built for all active workers</li>
+          <li>IR35 status confirmed per worker category</li>
+          <li>Flex Plus dashboard live for multi-site visibility</li>
+        </ul>
+      </div>
+
+      <div class="impl-card reveal reveal-delay-3">
+        <div class="impl-day">Days 22 to 30</div>
+        <h4>Cost Baseline and Reporting</h4>
+        <ul class="impl-list">
+          <li>First consolidated labour cost report produced</li>
+          <li>Agency cost comparison completed</li>
+          <li>Fill rate baseline established (95% target)</li>
+          <li>Procurement summary ready for board reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 13: FAQ -->
+<section class="reveal" id="faq">
+  <div class="container-narrow">
+    <span class="section-label">Common Questions</span>
+    <h2>The questions operations and procurement teams ask before switching</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">
+          We have a preferred supplier agreement. Procurement will take 90 days to onboard a new supplier. How do we manage this?
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Indeed Flex is designed to work alongside your existing PSL, not replace it overnight. You can start with a pilot on specific sites or shift types while procurement runs the formal onboarding process in parallel. Most enterprise clients are filling shifts within the first week while the formal PSL process completes in the background. Flex Plus also integrates your existing agency relationships into the VMS, so you do not have to terminate current suppliers to use the platform.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          Our workers are familiar with our sites. Starting again with a new pool is a risk.
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Your existing casual workers can be invited directly to your Indeed Flex worker bank. They join the platform, complete compliance verification, and continue working your shifts — now through a system that tracks their records and pays them same-day. The transition is additive, not a replacement. Workers who worked your sites before become your rated, preferred pool on the platform.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          We need a TUPE assessment if we move the whole workforce. Does this apply?
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          TUPE applies to the transfer of an undertaking, not the adoption of a staffing platform. Moving to Indeed Flex from an agency arrangement does not trigger TUPE in the same way as a service transfer. Your employment legal team can confirm this for your specific arrangement. Indeed Flex's compliance team has handled this question for enterprise clients and can provide supporting documentation for your legal review.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          My board wants me to cut costs, not add another platform subscription. How does this work financially?
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          The platform cost is offset by the agency premium reduction. At a 25% saving on a typical annual temp labour bill of £1.56 million, the annual saving is £390,000. The Flex Plus pricing for enterprise accounts is structured as a percentage of managed spend — so the platform only costs more when you are saving more. The first-year saving consistently exceeds the platform cost for enterprise clients. We can model this for your specific labour bill before you sign anything.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          Can you prove you can fill on the same day in our location?
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          Indeed Flex operates across the UK with 240,000+ pre-vetted workers. Before onboarding, we run a worker density check for your specific locations and role types. If the density does not meet your requirements, we tell you before you commit — not after. For hospitality and catering across major UK cities and their surrounding areas, the fill rate holds above 95% on same-day requests.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 14: GUARANTEE -->
+<section class="alt-bg reveal" id="guarantee">
+  <div class="container-narrow">
+    <span class="section-label">Our Commitment</span>
+    <h2>The fill rate guarantee</h2>
+
+    <div class="guarantee-box">
+      <div class="guarantee-icon">🛡️</div>
+      <div>
+        <h3>95% Fill Rate — Or We Work Until It Is Fixed</h3>
+        <p>Indeed Flex's service level for enterprise Flex Plus clients is a 95% fill rate across standard shift requests with 4+ hours lead time. If your fill rate falls below this in any rolling 30-day period, your account manager reviews every unfilled shift, identifies the cause, and rebuilds your worker bank to close the gap. We do not charge for shifts that are not filled. And we do not offer a fill rate figure we cannot back up — 95% is the platform average, not a headline number we invented for this page.</p>
+        <p style="margin-top:1rem;">The guarantee matters because it removes the risk your board will ask about. "What happens if it goes wrong?" has an answer before you sign.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 15: FINAL CTA -->
+<section class="final-cta-section reveal" id="get-started">
+  <div class="container text-center">
+    <span class="section-label" style="color:rgba(221,0,169,0.9);">Get Started</span>
+    <h2>Your peak season is 6 weeks away.<br>Your current supplier is not Coople anymore.</h2>
+    <p class="cost-of-inaction">Every week without a confirmed preferred supplier is a week closer to a fill rate failure at your next major event. The £390,000 annual saving from moving to a 95% fill rate on a £1.56M temp labour bill does not require a 90-day PSL process to start. It requires a conversation.</p>
+    <a href="#" class="btn-primary" id="get-started-cta">Get Started</a>
+    <p style="margin-top:1.5rem; font-size:0.85rem; color:rgba(255,255,255,0.45);">Operations and procurement teams typically see first results in week one.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Indeed Flex is a trading name of Syft Online Limited, a subsidiary of Indeed, Inc. — part of Recruit Holdings.</p>
+  <p style="margin-top:0.5rem;">This is a mockup of what an Indeed Flex customer acquisition page could look like for the hospitality procurement segment. Strategy and mockup prepared by Jean Mundabi Fala, MDB Growth Capital.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => io.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
